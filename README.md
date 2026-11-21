@@ -15,7 +15,7 @@ npm run dev
 
 If the cloud shell cannot write to the default npm cache, use `npm ci --cache /tmp/rulecraft-npm-cache`.
 
-Open the URL printed by Vite. Select a mode and either the Campaign preview or the 12-day Sandbox trial, then start a village. The Decree Book lets you confirm rules for the next day. Village advances the simulation, and the Gazette connects completed days to their Inquiry records. Reload the same origin and select **Resume village** to reopen the verified device save. Creating a new village requires confirmation before replacing the save.
+Open the URL printed by Vite. Select Junior or Full, then start The Hungry Village or a 12-day Sandbox experiment. The campaign has a day-six evidence checkpoint and a day-12 debrief. Sandbox lets you choose a starting preset and seed. The Decree Book lets you confirm rules for the next day. Village advances the simulation, and the Gazette connects completed days to their Inquiry records. Reload the same origin and select **Resume village** to reopen the verified device save. Creating a new village requires confirmation before replacing the save.
 
 The Gazette highlights incidents from verified simulation records and keeps the full action log. Open **Chronicle** to browse prior stories by day, topic or adviser, or open a story’s **Share card** for a local PNG or selectable text. Run `node tools/task-05-coverage.mjs` to reproduce the narrative coverage study. See the [Task 05 engineering report](docs/13_Task_05_Engineering.md) for results and screenshots.
 
@@ -29,7 +29,7 @@ npm run build
 npm run test:browser
 ```
 
-Set `RULECRAFT_CHROMIUM=/usr/bin/chromium` to use a Linux system Chromium. See the [Task 04 report](docs/11_Task_04_Engineering.md) for screenshots, storage measurements and device coverage.
+Set `RULECRAFT_CHROMIUM=/usr/bin/chromium` to use a Linux system Chromium. See the [Task 06 engineering report](docs/19_Task_06_First_Playable_Engineering.md) for screenshots, storage measurements and device coverage.
 
 ## Run the headless village
 

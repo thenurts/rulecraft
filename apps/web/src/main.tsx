@@ -1,16 +1,22 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { advanceSociety, confirmLaw, type LawCommand, type LawVersion } from '@rulecraft/simulation';
+import { isMission, MissionOverview, MissionReview } from './Mission.tsx';
+import { checkpointDay } from './mission.ts';
+import { ExperimentReport, isExperiment } from './Sandbox.tsx';
+import { RetryPanel } from './Retry.tsx';
+import { ChoiceSelect } from './ChoiceSelect.tsx';
 import { Book, Composer, newDraft, usableDraft } from './decrees.tsx';
 import { deviceDraftStore, type DecreeDraft } from './draft-store.ts';
 import { AdvancePanel, DayResults, Gazette, Inquiry, TrialSummary } from './results.tsx';
 import { Chronicle, ShareView, StoryCard } from './narrative/StoryViews.tsx';
 import { projectNarrative, type Incident } from './narrative/projection.ts';
+import { editorProfile, modeProfiles, scenarios, presets, readSeed, type PresetId, type StartSelection, type Selection } from './profiles.ts';
 import { workerCodec } from './save-codec.ts';
 import { BrowserDatabase, deviceSaveStore, emptySave, SaveConflict, type LoadedSave } from './save-store.ts';
 import { createRoot } from 'react-dom/client';
 import {
-  browserId, citizenLabel, homeScreen, modeLabel, newSession, occupations, previous, trackLabel, villageReadModel, villageScreen, visit,
-  type GameSession, type Screen, type Selection,
+  browserId, citizenLabel, homeScreen, newSession, occupations, previous, sessionLabel, setupLabel, villageReadModel, villageScreen, visit,
+  type GameSession, type Screen,
 } from './world.ts';
 import './styles.css';
 
@@ -19,10 +25,24 @@ function PageHeading({ children }: { children: ReactNode }) {
 }
 
 function Home({ session, onStart, onResume, busy }: {
-  session: GameSession | null; onStart: (selection: Selection) => void; onResume: () => void; busy: boolean;
+  session: GameSession | null; onStart: (selection: StartSelection) => void; onResume: () => void; busy: boolean;
 }) {
   const [selection, setSelection] = useState<Selection>({ mode: 'junior', track: 'campaign' });
-  const [replace, setReplace] = useState(false);
+  const [sandboxPreset, setSandboxPreset] = useState<PresetId>(scenarios.sandbox.defaultPreset);
+  const [sandboxSeed, setSandboxSeed] = useState(String(scenarios.sandbox.defaultSeed));
+  const [pending, setPending] = useState<StartSelection | null>(null);
+  const scenario = scenarios[selection.track];
+  const experiment = scenario.track === 'sandbox';
+  const preset = experiment ? sandboxPreset : scenario.defaultPreset;
+  const seed = experiment ? readSeed(sandboxSeed) : scenario.defaultSeed;
+  const starting = presets[preset];
+  const locked = busy || pending !== null;
+  function requestStart() {
+    if (seed === undefined) return;
+    const next = { ...selection, seed, preset };
+    if (session) setPending(next);
+    else onStart(next);
+  }
   return <>
     <section className="hero">
       <p className="eyebrow">The village charter</p>
@@ -31,33 +51,51 @@ function Home({ session, onStart, onResume, busy }: {
     </section>
     {session && <section className="panel">
       <h2>Your village</h2>
-      <p>{modeLabel[session.mode]} · {trackLabel[session.track]} · Day {session.game.state.turn}</p>
-      <p className="muted">Saved on this device · Engine v{session.game.versions.schemaVersion}</p>
+      <p>{sessionLabel(session)} · Day {session.game.state.turn}</p>
+      <p className="muted">Saved on this device · Engine v{session.game.versions.schemaVersion}</p><p>{setupLabel(session)}</p>
       <button className="primary" disabled={busy} onClick={onResume}>Resume village</button>
     </section>}
     <section className="panel">
       <h2>Start a village</h2>
       <div className="two-col">
-        <label>Complexity
-          <select disabled={busy} value={selection.mode} onChange={(event) => setSelection({ ...selection, mode: event.target.value as Selection['mode'] })}>
-            <option value="junior">Junior</option><option value="full">Full</option>
-          </select>
-        </label>
-        <label>Play option
-          <select disabled={busy} value={selection.track} onChange={(event) => setSelection({ ...selection, track: event.target.value as Selection['track'] })}>
-            <option value="campaign">Campaign preview</option><option value="sandbox">12-day Sandbox trial</option>
-          </select>
-        </label>
+        <ChoiceSelect label="Complexity" value={selection.mode} disabled={locked}
+          choices={Object.values(modeProfiles).map(({ id, label }) => ({ value: id, label }))}
+          onChange={(mode) => setSelection({ ...selection, mode: mode as Selection['mode'] })} />
+        <ChoiceSelect label="Play option" value={selection.track} disabled={locked}
+          choices={[
+            { value: 'campaign', label: 'Campaign · The Hungry Village' },
+            { value: 'sandbox', label: scenarios.sandbox.label },
+          ]}
+          onChange={(track) => setSelection({ ...selection, track: track as Selection['track'] })} />
       </div>
-      <p>{selection.track === 'campaign' ? 'Try The Hungry Village with provisional food targets.' :
-        'Try decrees for 12 days with no campaign target.'}</p>
-      {replace ? <div className="notice" role="group" aria-label="Replace current village">
-        <p>Starting a new village replaces the current one.</p>
-        <div className="actions">
-          <button className="primary" disabled={busy} onClick={() => onStart(selection)}>Replace and start</button>
-          <button disabled={busy} onClick={() => setReplace(false)}>Cancel</button>
+      <p>{modeProfiles[selection.mode].explanation}</p>
+      {experiment && <>
+        <div className="two-col">
+          <ChoiceSelect label="Starting preset" value={sandboxPreset} disabled={locked}
+            choices={scenario.presets.map((id) => ({ value: id, label: presets[id].label }))}
+            onChange={(id) => setSandboxPreset(id as PresetId)} />
+          <label>Seed
+            <input type="text" inputMode="numeric" aria-describedby="start-seed-help" aria-invalid={seed === undefined}
+              value={sandboxSeed} disabled={locked} onChange={({ target }) => setSandboxSeed(target.value)} />
+          </label>
         </div>
-      </div> : <button className={session ? '' : 'primary'} disabled={busy} onClick={() => session ? setReplace(true) : onStart(selection)}>Start village</button>}
+        <p id="start-seed-help">Enter a whole number from 0 to 4,294,967,295. Use the same seed and preset to repeat the same start.</p>
+        <p>The experiment lasts 12 days and has no victory target.</p>
+      </>}
+      <p>{starting.label} preset · Scenario v{scenario.version} · {starting.fixture.days} days
+        {!experiment && ` · Seed ${scenario.defaultSeed}`}</p>
+      <details><summary>Starting conditions</summary>
+        <p>{starting.fixture.population.farmer} farmers · {starting.fixture.population.merchant} merchants · {starting.fixture.population.forester} foresters · {starting.fixture.population.guard} guards.</p>
+        <p>{starting.fixture.opening.marketFood} market food · {starting.fixture.opening.fieldFood} field food · {starting.fixture.opening.citizenCoin} coins per resident.</p>
+      </details>
+      {pending ? <div className="notice" role="group" aria-label="Replace current village">
+        <p>Starting a new village replaces the current one.</p>
+        <p>{modeProfiles[pending.mode].label} · {starting.label} · Seed {pending.seed}</p>
+        <div className="actions">
+          <button className="primary" disabled={busy} onClick={() => onStart(pending)}>Replace and start</button>
+          <button disabled={busy} onClick={() => setPending(null)}>Cancel</button>
+        </div>
+      </div> : <button className={session ? '' : 'primary'} disabled={busy || seed === undefined} onClick={requestStart}>Start village</button>}
     </section>
   </>;
 }
@@ -70,10 +108,11 @@ function Village({ session, children }: { session: GameSession; children?: React
   const village = villageReadModel(session.game);
   return <>
     <header className="page-header">
-      <p className="eyebrow">{modeLabel[session.mode]} · {trackLabel[session.track]}</p>
+      <p className="eyebrow">{sessionLabel(session)}</p>
       <PageHeading>Village</PageHeading>
       <p>Day {village.day} of {village.limit} · {village.remaining} days remaining</p>
-      {session.game.versions.schemaVersion === 3 && <p>Historical engine v3 · original replay rules</p>}
+      <p>{setupLabel(session)}</p>
+      {session.game.versions.schemaVersion === 3 ? <p>Historical engine v3 · original replay rules</p> : <p>Engine v4</p>}
     </header>
     {children}
     <section className="panel">
@@ -87,7 +126,7 @@ function Village({ session, children }: { session: GameSession; children?: React
         <Metric label="Average trust" value={village.trust === null ? 'Unavailable' : `${village.trust}/100`} />
       </dl>
     </section>
-    {session.track === 'campaign' && <section className="panel">
+    {session.track === 'campaign' && !session.setup && <section className="panel">
       <h2>The Hungry Village</h2>
       <p>Provisional targets by day 12. Feed residents on at least 90% of citizen-days and finish with 40 units of market food.</p>
       <p>{village.mealOpportunities ? `${village.fed} of ${village.mealOpportunities} citizen-days fed so far.` : 'Food access will be measured after the first day.'}</p>
@@ -245,14 +284,14 @@ function App() {
     draftQueue.current = waiting;
   }
 
-  async function start(selection: Selection) {
+  async function start(selection: StartSelection) {
     await persist(async () => {
       const next = newSession(selection, browserId());
       accept(await saves.commit(saveRef.current, next));
       setDraft(null);
       setDraftProblem('');
       setFeedback('Village saved on this device.');
-      go(villageScreen);
+      setHistory([homeScreen, villageScreen]);
     });
   }
 
@@ -296,7 +335,10 @@ function App() {
 
   const inspect = (id: string) => go({ name: 'inquiry', id });
   const share = (id: string) => go({ name: 'share', id });
-  const today = narrative.incidents.filter(({ turn }) => turn === Number(screen.id));
+  const reportDay = Number(screen.id);
+  const today = narrative.incidents.filter(({ turn }) => turn === reportDay);
+  const openResults = (day: number) => go({ name: 'results', id: String(day) });
+  const openChronicle = () => go({ name: 'chronicle' });
   function story(incident: Incident, compact = false) {
     return session && <StoryCard key={incident.id} incident={incident} game={session.game} compact={compact} inspect={inspect} share={share} />;
   }
@@ -322,15 +364,27 @@ function App() {
         <button disabled={busy} aria-current={screen.name === 'book' || screen.name === 'composer' ? 'page' : undefined} onClick={() => go(bookScreen)}>Decree Book</button>
         <button disabled={busy} aria-current={screen.name === 'gazette' ? 'page' : undefined} onClick={() => openGazette()}>Gazette</button>
         <button disabled={busy} aria-current={screen.name === 'chronicle' ? 'page' : undefined}
-          onClick={() => go({ name: 'chronicle' })}>Chronicle</button>
+          onClick={openChronicle}>Chronicle</button>
       </nav>}
       {screen.name === 'village' && session && <Village session={session}>
-        <AdvancePanel day={session.game.state.turn} limit={session.game.fixture.days} busy={blocked} onAdvance={advance} />
-        {session.game.state.turn > 0 && <button className="recent-results" onClick={() => go({ name: 'results', id: String(session.game.state.turn) })}>Latest day results</button>}
-        <TrialSummary session={session} />
+        <AdvancePanel key={session.id} day={session.game.state.turn} limit={session.game.fixture.days} busy={blocked} onAdvance={advance} />
+        {session.game.state.turn > 0 && <button className="recent-results" onClick={() => openResults(session.game.state.turn)}>Latest day results</button>}
+        {isMission(session)
+          ? <MissionOverview session={session} openDay={openResults} openBook={() => go(bookScreen)} />
+          : isExperiment(session) ? <>
+            <ExperimentReport session={session} day={session.game.state.turn} openGazette={openGazette} />
+            <RetryPanel key={session.id} session={session} start={start} busy={blocked} />
+          </> : <TrialSummary session={session} />}
       </Village>}
-      {screen.name === 'results' && session && <DayResults session={session} day={Number(screen.id)}
-        inspect={inspect} openGazette={() => openGazette(Number(screen.id))} story={today[0] ? story(today[0], true) : null} />}
+      {screen.name === 'results' && session && <DayResults session={session} day={reportDay}
+        inspect={inspect} openGazette={() => openGazette(reportDay)} story={today[0] ? story(today[0], true) : null}
+        review={isMission(session) && (reportDay === checkpointDay || reportDay === session.game.fixture.days) ?
+          <MissionReview session={session} day={reportDay} inspect={inspect} openBook={() => go(bookScreen)}
+            openChronicle={openChronicle} hasStory={narrative.incidents.some(({ turn }) => turn <= reportDay)} />
+          : isExperiment(session) && reportDay === session.game.fixture.days &&
+            <ExperimentReport session={session} day={reportDay} openGazette={openGazette} />}
+        next={session.setup && reportDay === session.game.fixture.days &&
+          <RetryPanel key={session.id} session={session} start={start} busy={blocked} />} />}
       {screen.name === 'gazette' && session && <Gazette game={session.game} day={Number(screen.id)}
         onDay={(day) => setHistory((previous) => [...previous.slice(0, -1), { name: 'gazette', id: String(day) }])} inspect={inspect}
         stories={today.length ? today.map((incident) => story(incident))
@@ -342,7 +396,7 @@ function App() {
       {screen.name === 'book' && session &&
         <Book game={session.game} draft={draft} busy={blocked} onCompose={openComposer} onCommit={enact} />}
       {screen.name === 'composer' && session && draft &&
-        <Composer key={draft.commandId} game={session.game} mode={session.mode} draft={draft} busy={blocked}
+        <Composer key={draft.commandId} game={session.game} profile={editorProfile(session, session.setup)} draft={draft} busy={blocked}
           onChange={(next) => storeDraft(session.id, next)} onCommit={enact}
           onDiscard={() => { storeDraft(session.id, null); setHistory(previous); }} />}
       {screen.name === 'home' && <Home session={session} busy={blocked} onStart={start} onResume={() => go(villageScreen)} />}

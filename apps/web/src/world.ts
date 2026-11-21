@@ -1,13 +1,23 @@
 import { citizenAccount, startSociety, villageAccounts, type SocietyGame } from '@rulecraft/simulation';
-import fixture from '../../../fixtures/task-01-village.json';
+import { makeSetup, scenarios, presets, type RunSetup, type Selection, type StartSelection } from './profiles.ts';
 
-export type Mode = 'junior' | 'full';
-export type Track = 'campaign' | 'sandbox';
-export interface Selection { mode: Mode; track: Track }
-export interface GameSession extends Selection { id: string; game: SocietyGame }
+export type { Mode, Selection } from './profiles.ts';
+export interface GameSession extends Selection { readonly id: string; readonly game: SocietyGame; readonly setup?: RunSetup }
 
 export const modeLabel = { junior: 'Junior', full: 'Full' };
-export const trackLabel = { campaign: 'Campaign preview', sandbox: '12-day Sandbox trial' };
+const legacyTrackLabel = { campaign: 'Campaign preview', sandbox: '12-day Sandbox trial' };
+
+export function sessionLabel(session: GameSession): string {
+  return `${modeLabel[session.mode]} · ${session.setup ? scenarios[session.track].label : legacyTrackLabel[session.track]}`;
+}
+
+export function setupLabel(session: GameSession): string {
+  const { setup, game } = session;
+  return setup
+    ? `${presets[setup.preset].label} preset · Scenario v${setup.scenarioVersion} · Profile v${setup.profileVersion} · Seed ${setup.seed}`
+    : `Legacy preview · Seed ${game.seed}`;
+}
+
 export const occupations = { farmer: 'Farmers', forester: 'Foresters', merchant: 'Merchants', guard: 'Guards' };
 export type Screen = { name: 'home' | 'village' | 'book' | 'composer' | 'results' | 'gazette' | 'inquiry' | 'chronicle' | 'share'; id?: string };
 export const homeScreen: Screen = { name: 'home' };
@@ -30,8 +40,11 @@ export function browserId(): string {
     (byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
-export function newSession(selection: Selection, id: string, seed = 42): GameSession {
-  return { ...selection, id, game: startSociety(fixture, seed) };
+export function newSession(selection: StartSelection, id: string): GameSession {
+  const setup = makeSetup(selection);
+  const { config, policy } = scenarios[selection.track];
+  return { mode: selection.mode, track: selection.track, id, setup,
+    game: startSociety(presets[setup.preset].fixture, setup.seed, config, policy) };
 }
 
 export function lawRefLabel(game: SocietyGame, lawId: string, version?: number): string {

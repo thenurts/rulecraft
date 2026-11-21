@@ -51,10 +51,10 @@ test('advance saves one day before displaying actual results and an action ledge
 });
 
 for (const [mode, track, label] of [
-  ['junior', 'campaign', 'Junior · Campaign preview'],
-  ['junior', 'sandbox', 'Junior · 12-day Sandbox trial'],
-  ['full', 'campaign', 'Full · Campaign preview'],
-  ['full', 'sandbox', 'Full · 12-day Sandbox trial'],
+  ['junior', 'campaign', 'Junior · The Hungry Village'],
+  ['junior', 'sandbox', 'Junior · 12-day Sandbox experiment'],
+  ['full', 'campaign', 'Full · The Hungry Village'],
+  ['full', 'sandbox', 'Full · 12-day Sandbox experiment'],
 ]) {
   test(`${label} persists and resumes`, async ({ page }) => {
     await startVillage(page, mode, track);

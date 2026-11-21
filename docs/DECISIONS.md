@@ -199,3 +199,16 @@ The research adapter keeps engine bytes and schema versions intact in a separate
 
 - Consider a guided distribution puzzle on the research fixture `five-merchants-farmers-v1`. The 128-seed independent holdout verified the delivery benefit and found that a distinct rest duty reduced fatigue blocks at the cost of meals. A late delivery duty showed scope for recovery after the day-six teaching checkpoint.
 - Use fully fed resident-days as the proposed primary outcome with separate supply, affordability and repeated-hardship diagnostics. The tutorial format, preset, thresholds and separate Junior severity remain subject to review and real playtests. [Introductory mission design and evidence](17_Hungry_Village_Introductory_Mission.md)
+
+### Task 06 first playable · implementation decisions
+
+- New starts use setup metadata version 1 in the same atomic IndexedDB record as the plain canonical snapshot. The profile, scenario and preset are fixed for the lifetime of a village. Legacy previews retain their existing behaviour when setup is absent.
+- The Hungry Village uses the approved Five Merchants fixture for both profiles. Day six teaches observation and revision, and day 12 accounts for actual food access. The only modern completion condition is reaching the preset's day limit. Repeated hardship is reported as a diagnostic.
+- Junior Campaign introduces the optional clause after completing day six. Junior Sandbox offers one optional clause from the start with all supported predicates. Full offers both clause types. The rule interpreter is shared.
+- Sandbox has two versioned 12-day presets. A retry is a new village and needs explicit replacement confirmation. Actual phone and novice playtests remain separate gates. [Implementation report and acceptance matrix](19_Task_06_First_Playable_Engineering.md)
+
+### Task 06 review fix · save-identity guard
+
+- The canonical snapshot checksum verifies simulation history. To identify a setup-less historical browser preview, the loader checks v3/v4, the original fixture, default society and law settings, and the shipped preview UI's fixed seed 42.
+- Versioned generations use an outer `sessionFormat: 'scenario-v1'` marker alongside their setup. Missing setup on a marked generation or an unknown marker triggers the existing verified-generation recovery path. Loading is read-only.
+- A standard Sandbox and a legacy preview are indistinguishable when both outer identity fields are absent and the seed, fixture and settings are identical. An unmarked modern record with intact setup still opens and is marked on its next commit. [Post-review validation and caveat](19_Task_06_First_Playable_Engineering.md#post-review-correction--save-identity-and-legacy-preview-recovery)

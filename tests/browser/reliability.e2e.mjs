@@ -25,6 +25,11 @@ async function mutateHead(page, operation, payload) {
         if (operation === 'read') result = head;
         else if (operation === 'seed') {
           store.put({ revision: 1, previous: null, current: { id: 'legacy', at: 1, mode: 'full', track: 'sandbox', payload } }, 'village');
+        } else if (operation === 'remove-setup') {
+          delete head.current.setup;
+          delete head.current.sessionFormat;
+          store.put(head, 'village');
+          result = head;
         } else {
           store.put({ ...head, current: { ...head.current, payload } }, 'village');
         }
@@ -106,6 +111,22 @@ test('a corrupted current generation recovers the prior one; unsupported saves f
   await expect(page.getByRole('button', { name: 'Start village', exact: true })).toBeDisabled();
 });
 
+test('a valid modern world missing scenario setup recovers the previous Hungry Village', async ({ page }) => {
+  await start(page);
+  await (await openAdvance(page, 1)).click();
+  await expect(page.getByRole('heading', { name: 'Day 1 results' })).toBeVisible();
+  const damaged = await mutateHead(page, 'remove-setup');
+  expect(loadSociety(damaged.current.payload).state.turn).toBe(1);
+
+  await page.reload();
+  await expect(page.getByRole('status')).toContainText('Recovered the previous complete save');
+  await page.getByRole('button', { name: 'Resume village' }).click();
+  await expect(page.getByText('Day 0 of 12')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The Hungry Village' })).toBeVisible();
+  await expect(page.getByText(/Provisional targets by day 12/)).toHaveCount(0);
+  expect(await mutateHead(page, 'read')).toEqual(damaged);
+});
+
 test('unavailable device storage never reports a successful start', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(globalThis, 'indexedDB', { configurable: true,
     get() { throw new DOMException('Storage denied in test', 'SecurityError'); } }));
@@ -131,6 +152,13 @@ test('a historical v3 game resumes and advances using the original engine', asyn
 
 test('a full 12-day village saves, replays and records actual browser timings', async ({ page }) => {
   test.setTimeout(90_000);
+  await page.addInitScript(() => {
+    window.longTasks = [];
+    if (PerformanceObserver.supportedEntryTypes.includes('longtask')) {
+      new PerformanceObserver((records) => window.longTasks.push(...records.getEntries().map(({ duration }) => duration)))
+        .observe({ type: 'longtask', buffered: true });
+    }
+  });
   await start(page);
   await page.getByRole('button', { name: 'Decree Book', exact: true }).click();
   await page.getByRole('button', { name: 'Compose decree' }).click();
@@ -145,7 +173,7 @@ test('a full 12-day village saves, replays and records actual browser timings', 
     await (await openAdvance(page, day)).click();
     await expect(page.getByRole('heading', { name: `Day ${day} results`, exact: true })).toBeVisible();
   }
-  await expect(page.getByRole('heading', { name: 'Trial summary' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Day-12 debrief' })).toBeVisible();
   const timings = await page.evaluate(() => [...performance.getEntriesByName('rulecraft.turn'), ...performance.getEntriesByName('rulecraft.save')]
     .filter((entry) => entry.detail?.day > 0).map(({ name, duration, detail }) => ({ name, ms: duration, ...detail })));
   const head = await mutateHead(page, 'read');
@@ -160,24 +188,31 @@ test('a full 12-day village saves, replays and records actual browser timings', 
   await page.getByRole('button', { name: 'Chronicle', exact: true }).click();
   const originalChronicle = await catalogue();
   expect(originalChronicle.length).toBeGreaterThan(0);
-  await page.reload();
-  await page.getByRole('button', { name: 'Resume village' }).click();
-  await expect(page.getByText('Day 12 of 12')).toBeVisible();
+  const longTasks = await page.evaluate(() => window.longTasks);
+  const loads = [];
+  for (let sample = 0; sample < 5; sample++) {
+    await page.reload();
+    await page.getByRole('button', { name: 'Resume village' }).click();
+    await expect(page.getByText('Day 12 of 12')).toBeVisible();
+    loads.push(await page.evaluate(() => performance.getEntriesByName('rulecraft.load')
+      .filter((entry) => entry.detail?.day === 12).at(-1).duration));
+  }
   await expect(page.getByRole('button', { name: 'Advance day', exact: true })).toHaveCount(0);
-  const reload = await page.evaluate(() => performance.getEntriesByName('rulecraft.load')
-    .map(({ duration, detail }) => ({ ms: duration, ...detail })).at(-1));
-  const median = (values) => {
-    values.sort((a, b) => a - b);
-    const centre = Math.floor(values.length / 2);
-    return values.length % 2 ? values[centre] : (values[centre - 1] + values[centre]) / 2;
+  const stats = (values) => {
+    const ordered = [...values].sort((a, b) => a - b);
+    const middle = Math.floor(ordered.length / 2);
+    return { n: ordered.length, p50: ordered.length % 2 ? ordered[middle] : (ordered[middle - 1] + ordered[middle]) / 2,
+      p95: ordered[Math.ceil(ordered.length * 0.95) - 1] };
   };
   const summary = {
-    samples: timings.filter(({ name }) => name === 'rulecraft.turn').length,
-    medianTurnMs: median(timings.filter(({ name }) => name === 'rulecraft.turn').map(({ ms }) => ms)),
-    medianSaveMs: median(timings.filter(({ name }) => name === 'rulecraft.save').map(({ ms }) => ms)),
+    turns: stats(timings.filter(({ name }) => name === 'rulecraft.turn').map(({ ms }) => ms)),
+    saves: stats(timings.filter(({ name }) => name === 'rulecraft.save').map(({ ms }) => ms)),
+    reloadVerify: stats(loads),
+    longestMainThreadTaskMs: longTasks.length ? Math.max(...longTasks) : null,
     day12SaveMs: timings.find(({ day, name }) => day === 12 && name === 'rulecraft.save').ms,
     day12PayloadBytes: head.current.payload.length,
-    twoGenerationBytes: JSON.stringify(head).length, reload,
+    twoGenerationBytes: JSON.stringify(head).length,
+    audit: auditSnapshot(audited),
   };
   await page.getByRole('button', { name: 'Chronicle', exact: true }).click();
   expect(await catalogue()).toEqual(originalChronicle);
@@ -185,10 +220,10 @@ test('a full 12-day village saves, replays and records actual browser timings', 
   const lastProjection = await page.evaluate(() => performance.getEntriesByName('rulecraft.narrative').at(-1)?.duration);
   expect(narrativeTimings.length).toBe(12);
   console.log('Measured browser narrative', JSON.stringify({
-    samples: narrativeTimings.length, medianProjectionMs: median(narrativeTimings),
+    projection: stats(narrativeTimings),
     day12ReloadProjectionMs: lastProjection, chronicleCards: originalChronicle.length,
   }));
-  expect(summary.samples).toBe(12);
+  expect(summary.turns.n).toBe(12);
   console.log('Measured browser persistence', JSON.stringify(summary));
 });
 
