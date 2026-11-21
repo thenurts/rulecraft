@@ -189,3 +189,8 @@ See the [Task 02 report](07_Task_02_Engine.md) for test evidence and open review
 - Full BUILD-01–24 evidence matrix with Pass/Fail/Not Yet Tested, preservation of v1–v4 digests and Task 04/05 gameplay, Chrome/Safari and 200% text assessments.
 
 **Still-open dependencies:** [private staging and physical phone test issue #16](https://github.com/thenurts/rulecraft/issues/16); [320px enlarged composer accessibility issue #17](https://github.com/thenurts/rulecraft/issues/17); 12-day dual-generation save growth; foresters lacking a timber buyer; narrative catalogue currently globally pinned to \`village-record-1\`; native packaging and compliance outside Task 06.
+
+### Task 06 research proposal · Hungry Village introductory mission
+
+- Consider a guided distribution puzzle on the research fixture `five-merchants-farmers-v1`. The 128-seed independent holdout verified the delivery benefit and found that a distinct rest duty reduced fatigue blocks at the cost of meals. A late delivery duty showed scope for recovery after the day-six teaching checkpoint.
+- Use fully fed resident-days as the proposed primary outcome with separate supply, affordability and repeated-hardship diagnostics. The tutorial format, preset, thresholds and separate Junior severity remain subject to review and real playtests. [Introductory mission design and evidence](17_Hungry_Village_Introductory_Mission.md)
