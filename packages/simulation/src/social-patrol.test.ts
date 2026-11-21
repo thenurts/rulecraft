@@ -55,7 +55,7 @@ test('limited public patrol capacity uses actual action and current law evidence
       .toBeLessThanOrEqual(presence.capacity);
   }
   expect(day.book.notices.every(({ learnedAtPhase, learnedAtTurn }) =>
-    learnedAtPhase === 'warning' && learnedAtTurn === 1)).toBe(true);
+    learnedAtPhase === 'education' && learnedAtTurn === 1)).toBe(true);
   expect(auditSnapshot(day).remaining).toMatchObject({ coin: 820, timber: 120 });
   expect(encodeSociety(loadSociety(encodeSociety(day)))).toBe(encodeSociety(day));
 });
@@ -86,18 +86,46 @@ test('a remembered ban can influence citizens after repeal but cannot be sanctio
   expect(remembered?.legalChoice?.[0]).toMatchObject({ actual: { status: 'optional' }, perceived: { status: 'prohibited' } });
 });
 
-test('education is learned for the next day and remembered risk points to an actual warning', () => {
-  const one = advanceSociety(scenario());
-  const warned = one.societyDays[0].patrol.investigations.find(({ noticeId }) => noticeId !== null)!;
+test('education teaches for the next day with no warning risk or trust penalty', () => {
+  const initial = scenario();
+  const one = advanceSociety(initial);
+  const education = one.societyDays[0].patrol.investigations.find(({ noticeId }) => noticeId !== null)!;
+  expect(education.disposition).toBe('education');
   const two = advanceSociety(one);
   const morning = two.events.find(({ turn, phase, actorId, choice }) =>
-    turn === 2 && phase === 'morning' && actorId === warned.act.citizenId && choice);
-  expect(morning?.legalChoice?.[0]).toMatchObject({ perceived: { status: 'prohibited' } });
-  expect(morning?.choice?.candidates[0].utility).toMatchObject({
-    risk: -50, riskEventIds: expect.arrayContaining([expect.stringMatching(/^inspection\.event\.1\./)]),
+    turn === 2 && phase === 'morning' && actorId === education.act.citizenId && choice);
+  expect(morning?.legalChoice?.[0]).toMatchObject({
+    perceived: { status: 'prohibited' }, noticeEventIds: [education.noticeId],
   });
-  expect(one.societyDays[0].experiences.some(({ sourceEventId, component }) =>
-    component === 'patrol-warning' && sourceEventId === warned.id)).toBe(true);
+  expect(morning?.choice?.candidates[0].utility).toMatchObject({ risk: 0, riskEventIds: [] });
+  const experiences = one.societyDays[0].experiences.filter(({ sourceEventId }) => sourceEventId === education.id);
+  expect(experiences).toEqual([expect.objectContaining({
+    citizenId: education.act.citizenId, component: 'patrol-education', change: 0,
+  })]);
+  expect(one.societyDays[0].experiences.some(({ component }) => component === 'patrol-warning')).toBe(false);
+  const id = education.act.citizenId;
+  expect(one.state.citizens.find((citizen) => citizen.id === id)?.trust)
+    .toBe(initial.state.citizens.find((citizen) => citizen.id === id)!.trust + 1);
+});
+
+test('a formal warning changes trust and remembered risk with provenance to that warning', () => {
+  let initial = scenario();
+  for (const { id, occupation } of initial.state.citizens) {
+    if (occupation === 'farmer') initial = notifyLaw(initial, id, 'harvest-ban', 1);
+  }
+  const one = advanceSociety(initial);
+  const warning = one.societyDays[0].patrol.investigations.find(({ disposition }) => disposition === 'warning')!;
+  expect(warning).toMatchObject({ noticeId: null, act: { knewCurrentVersion: true } });
+  const two = advanceSociety(one);
+  const morning = two.events.find(({ turn, phase, actorId, choice }) =>
+    turn === 2 && phase === 'morning' && actorId === warning.act.citizenId && choice);
+  const expectedWarning = one.societyDays[0].patrol.investigations
+    .filter(({ act, disposition }) => act.citizenId === warning.act.citizenId && disposition === 'warning').at(-1)!;
+  expect(morning?.choice?.candidates[0].utility).toMatchObject({ risk: -50, riskEventIds: [expectedWarning.id] });
+  expect(one.societyDays[0].experiences).toContainEqual(expect.objectContaining({
+    sourceEventId: warning.id, component: 'patrol-warning', change: -1,
+  }));
+  expect(one.societyDays[0].experiences.some(({ component }) => component === 'patrol-education')).toBe(false);
 });
 
 test('home rest is a performed prohibited action outside the public patrol route', () => {

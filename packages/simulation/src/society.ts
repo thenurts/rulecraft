@@ -11,8 +11,9 @@ import {
 import { patrolDefaults, resolvePatrols, type Investigation, type PatrolPolicy, type PatrolReport } from './social-patrol.ts';
 import { resolveDay, type AllocationEvidence } from './turn.ts';
 
-const versions = { schemaVersion: 3, engineVersion: 'headless-society-v1', contentVersion, rngVersion,
+const historicalVersions = { schemaVersion: 3, engineVersion: 'headless-society-v1', contentVersion, rngVersion,
   lawRegistryVersion } as const;
+const versions = { ...historicalVersions, schemaVersion: 4, engineVersion: 'headless-society-v2' } as const;
 
 export interface SocietyConfig extends NewsPolicy {
   readonly behaviour: BehaviourPolicy;
@@ -33,7 +34,7 @@ export interface SocietyDay {
 }
 
 export interface SocietyGame extends LawRun {
-  readonly versions: Readonly<typeof versions>;
+  readonly versions: Readonly<typeof versions | typeof historicalVersions>;
   readonly config: SocietyConfig;
   readonly contacts: readonly ContactList[];
   readonly attitudes: readonly Attitude[];
@@ -49,6 +50,17 @@ function configNumber(input: Record<string, unknown>, key: string, max: number):
 }
 
 export function startSociety(fixture: unknown, seed: number, config: SocietyConfig = societyDefaults, policy?: LawPolicy): SocietyGame {
+  return initialiseSociety(versions, fixture, seed, config, policy);
+}
+
+/** Reproduce the original Task 03 engine for historical verification. */
+export function startSocietyV3(fixture: unknown, seed: number, config: SocietyConfig = societyDefaults, policy?: LawPolicy): SocietyGame {
+  return initialiseSociety(historicalVersions, fixture, seed, config, policy);
+}
+
+function initialiseSociety(
+  engine: SocietyGame['versions'], fixture: unknown, seed: number, config: SocietyConfig, policy?: LawPolicy,
+): SocietyGame {
   if (!isRecord(config)) throw new TypeError('Invalid society settings.');
   if (!isRecord(config.behaviour)) throw new TypeError('Invalid behaviour settings.');
   const behaviour = Object.fromEntries(Object.keys(behaviourDefaults).map((key) =>
@@ -67,7 +79,7 @@ export function startSociety(fixture: unknown, seed: number, config: SocietyConf
     contacts: configNumber(config, 'contacts', 12), behaviour, patrol,
   };
   const game = startLawGame(fixture, seed, policy);
-  return { ...game, versions: { ...versions }, config: settings,
+  return { ...game, versions: { ...engine }, config: settings,
     contacts: buildContacts(game.state.citizens, seed, settings.contacts), attitudes: [], societyDays: [] };
 }
 
@@ -78,11 +90,14 @@ export function advanceSociety(game: SocietyGame): SocietyGame {
   const experiences: Experience[] = [];
   const attitudes = initialiseAttitudes(informed, experiences);
   const allocations: AllocationEvidence[] = [];
-  const recentWarnings = new Map<string, Investigation>();
+  const historical = game.versions.schemaVersion === 3;
+  const rememberedWarnings = new Map<string, Investigation>();
   for (const previous of game.societyDays) {
     if (turn - previous.turn > game.config.patrol.warningMemoryDays) continue;
     for (const inspection of previous.patrol.investigations) {
-      if (inspection.detected) recentWarnings.set(`${inspection.act.citizenId}:${inspection.act.action}`, inspection);
+      if (inspection.disposition === 'warning' || (historical && inspection.disposition === 'education')) {
+        rememberedWarnings.set(`${inspection.act.citizenId}:${inspection.act.action}`, inspection);
+      }
     }
   }
   const day = resolveDay(game.state, game.fixture, game.seed, undefined, lawEvaluator(informed), {
@@ -91,11 +106,11 @@ export function advanceSociety(game: SocietyGame): SocietyGame {
     utility: (actor, action, quantities, law, pressure) => {
       const base = utilityParts(actor, action, game.fixture, game.config.behaviour, quantities, pressure,
         law ? attitudes.get(attitudeKey(actor.id, law))?.score ?? 0 : 0);
-      const remembered = pressure < 0 ? recentWarnings.get(`${actor.id}:${action}`) : undefined;
+      const remembered = pressure < 0 && (historical || game.config.patrol.warningRiskWeight > 0) ? rememberedWarnings.get(`${actor.id}:${action}`) : undefined;
       return remembered ? { ...base, risk: -game.config.patrol.warningRiskWeight, riskEventIds: [remembered.id] } : base;
     },
   });
-  const patrol = resolvePatrols(dawn.book, day, game.seed, game.config.patrol);
+  const patrol = resolvePatrols(dawn.book, day, game.seed, game.config.patrol, historical ? 'warning' : 'education');
   const settled = settleExperiences(informed, day, attitudes, experiences, patrol.report.investigations);
   return appendDay({
     ...informed, book: patrol.book, attitudes: sortedAttitudes(attitudes),
@@ -120,8 +135,9 @@ export function loadSociety(encoded: string): SocietyGame {
   const envelope: unknown = JSON.parse(encoded);
   const candidate = isRecord(envelope) ? envelope.snapshot : null;
   const declared = isRecord(candidate) ? candidate.versions : null;
-  if (!isRecord(candidate) || !isRecord(declared) ||
-      !Object.entries(versions).every(([name, value]) => declared[name] === value)) {
+  const engine = isRecord(declared) && [versions, historicalVersions].find((version) =>
+    Object.entries(version).every(([name, value]) => declared[name] === value));
+  if (!isRecord(candidate) || !engine) {
     throw new Error('UNSUPPORTED_SOCIETY_SAVE_VERSION');
   }
   const bytes = canonicalJson(candidate);
@@ -129,7 +145,8 @@ export function loadSociety(encoded: string): SocietyGame {
   const seed = typeof candidate.seed === 'number' ? uint32(candidate.seed, 'Seed') : NaN;
   if (!Number.isInteger(seed)) throw new Error('INVALID_SOCIETY_SAVE_SEED');
   const game = replayLegalJournal(
-    startSociety(candidate.fixture, seed, candidate.config as SocietyConfig, parsePolicy(candidate.policy)), candidate, advanceSociety,
+    initialiseSociety(engine, candidate.fixture, seed, candidate.config as SocietyConfig, parsePolicy(candidate.policy)),
+    candidate, advanceSociety,
   );
   if (canonicalJson(game) !== bytes) throw new Error('INCOMPLETE_OR_NON_REPRODUCIBLE_SOCIETY_SAVE');
   return game;

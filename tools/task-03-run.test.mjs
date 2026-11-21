@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import fixture from '../fixtures/task-01-village.json';
 import {
-  advanceSociety, auditSnapshot, encodeSociety, loadSociety, societyHashes,
+  advanceSociety, auditSnapshot, encodeSociety, loadSociety, societyHashes, startSocietyV3,
 } from '@rulecraft/simulation';
 import { societyExample } from './task-03-scenario.mjs';
 
@@ -11,7 +11,7 @@ function play(game, turn) {
 }
 
 test('the v3 seed-42 golden replay conserves the village through a day-six checkpoint', () => {
-  const six = play(societyExample(fixture), 6);
+  const six = play(societyExample(fixture, startSocietyV3), 6);
   const expected = play(six, 12);
   const resumed = play(loadSociety(encodeSociety(six)), 12);
   expect(encodeSociety(resumed)).toBe(encodeSociety(expected));
@@ -26,4 +26,27 @@ test('the v3 seed-42 golden replay conserves the village through a day-six check
   expect(resumed.societyDays[0].patrol.investigations.some(({ detected }) => detected)).toBe(true);
   expect(resumed.societyDays[1].news.some((entry) => entry.learnedFrom?.channel === 'peer')).toBe(true);
   expect(resumed.societyDays[11].metrics.food).toMatchObject({ unableToAffordUnits: 6, unavailableMarketUnits: 0 });
+});
+
+test('the corrected v4 seed-42 replay preserves typed dispositions and conserves the village', () => {
+  const six = play(societyExample(fixture), 6);
+  const expected = play(six, 12);
+  const resumed = play(loadSociety(encodeSociety(six)), 12);
+  expect(resumed.versions.schemaVersion).toBe(4);
+  expect(encodeSociety(resumed)).toBe(encodeSociety(expected));
+  expect(societyHashes(resumed)).toEqual({ state: 'f4c46dbfd1b05523', events: '076d885f324114cf' });
+  expect(auditSnapshot(resumed)).toEqual({
+    transactions: 888, movements: 2232,
+    genesis: { food: 495, timber: 120, coin: 1500 },
+    consumed: { food: 468, timber: 0, coin: 0 },
+    remaining: { food: 27, timber: 120, coin: 1500 },
+  });
+  const investigations = resumed.societyDays.flatMap(({ patrol }) => patrol.investigations);
+  expect(investigations.filter(({ disposition }) => disposition === 'warning')).toHaveLength(11);
+  expect(investigations.filter(({ disposition }) => disposition === 'education')).toHaveLength(4);
+  const formalWarnings = new Set(investigations.filter(({ disposition }) => disposition === 'warning').map(({ id }) => id));
+  const riskSources = resumed.events.flatMap(({ choice }) =>
+    choice?.candidates.flatMap(({ utility }) => utility.riskEventIds) ?? []);
+  expect(riskSources.length).toBeGreaterThan(0);
+  expect(riskSources.every((id) => formalWarnings.has(id))).toBe(true);
 });

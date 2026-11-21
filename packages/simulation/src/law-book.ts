@@ -23,7 +23,7 @@ export interface LawVersion extends LawRef {
 export interface LawNotice extends LawRef {
   readonly citizenId: string;
   readonly learnedAtTurn: number;
-  readonly learnedAtPhase?: 'dawn' | 'warning';
+  readonly learnedAtPhase?: 'dawn' | 'education' | 'warning';
   readonly eventId: string;
 }
 

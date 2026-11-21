@@ -1,5 +1,6 @@
+import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { advanceSociety, confirmLaw, societyDefaults, startSociety, villageScope } from '@rulecraft/simulation';
+import { advanceSociety, confirmLaw, notifyLaw, societyDefaults, startSociety, villageScope } from '@rulecraft/simulation';
 
 const fixture = JSON.parse(await readFile(new URL('../fixtures/task-01-village.json', import.meta.url), 'utf8'));
 const namedLaw = (game) => confirmLaw(game, {
@@ -30,7 +31,7 @@ function collect(name, control, treatment) {
   if (!comparisons.has(name)) comparisons.set(name, []);
   if (control.opportunities && treatment.opportunities) comparisons.get(name).push([control, treatment]);
 }
-const keys = ['awareness', 'patrol-capacity', 'remembered-risk', 'hunger', 'income-opportunity',
+const keys = ['awareness', 'patrol-capacity', 'formal-warning-risk', 'hunger', 'income-opportunity',
   'fatigue', 'field-lottery-early-id', 'meal-lottery-early-id'];
 
 function learning(seed, bulletinBp) {
@@ -38,10 +39,16 @@ function learning(seed, bulletinBp) {
   return counts(game.book.notices.length, game.state.citizens.length);
 }
 
-function patrol(seed, settings) {
-  return advanceSociety(namedLaw(startSociety(patrolFixture, seed, {
+function patrol(seed, settings, preInformed = false) {
+  let game = namedLaw(startSociety(patrolFixture, seed, {
     ...patrolConfig, patrol: { ...patrolConfig.patrol, ...settings },
-  })));
+  }));
+  if (preInformed) {
+    for (const { id, occupation } of game.state.citizens) {
+      if (occupation === 'farmer') game = notifyLaw(game, id, 'field-ban', 1);
+    }
+  }
+  return advanceSociety(game);
 }
 
 function detection(game) {
@@ -50,10 +57,13 @@ function detection(game) {
 }
 
 function risk(seed) {
-  const control = patrol(seed, { detectionBp: 10_000, warningRiskWeight: 0 });
-  const treatment = patrol(seed, { detectionBp: 10_000, warningRiskWeight: 50 });
-  const warned = new Set(control.societyDays[0].patrol.investigations.filter(({ detected }) => detected)
-    .map(({ act }) => act.citizenId));
+  const control = patrol(seed, { detectionBp: 10_000, warningRiskWeight: 0 }, true);
+  const treatment = patrol(seed, { detectionBp: 10_000, warningRiskWeight: 50 }, true);
+  const warnedCitizens = (game) => game.societyDays[0].patrol.investigations
+    .filter(({ disposition, act }) => disposition === 'warning' && act.knewCurrentVersion)
+    .map(({ act }) => act.citizenId);
+  assert.deepEqual(warnedCitizens(control), warnedCitizens(treatment));
+  const warned = new Set(warnedCitizens(control));
   const choices = (game) => new Map(advanceSociety(game).events
     .filter(({ turn, phase, actorId, choice, legalChoice }) => turn === 2 && phase === 'morning' &&
       warned.has(actorId) && choice?.candidates[0].selectionBarrier === null &&

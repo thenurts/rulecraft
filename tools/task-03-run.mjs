@@ -39,15 +39,18 @@ try {
   const replayed = advance(restored.snapshot, 12);
   assert.equal(encodeSociety(full), encodeSociety(replayed));
   const audit = auditSnapshot(replayed);
-  const warnings = replayed.societyDays.flatMap(({ patrol }) => patrol.investigations).filter(({ detected }) => detected);
-  assert.ok(warnings.length > 0);
+  const dispositions = replayed.societyDays.flatMap(({ patrol }) => patrol.investigations);
+  assert.ok(dispositions.some(({ disposition }) => disposition === 'education'));
+  assert.ok(dispositions.some(({ disposition }) => disposition === 'warning'));
   const daily = replayed.societyDays.map(({ turn, news, patrol, experiences, metrics }) => ({
     turn, learnedAtDawn: news.filter(({ type, noticeId }) => type === 'learning' && noticeId).length,
     learnedByChannel: ['bulletin', 'peer'].map((channel) =>
       news.filter((entry) => entry.type === 'learning' && entry.learnedFrom?.channel === channel).length),
     experiencedAttitudeUpdates: experiences.filter(({ component }) => component === 'exertion').length,
     patrols: patrol.presence.length, prohibitedActs: patrol.prohibitedActs.length,
-    investigations: patrol.investigations.length, warnings: patrol.investigations.filter(({ detected }) => detected).length,
+    investigations: patrol.investigations.length,
+    education: patrol.investigations.filter(({ disposition }) => disposition === 'education').length,
+    warnings: patrol.investigations.filter(({ disposition }) => disposition === 'warning').length,
     food: metrics.food, compliance: metrics.compliance,
   }));
   const withHistory = encodeSociety(replayed);

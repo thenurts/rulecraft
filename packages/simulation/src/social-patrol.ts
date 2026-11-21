@@ -50,6 +50,7 @@ export interface PatrolReport {
 
 export function resolvePatrols(
   initial: LawBook, day: ResolvedDay, seed: number, policy: PatrolPolicy,
+  educationPhase: 'education' | 'warning',
 ): { book: LawBook; report: PatrolReport } {
   const presence: PatrolPresence[] = [];
   const prohibitedActs: ProhibitedAct[] = [];
@@ -90,7 +91,7 @@ export function resolvePatrols(
       const detected = draw < policy.detectionBp;
       let noticeId: string | null = null;
       if (detected && !act.knewCurrentVersion) {
-        const taught = addLawNotice(book, turn, act.citizenId, act.law.lawId, act.law.version, 'warning');
+        const taught = addLawNotice(book, turn, act.citizenId, act.law.lawId, act.law.version, educationPhase);
         if (taught !== book) {
           book = taught;
           noticeId = taught.notices[taught.notices.length - 1].eventId;
