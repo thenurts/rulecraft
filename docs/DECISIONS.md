@@ -117,3 +117,19 @@ See the [Task 02 report](07_Task_02_Engine.md) for test evidence and open review
 - Feasible choices record base weight, disposition, perceived pressure, income and need, fatigue, trust, acceptance and warning-risk components. Per-version attitude initialization uses a notice plus personal opportunity, expected workload and disposition. Dusk trust follows actual meal access and warning experience. Experienced exertion adjusts the perceived version's attitude with the action ID as evidence. The confidence intervals do not validate these as models of psychology.
 - Completed patrols open a bounded number of encounter attempts on the public work route. Each performed and currently prohibited public act can receive one attempt, with no self-investigation. Detected acts receive education or a non-monetary warning. The actor can remember their own recent warning as evidence for risk. More granular route allocation and differentiated responses to warning fairness need product review.
 - The existing ledger has no timber buyer. Report inability to pay, market stock and undelivered producer stock separately. Campaign thresholds and all behavioural, enforcement and economic settings remain provisional. See the [Task 03 engineering report](09_Task_03_Engineering.md) for the matched-seed study, tests and open choices.
+
+
+## Task 04 — first playable mobile web shell · 21 November 2026
+
+**Status:** Design proposal published for owner review after PR #9 was merged. See [Task 04 contract](10_Task_04_Playable_Shell.md). The player-visible scope is observe → compose/confirm → advance → inspect → revise, backed by the actual v3 world, not simulated UI values.
+
+**Proposed implementation choices, subject to design review:**
+- One accessible portrait-priority React/Vite UI with Home, Village, Decree Book, Composer, Day Results, factual Gazette and Inquiry. Use generic labelled placeholders; adviser humour, canonical art and media sharing remain Task 05.
+- Start menu contains Junior/Full × Campaign-preview/Sandbox-trial combinations; all share v3 law semantics and the existing **12-day** fixture. Do not claim full campaign progression, balanced objectives or unlimited sandbox until Task 06.
+- Browser committed snapshots use a versioned IndexedDB adapter with revisioned atomic writes, last-good recovery and independent uncommitted drafts. Current Task 00 localStorage fixture test is *not* an adequate large-snapshot storage strategy. Native storage remains an adapter seam.
+- Royal Inquiry and other output must be grounded in actual law/action/notice/transaction/investigation IDs. Never infer causes unsupported by evidence, conflate legal knowledge/acceptance/compliance, or label detected educational encounters as formal warnings.
+- Minimum 320×640 and 390×844 tap-first tests, accessible full-screen composer/confirm, safe areas and ≥44px controls. Actual Android/iOS Safari/Chrome device checks remain unverified until run.
+
+**Carry-over bug:** PR #9's merged code still conflates \`education\` and \`warning\` in remembered effects/experience labels; 256-seed +45.75pp claim is not a true prior-knowledge-warning cohort. Tracked as [issue #10](https://github.com/thenurts/rulecraft/issues/10). Correct before publishing player-visible enforcement claims. Historic v1/v2 hashes stay protected; if changed v3 model produces new hashes, document/version explicitly.
+
+**Other open choices:** production map/art, native packaging, full campaign balance and timber-funded income, full-history save scalability, Android/iOS physical validation and playtesting with children.
