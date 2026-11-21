@@ -91,3 +91,21 @@ See the [Task 01 kernel report](05_Task_01_Kernel.md) for final test counts, tim
 - Schema 2 uses a distinct engine and registry version plus a command and notice journal. The loader replays the journal and whole turns. The local adapter atomically writes each confirmed operation and each completed turn. Rule-free schema 1 remains readable through its existing codec and retains the published Task 01 checksums. The v2 codec rejects v1 explicitly.
 
 See the [Task 02 report](07_Task_02_Engine.md) for test evidence and open review points. Task 03 remains subject to owner review.
+
+
+## Task 03 — autonomous citizen behaviour · 21 November 2026
+
+**Status:** Technical design proposed for review; user authorised proceeding to Task 03 planning following the merge of PR #6. See [Task 03 Autonomous Society contract](08_Task_03_Autonomous_Society.md).
+
+**Existing confirmed constraints (preserved):** decree-only player influence; physically feasible action execution; distinction between actual and perceived law; gradual awareness and acceptance as separate processes; enforcement limited by guard resources and current applicable law; factual event provenance; seeded reproducibility; one shared Junior/Full rule engine.
+
+**New Task 03 implementation proposals requiring design review before coding:**
+- Daily dawn law-version learning from explicit, logged public notice and previous-day peer channels; bounded seeded contact graph; no automatic universal broadcast. Any staffed institutional outreach needs a real capacity/cost contract.
+- Per-citizen, per-law/version acceptance and experienced-event-based trust updates; explainable utility components with provisional tunable coefficients, not global decree multipliers.
+- New v3 replay/clock semantics for dawn notices and deterministic, seed-fair scarcity allocation; preserve v1/v2 saves and golden results.
+- Actual patrolling guards only; bounded detection of completed prohibited actions and **non-monetary warnings only**. No passive enforcement, fines, automatic sanction or fabricated inability-to-act charge.
+- Four scoped increments with 200+ matched-seed tests and confidence intervals. No claim of calibrated human behaviour or campaign difficulty.
+
+**Economy and balance remain OPEN:** timber is unsold in current fixture, and six citizens cannot afford food late in the 12-day reference run despite market stock. A timber procurement and maintenance loop must be explicitly funded/ledgered and separately agreed; do not silently add money, food or a buyer. Food access metrics must distinguish shortage from unaffordability and delivery limits.
+
+**Additional technical debt:** propose a lightweight CI workflow; benchmark growing event/save size; physical Android/iOS tests and Junior playtesting remain pending.
