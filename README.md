@@ -1,30 +1,29 @@
-# Rulecraft - Codex Development Starter
+# Rulecraft
 
-Rulecraft is a mobile-first, standalone game in which the player governs an autonomous, whimsical society only by creating, modifying, suspending, reinstating and abolishing decrees. The game should be funny, fair, systemic, and explainable.
+Rulecraft is a standalone, mobile-first game about governing an autonomous village through decrees. Task 00 provides a runnable portability scaffold. The page exercises a shared TypeScript fixture and browser draft storage. The game itself starts with the headless kernel in Task 01, after architecture review.
 
-This repository currently contains **design/specification and Codex operating files only**. It is **not a playable game**. Ask Codex to perform `tasks/00_architecture_spike.md` first, then move through `ROADMAP.md` one checkpoint at a time.
+## Run locally
 
-## Sources of truth
+Use Node.js 24.22.3 (see `.nvmrc`) and npm. Run these commands from the repository root.
 
-- `docs/01_Master_GDD.md` - player experience, scope, modes, character roles, humour.
-- `docs/02_Technical_Systems.md` - typed rule language, simulation, behavioural models, deterministic replays, persistence.
-- `docs/03_Vertical_Slice.md` - first village fixtures, scope, acceptance cases and implementation gates.
-- `AGENTS.md` - instructions Codex should follow whenever working in this repository.
-- `docs/DECISIONS.md` - signed-off technical decisions and unresolved items.
-- `ROADMAP.md` - phased implementation strategy.
+```sh
+npm ci
+npm test
+npm run build
+npm run dev
+```
 
-## First use
+If the cloud shell cannot write to the default npm cache, use `npm ci --cache /tmp/rulecraft-npm-cache`.
 
-1. Create a **private** GitHub repository, for example `rulecraft`.
-2. Unzip this package and commit its **contents** at the repository root (not the zip file).
-3. Connect the repository to Codex Cloud, or open it with Codex locally.
-4. Start with `START_HERE_PROMPT.md`, asking for a design/spec audit and platform spike; do not author the entire game yet.
-5. Review and approve the recommended stack and architecture decisions; then implement one milestone at a time.
+Open the URL printed by Vite. Select **Save fixture** and reload the same URL. The status should read **Fixture restored from this device.** For the built site, run `npm run preview` after building. To test from a phone on the same trusted network, run `npm run dev -- --host 0.0.0.0` and open the host machine's LAN address and Vite port on the phone.
 
-## Possible technology direction (not yet signed off)
+## Project layout
 
-TypeScript + a renderer-independent headless simulation core, React/Vite for the mobile-first UI, Vitest for tests, and an evaluated Capacitor path to Android/iOS. This is a hypothesis to be validated via a mobile/web spike, not an immutable dependency choice. Consider Godot if the actual gameplay/visual needs make a game-engine route superior.
+| Path | Purpose |
+|---|---|
+| `packages/simulation` | Headless TypeScript package and Vitest fixture tests. Its compiler configuration excludes DOM and ambient platform types. |
+| `apps/web` | React/Vite page, mobile stylesheet and browser draft adapter. |
+| `docs/` | Design specifications, decision register and Task 00 audit. |
+| `tasks/` | Milestone work and acceptance criteria. |
 
-## Boundaries
-
-No direct player management, no AI-interpreted arbitrary laws, no multiplayer, no permanent backend dependency, no unapproved canonical art, and no implementation of world/galactic expansion in the first slice.
+For the stack trade-offs, unresolved decisions and mobile test plan, see the [Task 00 architecture report](docs/04_Task_00_Architecture.md) and [decision register](docs/DECISIONS.md). The [roadmap](ROADMAP.md) defines the milestone order.
