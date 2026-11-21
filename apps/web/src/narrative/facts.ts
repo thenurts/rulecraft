@@ -3,7 +3,7 @@ import { authoritativeLaws, compareIds, type LawRef, type SocietyGame, type Vill
 export const families = {
   MEAL_UNAFFORDABLE: 'Food costs', MEAL_STOCKOUT: 'Stockout', EDUCATION: 'Education',
   FORMAL_WARNING: 'Warning', PATROL_CAPACITY_GAP: 'Patrol slots', FATIGUE_BLOCKED_WORK: 'Fatigue',
-  COMPETING_KNOWN_DUTIES: 'Duties', FOOD_ACCESS_SUCCESS: 'Meals served',
+  COMPETING_KNOWN_DUTIES: 'Duties', FOOD_ACCESS_SUCCESS: 'Meals',
 } as const;
 export type Family = keyof typeof families;
 

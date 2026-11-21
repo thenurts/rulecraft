@@ -85,6 +85,8 @@ These commands passed. The existing golden runs and replay suite verified the fo
 
 Playwright used actual touch interactions to advance a village, investigate an incident’s exact witness ID and open the associated decree version. On abolishing the decree and advancing, Chronicle marked its earlier version historical. The Chronicle remained filterable by day, topic and adviser. The full action log was still visible on demand. At 320px and 200% root text the Chronicle and share card fit the viewport, their story and export actions stayed at least 44px tall, and Chronicle’s filter options fit within their controls. Keyboard focus reached the new screens and controls. Playwright checked the navigation semantics and accessible control names.
 
+GitHub’s bundled Chromium exposed a font-width difference in the enlarged-text Chronicle filter. The `Meals served` label was shortened to `Meals`; the browser test still checks the width of every option. GitHub Actions now surfaces browser test failures directly in the PR checks.
+
 The real browser download produced a **1080 × 1350 PNG**. The test checked the PNG signature, header dimensions, two decoded pixels and the exact text sent to Canvas against the selectable card text. The test exercised both an unavailable PNG encoder and an unavailable download API. The verified fallback remained selectable and the status described the failure. The flow observed no remote requests and no save identifier in the card text or PNG data. The historic decree test confirmed the exact source version and its status on the incident day.
 
 ### Local measurements
