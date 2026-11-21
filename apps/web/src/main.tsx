@@ -4,6 +4,7 @@ import { isMission, MissionOverview, MissionReview } from './Mission.tsx';
 import { checkpointDay } from './mission.ts';
 import { ExperimentReport, isExperiment } from './Sandbox.tsx';
 import { RetryPanel } from './Retry.tsx';
+import { ChoiceSelect } from './ChoiceSelect.tsx';
 import { Book, Composer, newDraft, usableDraft } from './decrees.tsx';
 import { deviceDraftStore, type DecreeDraft } from './draft-store.ts';
 import { AdvancePanel, DayResults, Gazette, Inquiry, TrialSummary } from './results.tsx';
@@ -57,25 +58,22 @@ function Home({ session, onStart, onResume, busy }: {
     <section className="panel">
       <h2>Start a village</h2>
       <div className="two-col">
-        <label>Complexity
-          <select disabled={locked} value={selection.mode} onChange={(event) => setSelection({ ...selection, mode: event.target.value as Selection['mode'] })}>
-            {Object.values(modeProfiles).map(({ id, label }) => <option key={id} value={id}>{label}</option>)}
-          </select>
-        </label>
-        <label>Play option
-          <select disabled={locked} value={selection.track} onChange={(event) => setSelection({ ...selection, track: event.target.value as Selection['track'] })}>
-            <option value="campaign">Campaign · The Hungry Village</option><option value="sandbox">12-day Sandbox experiment</option>
-          </select>
-        </label>
+        <ChoiceSelect label="Complexity" value={selection.mode} disabled={locked}
+          choices={Object.values(modeProfiles).map(({ id, label }) => ({ value: id, label }))}
+          onChange={(mode) => setSelection({ ...selection, mode: mode as Selection['mode'] })} />
+        <ChoiceSelect label="Play option" value={selection.track} disabled={locked}
+          choices={[
+            { value: 'campaign', label: 'Campaign · The Hungry Village' },
+            { value: 'sandbox', label: scenarios.sandbox.label },
+          ]}
+          onChange={(track) => setSelection({ ...selection, track: track as Selection['track'] })} />
       </div>
       <p>{modeProfiles[selection.mode].explanation}</p>
       {experiment && <>
         <div className="two-col">
-          <label>Starting preset
-            <select disabled={locked} value={sandboxPreset} onChange={({ target }) => setSandboxPreset(target.value as PresetId)}>
-              {scenario.presets.map((id) => <option key={id} value={id}>{presets[id].label}</option>)}
-            </select>
-          </label>
+          <ChoiceSelect label="Starting preset" value={sandboxPreset} disabled={locked}
+            choices={scenario.presets.map((id) => ({ value: id, label: presets[id].label }))}
+            onChange={(id) => setSandboxPreset(id as PresetId)} />
           <label>Seed
             <input type="text" inputMode="numeric" aria-describedby="start-seed-help" aria-invalid={seed === undefined}
               value={sandboxSeed} disabled={locked} onChange={({ target }) => setSandboxSeed(target.value)} />

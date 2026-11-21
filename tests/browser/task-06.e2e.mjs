@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
-import { loadSociety } from '@rulecraft/simulation';
+import { advanceSociety, encodeSociety, loadSociety, startSociety } from '@rulecraft/simulation';
+import fixture from '../../fixtures/task-01-village.json' with { type: 'json' };
 import { startVillage } from './helpers.mjs';
 
 test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: 'reduce' });
@@ -90,6 +91,11 @@ test('Junior learns from the real day-six checkpoint, debrief and confirmed same
   await expect(page.getByText('Meals by occupation', { exact: true })).toBeVisible();
   await expect(page.getByText('Individual meal records', { exact: true })).toBeVisible();
   await expect(page.getByText(/provisional campaign targets/)).toHaveCount(0);
+  console.log('Task 06 authored campaign', JSON.stringify({
+    seed: finished.seed, fedAtCheckpoint: fed, fedAtDebrief: finalFed, decreeVersions: finished.book.versions.length,
+    stockout: finished.societyDays.reduce((sum, day) => sum + day.metrics.food.unavailableMarketUnits, 0),
+    affordability: finished.societyDays.reduce((sum, day) => sum + day.metrics.food.unableToAffordUnits, 0),
+  }));
   await capture(page, 'debrief-390');
 
   await page.reload();
@@ -99,7 +105,9 @@ test('Junior learns from the real day-six checkpoint, debrief and confirmed same
   await button(page, 'Back').tap();
   await button(page, 'Open day-12 debrief').tap();
   await button(page, 'Retry same seed').tap();
+  await expect(page.getByRole('group', { name: 'Replace current village' })).toBeFocused();
   await button(page, 'Cancel retry').tap();
+  await expect(button(page, 'Retry same seed')).toBeFocused();
   expect(await readHead(page)).toEqual(completed);
   await button(page, 'Retry same seed').tap();
   await button(page, 'Replace and retry').tap();
@@ -161,4 +169,108 @@ test('Sandbox records the preset and seed, stops at twelve days and confirms new
   expect(changed.current.setup.seed).toBe(4294967295);
   expect(changed.current.payload).not.toBe(replay.current.payload);
   expect(changed.previous).toEqual(replay.current);
+});
+
+test('legacy v4 Campaign resumes its original preview and advances with the exact recorded engine', async ({ page }) => {
+  const game = advanceSociety(startSociety(fixture, 42));
+  await page.goto('/');
+  await expect(button(page, 'Start village')).toBeEnabled();
+  await page.evaluate((payload) => new Promise((resolve, reject) => {
+    const open = indexedDB.open('rulecraft-village', 1);
+    open.onerror = () => reject(open.error);
+    open.onsuccess = () => {
+      const db = open.result;
+      const tx = db.transaction('world', 'readwrite');
+      tx.objectStore('world').put({
+        revision: 1, previous: null, current: { id: 'historic-preview', mode: 'junior', track: 'campaign', at: 1, payload },
+      }, 'village');
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onabort = () => { db.close(); reject(tx.error); };
+    };
+  }), encodeSociety(game));
+  await page.reload();
+  await expect(page.getByText('Junior · Campaign preview · Day 1', { exact: true })).toBeVisible();
+  await button(page, 'Resume village').tap();
+  await expect(page.getByText(/Provisional targets by day 12/)).toBeVisible();
+  await expect(page.getByText('Legacy preview · Seed 42')).toBeVisible();
+  await advance(page, 2);
+  const { current } = await readHead(page);
+  expect(current).not.toHaveProperty('setup');
+  expect(current.payload).toBe(encodeSociety(advanceSociety(game)));
+});
+
+test('complete composer words and native selections remain visible at 320 and 390 px with enlarged text', async ({ page }) => {
+  await startVillage(page, 'full', 'campaign');
+  await button(page, 'Decree Book').tap();
+  await button(page, 'Compose decree').tap();
+  const select = (label) => page.getByRole('combobox', { name: label, exact: true });
+  await select('Who').selectOption('merchant');
+  await select('Rule').selectOption('MUST_NOT');
+  await select('Action').selectOption('market-delivery');
+  await select('When condition').selectOption('fieldFood');
+  await select('When comparison').selectOption('EQ');
+  const threshold = page.getByRole('spinbutton', { name: 'When threshold in food units' });
+  await threshold.fill('0');
+  const values = [
+    ['Who', 'Merchants'], ['Rule', 'Must not'], ['Action', 'deliver food to the market'],
+    ['When condition', 'harvestable field stock'], ['When comparison', 'Equal to'],
+  ];
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    for (const scale of [100, 200]) {
+      await page.evaluate((scale) => { document.documentElement.style.fontSize = scale + '%'; }, scale);
+      for (const [field, text] of values) {
+        const frame = select(field).locator('..');
+        const label = frame.locator('.choice-value');
+        await expect(label).toHaveText(text);
+        await expect(label).toBeVisible();
+        expect(await frame.evaluate((element) => {
+          const box = element.getBoundingClientRect();
+          const select = element.querySelector('select');
+          const target = select.getBoundingClientRect();
+          const range = document.createRange();
+          const textNode = element.querySelector('.choice-value').firstChild;
+          range.selectNodeContents(textNode);
+          const fits = [...range.getClientRects()].every((line) => line.left >= box.left && line.right <= box.right + 1 &&
+            line.top >= box.top && line.bottom <= box.bottom + 1);
+          const intactWords = [...textNode.textContent.matchAll(/\S+/g)].every((word) => {
+            range.setStart(textNode, word.index);
+            range.setEnd(textNode, word.index + word[0].length);
+            return range.getClientRects().length === 1;
+          });
+          return fits && intactWords && target.width >= 44 && target.height >= 44;
+        })).toBe(true);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth === document.documentElement.clientWidth)).toBe(true);
+      expect(await heading(page, 'Compose decree').evaluate((element) => {
+        const range = document.createRange();
+        range.setStart(element.firstChild, 0);
+        range.setEnd(element.firstChild, 'Compose'.length);
+        return range.getClientRects().length;
+      })).toBe(1);
+      if (scale === 200 && width === 320) await capture(page, 'composer-320-200-percent');
+    }
+  }
+  // Tab onto the native picker to verify its wrapping presentation gains a visible keyboard focus ring.
+  await select('Rule').focus();
+  await page.keyboard.press('Tab');
+  await expect(select('Action')).toBeFocused();
+  expect(await select('Action').locator('..').evaluate((frame) => getComputedStyle(frame).outlineStyle)).toBe('solid');
+  await expect(page.getByRole('group', { name: 'Decree wording' })).toMatchAriaSnapshot(`
+    - group "Decree wording":
+      - combobox "Who"
+      - combobox "Rule"
+      - combobox "Action"
+  `);
+  await threshold.fill('');
+  await expect(button(page, 'Review decree')).toBeDisabled();
+  await expect(page.getByText('Complete or remove the condition or exception.')).toBeVisible();
+  await threshold.fill('0');
+  await button(page, 'Review decree').tap();
+  await expect(page.getByRole('group', { name: 'Final decree confirmation' })).toBeFocused();
+  await button(page, 'Keep editing').tap();
+  await expect(button(page, 'Review decree')).toBeFocused();
+  await button(page, 'Review decree').tap();
+  await button(page, 'Confirm decree').tap();
+  await expect(page.getByText('Decree saved. Confirmed for day 1.')).toBeVisible();
 });

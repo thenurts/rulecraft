@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   actionRegistry, authoritativeLaws, predicateRegistry, renderLaw, validateLaw,
   updateLawDraft, villageScope, type LawAst, type LawCommand, type LawDraft, type LawIssue, type LawVersion,
   type SocietyGame,
 } from '@rulecraft/simulation';
+import { ChoiceSelect } from './ChoiceSelect.tsx';
 import type { DecreeDraft } from './draft-store.ts';
 import { editorTokens, type EditorProfile } from './profiles.ts';
 import { browserId, lawRefLabel, occupations } from './world.ts';
@@ -83,26 +84,15 @@ function Clause({ field, wording, options, onPatch, blocked }: {
   const patch = (clause: NonNullable<LawDraft[ClauseKey]> | undefined) => onPatch({ [field]: clause });
   return <fieldset disabled={blocked} className="clause">
     <legend>{title} <span className="muted">(optional)</span></legend>
-    <label>{title} condition
-      <select value={value?.operand ?? ''} onChange={({ target }) =>
-        patch(target.value ? { operand: target.value as NonNullable<LawDraft[ClauseKey]>['operand'] } : undefined)}>
-        <option value="">None</option>
-        {options.operands.map((operand) => <option key={operand} value={operand}>{predicateRegistry[operand].label}</option>)}
-      </select>
-    </label>
-    {options.operators.length > 0 && <label>{title} comparison
-      <select value={value?.operator ?? ''} onChange={({ target }) =>
-        patch({ operator: target.value as NonNullable<LawDraft[ClauseKey]>['operator'] })}>
-        <option value="">Choose comparison</option>
-        {options.operators.map((operator) => <option key={operator} value={operator}>{operators[operator]}</option>)}
-      </select>
-    </label>}
-    {options.values?.choices && <label>{title} time
-      <select value={value?.value ?? ''} onChange={({ target }) => patch({ value: target.value as 'morning' | 'afternoon' })}>
-        <option value="">Choose time</option>
-        {options.values.choices.map((choice) => <option key={choice} value={choice}>{choice}</option>)}
-      </select>
-    </label>}
+    <ChoiceSelect label={`${title} condition`} value={value?.operand ?? ''} placeholder="None"
+      choices={options.operands.map((operand) => ({ value: operand, label: predicateRegistry[operand].label }))}
+      onChange={(operand) => patch(operand ? { operand: operand as NonNullable<LawDraft[ClauseKey]>['operand'] } : undefined)} />
+    {options.operators.length > 0 && <ChoiceSelect label={`${title} comparison`} value={value?.operator ?? ''}
+      placeholder="Choose comparison" choices={options.operators.map((operator) => ({ value: operator, label: operators[operator] }))}
+      onChange={(operator) => patch({ operator: operator as NonNullable<LawDraft[ClauseKey]>['operator'] })} />}
+    {options.values?.choices && <ChoiceSelect label={`${title} time`} value={String(value?.value ?? '')}
+      placeholder="Choose time" choices={options.values.choices.map((choice) => ({ value: choice, label: choice }))}
+      onChange={(slot) => patch({ value: slot as 'morning' | 'afternoon' })} />}
     {options.values?.unit && <div>
       <label>{title} threshold in {options.values.unit}
         <input type="number" inputMode="numeric" min="0" step="1" value={value?.value ?? ''}
@@ -121,6 +111,16 @@ export function Composer({ draft, profile, game, busy, onChange, onCommit, onDis
   onChange(draft: DecreeDraft): void; onCommit(command: LawCommand): void; onDiscard(): void;
 }) {
   const [reviewing, setReviewing] = useState(false);
+  const confirmation = useRef<HTMLDivElement>(null);
+  const reviewButton = useRef<HTMLButtonElement>(null);
+  const returnToReview = useRef(false);
+  useEffect(() => {
+    if (reviewing) confirmation.current?.focus();
+    else if (returnToReview.current) {
+      returnToReview.current = false;
+      reviewButton.current?.focus();
+    }
+  }, [reviewing]);
   const { wording } = draft;
   const options = editorTokens(wording, profile, game.state.turn);
   const preview = decreePreview(game, draft);
@@ -131,32 +131,23 @@ export function Composer({ draft, profile, game, busy, onChange, onCommit, onDis
     setReviewing(false);
   }
   return <>
-    <header className="page-header">
+    <header className="page-header composer-heading">
       <p className="eyebrow">Decree Book</p>
       <h1 id="page-heading" tabIndex={-1}>{draft.lawId ? 'Amend decree' : 'Compose decree'}</h1>
       <p>Draft · changes take effect from day {targetDay} after confirmation.</p>
     </header>
-    <section className="panel">
+    <section className="panel composer-panel">
       <fieldset disabled={busy} className="plain-fieldset">
         <legend className="sr-only">Decree wording</legend>
-        <label>Who
-          <select value={wording.targetSelector ?? ''} onChange={({ target }) => patch({ targetSelector: target.value as LawDraft['targetSelector'] })}>
-            <option value="">Choose a group</option>
-            {options.selectors.map((subject) => <option key={subject} value={subject}>{subjects[subject]}</option>)}
-          </select>
-        </label>
-        <label>Rule
-          <select disabled={!options.modalities.length} value={wording.modality ?? ''} onChange={({ target }) => patch({ modality: target.value as LawDraft['modality'] })}>
-            <option value="">Choose a rule</option>
-            {options.modalities.map((rule) => <option key={rule} value={rule}>{modalities[rule]}</option>)}
-          </select>
-        </label>
-        <label>Action
-          <select disabled={!options.actions.length} value={wording.actionId ?? ''} onChange={({ target }) => patch({ actionId: target.value as LawDraft['actionId'] })}>
-            <option value="">Choose an action</option>
-            {options.actions.map((action) => <option key={action} value={action}>{actionRegistry[action].label}</option>)}
-          </select>
-        </label>
+        <ChoiceSelect label="Who" value={wording.targetSelector ?? ''} placeholder="Choose a group"
+          choices={options.selectors.map((subject) => ({ value: subject, label: subjects[subject] }))}
+          onChange={(targetSelector) => patch({ targetSelector: targetSelector as LawDraft['targetSelector'] })} />
+        <ChoiceSelect label="Rule" disabled={!options.modalities.length} value={wording.modality ?? ''} placeholder="Choose a rule"
+          choices={options.modalities.map((rule) => ({ value: rule, label: modalities[rule] }))}
+          onChange={(modality) => patch({ modality: modality as LawDraft['modality'] })} />
+        <ChoiceSelect label="Action" disabled={!options.actions.length} value={wording.actionId ?? ''} placeholder="Choose an action"
+          choices={options.actions.map((action) => ({ value: action, label: actionRegistry[action].label }))}
+          onChange={(actionId) => patch({ actionId: actionId as LawDraft['actionId'] })} />
       </fieldset>
       {profile.clauseDay > game.state.turn && <p className="muted">You can add a condition or exception after day {profile.clauseDay}.</p>}
       <Clause field="when" wording={wording} options={options.when} onPatch={patch} blocked={busy} />
@@ -167,16 +158,16 @@ export function Composer({ draft, profile, game, busy, onChange, onCommit, onDis
       <p className="decree-text" aria-live="polite">{preview.ast ? renderLaw(preview.ast) : 'Complete the wording to preview the decree.'}</p>
       <Issues issues={preview.issues} game={game} />
       {remainingChanges(game) === 0 && <p>Today’s decree allowance is used. Advance a day to make another change.</p>}
-      {reviewing ? <div className="notice" role="group" aria-label="Final decree confirmation">
+      {reviewing ? <div className="notice" ref={confirmation} tabIndex={-1} role="group" aria-label="Final decree confirmation">
         <p>Confirm this wording for day {targetDay}. This uses one decree change.</p>
         <div className="actions">
           <button className="primary" disabled={busy || !canConfirm} onClick={() => preview.ast && onCommit(authoredCommand(draft, preview.ast, game))}>
             {draft.lawId ? 'Confirm amendment' : 'Confirm decree'}
           </button>
-          <button disabled={busy} onClick={() => setReviewing(false)}>Keep editing</button>
+          <button disabled={busy} onClick={() => { returnToReview.current = true; setReviewing(false); }}>Keep editing</button>
         </div>
       </div> : <div className="actions">
-        <button className="primary" disabled={busy || !canConfirm} onClick={() => setReviewing(true)}>Review decree</button>
+        <button className="primary" ref={reviewButton} disabled={busy || !canConfirm} onClick={() => setReviewing(true)}>Review decree</button>
         <button disabled={busy} onClick={onDiscard}>Discard draft</button>
       </div>}
     </section>

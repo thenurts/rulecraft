@@ -18,6 +18,7 @@ export function MissionOverview({ session, openDay, openBook }: {
     <h2>The Hungry Village</h2>
     <p className="mission-score">{report.fed} of {report.total} resident-days fully fed</p>
     {day === 0 ? <>
+      {mode === 'junior' && <p>One resident-day means one person got a full meal on one day.</p>}
       <p>Food can be in the field, with growers or in the market. A resident needs food at the market and enough coins to buy a meal.</p>
       <p>The market starts with {game.fixture.opening.marketFood} food units. The fields hold {game.fixture.opening.fieldFood} harvestable units. A meal costs {game.fixture.economy.residentPrice} coins.</p>
       <details open={modeProfiles[mode].guidance === 'guided' || undefined}>

@@ -74,3 +74,21 @@ test('Sandbox records legal seeds and permits only its tested twelve-day presets
   expect(() => newSession({ mode: 'junior', track: 'campaign', preset: 'standard-village-v1' }, 'invalid'))
     .toThrow(/Invalid preset/);
 });
+
+test('day-three amendment and day-five repeal leave old versions and avoid fresh sanctions', () => {
+  let { game } = newSession({ mode: 'full', track: 'sandbox' }, 'versions');
+  const command = { lawId: 'field', ast: { ...villageScope, actionId: 'harvest-food',
+    targetSelector: 'farmer', modality: 'MUST_NOT' } } as const;
+  game = confirmLaw(game, { ...command, operation: 'CREATE', commandId: 'create-field' }).game;
+  while (game.state.turn < 3) game = advanceSociety(game);
+  const history = game.events;
+  game = confirmLaw(game, { ...command, operation: 'AMEND', commandId: 'amend-field',
+    ast: { ...command.ast, when: { operand: 'slot', operator: 'EQ', value: 'morning' } } }).game;
+  while (game.state.turn < 5) game = advanceSociety(game);
+  game = confirmLaw(game, { lawId: 'field', operation: 'ABOLISH', commandId: 'retire-field' }).game;
+  game = advanceSociety(game);
+  expect(game.book.versions.map(({ version, effectiveFromTurn }) => [version, effectiveFromTurn]))
+    .toEqual([[1, 1], [2, 4], [3, 6]]);
+  expect(game.events.slice(0, history.length)).toEqual(history);
+  expect(game.societyDays.at(-1)?.patrol.investigations).toEqual([]);
+});
