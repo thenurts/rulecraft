@@ -20,7 +20,7 @@ export interface Attitude extends LawRef {
 export interface Experience {
   readonly citizenId: string;
   readonly sourceEventId: string;
-  readonly component: 'expected-benefit' | 'expected-cost' | 'disposition' | 'meal-access' | 'exertion' | 'patrol-warning';
+  readonly component: 'expected-benefit' | 'expected-cost' | 'disposition' | 'meal-access' | 'exertion' | 'patrol-warning' | 'patrol-education';
   readonly law: LawRef | null;
   readonly change: number;
 }
@@ -112,6 +112,13 @@ export function settleExperiences(
     });
     for (const inspection of investigations) {
       if (inspection.disposition === null || inspection.act.citizenId !== citizen.id) continue;
+      if (inspection.disposition === 'education' && game.versions.schemaVersion !== 3) {
+        experiences.push({
+          citizenId: citizen.id, sourceEventId: inspection.id, law: inspection.act.law,
+          component: 'patrol-education', change: 0,
+        });
+        continue;
+      }
       const next = clamp(trust - game.config.patrol.warningTrustLoss, 0, 100);
       if (trust !== next) experiences.push({
         citizenId: citizen.id, sourceEventId: inspection.id, law: inspection.act.law,
