@@ -69,3 +69,15 @@ details + details { border-block-start: 1px solid var(--rule); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; }
 }
+.tabs { display: flex; flex-wrap: wrap; gap: .5rem; }
+.tabs button { border-color: var(--rule); }
+.tabs button[aria-current] { border-color: var(--accent); color: var(--accent); background: #f5e2cb; }
+.decree-text { font-family: Georgia, serif; font-size: 1.26rem; }
+.plain-fieldset, .clause { min-inline-size: 0; margin: 0; padding: 0; border: 0; }
+.clause { margin-block-start: .75rem; border-block-start: 1px solid var(--rule); padding-block-start: .55rem; }
+.clause legend { padding: 0 .35rem 0 0; font-weight: 700; }
+.muted { color: var(--muted); font-weight: 400; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.issues { padding-inline-start: 1.3em; line-height: 1.45; }
+code { overflow-wrap: anywhere; }
+article.panel > details { margin-top: .65rem; }

@@ -1,15 +1,29 @@
-export interface DraftStore {
-  load(): Promise<string | null>;
-  save(encodedDraft: string): Promise<void>;
+import type { LawDraft } from '@rulecraft/simulation';
+import type { BrowserDatabase } from './save-store.ts';
+
+export interface DecreeDraft {
+  commandId: string;
+  lawId: string | null;
+  baseVersion: number | null;
+  wording: LawDraft;
 }
 
-const draftKey = 'rulecraft.task-00.portability-draft';
+export interface DraftStore {
+  load(id: string): Promise<DecreeDraft | null>;
+  put(id: string, draft: DecreeDraft): Promise<void>;
+  clear(id: string): Promise<void>;
+}
 
-export const browserDraftStore: DraftStore = {
-  async load() {
-    return window.localStorage.getItem(draftKey);
-  },
-  async save(encodedDraft) {
-    window.localStorage.setItem(draftKey, encodedDraft);
-  },
-};
+export function deviceDraftStore(database: BrowserDatabase): DraftStore {
+  return {
+    async load(id) {
+      return await database.request<DecreeDraft | undefined>('draft', 'readonly', (store) => store.get(id)) ?? null;
+    },
+    async put(id, draft) {
+      await database.request('draft', 'readwrite', (store) => store.put(draft, id));
+    },
+    async clear(id) {
+      await database.request('draft', 'readwrite', (store) => store.delete(id));
+    },
+  };
+}
