@@ -124,13 +124,14 @@ function availableActions(selector: TargetSelector): ExecutableAction[] {
 }
 
 export function listLawTokens(draft: LawDraft, profile: 'junior' | 'full' = 'full') {
-  const actions = draft.targetSelector && draft.modality ? availableActions(draft.targetSelector) : [];
-  const editable = !!draft.actionId && actions.includes(draft.actionId as ExecutableAction);
+  const selector = oneOf(draft.targetSelector, selectors) ? draft.targetSelector : null;
+  const actions = selector && oneOf(draft.modality, modalities) ? availableActions(selector) : [];
+  const editable = oneOf(draft.actionId, actions);
   function clauseOptions(clause: ClauseDraft | undefined, other: ClauseDraft | undefined) {
     if (!editable || (profile === 'junior' && !clause && other)) {
       return { operands: [], operators: [], values: null };
     }
-    const operand = clause?.operand;
+    const operand = oneOf(clause?.operand, keys(predicateRegistry)) ? clause.operand : undefined;
     return {
       operands: keys(predicateRegistry),
       operators: operand ? operators(operand) : [],
@@ -140,15 +141,15 @@ export function listLawTokens(draft: LawDraft, profile: 'junior' | 'full' = 'ful
     };
   }
   return {
-    selectors, modalities: draft.targetSelector ? modalities : [], actions,
+    selectors, modalities: selector ? modalities : [], actions,
     when: clauseOptions(draft.when, draft.unless), unless: clauseOptions(draft.unless, draft.when),
   };
 }
 
 export function updateLawDraft(draft: LawDraft, patch: LawDraft): LawDraft {
   const next = { ...draft, ...patch };
-  if (!next.targetSelector) return {};
-  if (!next.modality) return { targetSelector: next.targetSelector };
+  if (!oneOf(next.targetSelector, selectors)) return {};
+  if (!oneOf(next.modality, modalities)) return { targetSelector: next.targetSelector };
   const { targetSelector, modality, actionId } = next;
   if (!actionId || !availableActions(targetSelector).some((action) => action === actionId)) {
     return { targetSelector, modality };
@@ -157,7 +158,7 @@ export function updateLawDraft(draft: LawDraft, patch: LawDraft): LawDraft {
     if (!edited) return undefined;
     const clause = Object.hasOwn(edited, 'operand') && edited.operand !== previous?.operand
       ? edited : { ...previous, ...edited };
-    if (!clause.operand) return undefined;
+    if (!oneOf(clause.operand, keys(predicateRegistry))) return undefined;
     const { operand, operator, value } = clause;
     if (!operator || !operators(operand).includes(operator)) return { operand };
     return validValue(operand, value) ? { operand, operator, value } : { operand, operator };
@@ -189,7 +190,7 @@ function parsePredicate(value: unknown): Predicate | null {
       !oneOf(value.operand, keys(predicateRegistry)) || !oneOf(value.operator, operators(value.operand)) ||
       !validValue(value.operand, value.value)) return null;
   const { operand, operator, value: threshold } = value;
-  return { operand, operator, value: threshold } as Predicate;
+  return Object.freeze({ operand, operator, value: threshold }) as Predicate;
 }
 
 export function validateLaw(input: unknown, active: readonly LawCandidate[] = []): LawValidation {
@@ -209,10 +210,10 @@ export function validateLaw(input: unknown, active: readonly LawCandidate[] = []
   const unless = Object.hasOwn(input, 'unless') ? parsePredicate(input.unless) : undefined;
   if (when === null || unless === null) return reject('INVALID_PREDICATE');
 
-  const ast: LawAst = {
+  const ast: LawAst = Object.freeze({
     issuerId, jurisdictionId, targetSelector, modality, actionId, priority,
     ...(when && { when }), ...(unless && { unless }),
-  };
+  });
   return { ast, issues: warnings(ast, active) };
 }
 

@@ -95,6 +95,9 @@ test('confirmed versions are immutable, same-turn replacement is ordered, and re
   const created = confirmLaw(initial, attempt('CREATE', 'one', 'farm', wording));
   expect(initial.book.versions).toEqual([]);
   expect(created.version).toMatchObject({ version: 1, confirmedAtTurn: 0, effectiveFromTurn: 1 });
+  expect(Object.isFrozen(created.version)).toBe(true);
+  expect(Object.isFrozen(created.version.ast)).toBe(true);
+  expect(Object.isFrozen(created.game.book.versions)).toBe(true);
   expect(authoritativeLaws(created.game.book, 0)).toEqual([]);
   const changed = confirmLaw(created.game, attempt('AMEND', 'two', 'farm', { ...wording, modality: 'MUST_NOT' }));
   expect(changed.game.book.versions.map(({ ast, version }) => [version, ast.modality])).toEqual([[1, 'MUST'], [2, 'MUST_NOT']]);

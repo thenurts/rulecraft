@@ -114,11 +114,12 @@ export function prepareLawCommand(book: LawBook, turn: number, input: unknown, a
   const status = operation === 'ABOLISH' ? 'abolished' : operation === 'SUSPEND' ? 'suspended' :
     operation === 'AMEND' ? previous!.status : 'active';
   if (operation === 'REINSTATE') issues = validateLaw(ast, others).issues;
-  const version: LawVersion = {
+  const version: LawVersion = Object.freeze({
     lawId, version: (previous?.version ?? 0) + 1, ast, commandId, operation, status,
     eventId: `law-event.${commandId}`, confirmedAtTurn: turn, effectiveFromTurn: turn + 1,
-  };
-  return { book: { ...book, versions: [...book.versions, version] }, command, version, issues };
+  });
+  const nextBook = Object.freeze({ ...book, versions: Object.freeze([...book.versions, version]) });
+  return { book: nextBook, command, version, issues };
 }
 
 export function addLawNotice(
@@ -130,9 +131,10 @@ export function addLawNotice(
   const prior = [...book.notices].reverse().find((notice) => notice.citizenId === citizenId && notice.lawId === lawId);
   if (prior?.version === version) return book;
   if (prior && prior.version > version) throw new LawError('OBSOLETE_NOTICE');
-  return { ...book, notices: [...book.notices, {
+  const notice = Object.freeze({
     citizenId, lawId, version, learnedAtTurn: turn, eventId: `notice.${citizenId}.${lawId}.${version}`,
-  }] };
+  });
+  return Object.freeze({ ...book, notices: Object.freeze([...book.notices, notice]) });
 }
 
 export interface LegalFrame extends PredicateFrame {

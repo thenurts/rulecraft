@@ -1,14 +1,15 @@
-import { isRecord, lawRegistryVersion, type LawIssue } from './law.ts';
+import { isRecord, lawRegistryVersion, villageScope, type LawIssue } from './law.ts';
 import {
-  addLawNotice, LawError, prepareLawCommand, type LawBook, type LawCommand, type LawVersion,
+  addLawNotice, authoritativeLaws, LawError, perceivedLaws, prepareLawCommand, resolveLegality, type LawBook, type LawCommand, type LawVersion,
 } from './law-book.ts';
+import { contentVersion } from './model.ts';
 import { rngVersion, uint32 } from './rng.ts';
 import {
   appendDay, canonicalJson, encodeCheckpointPayload, hashCanonicalBytes, startVillage, type VillageRun,
 } from './snapshot.ts';
-import { advanceVillage } from './turn.ts';
+import { advanceVillage, resolveDay } from './turn.ts';
 
-const versions = { schemaVersion: 2, engineVersion: 'headless-law-v1', contentVersion: 'village-v1', rngVersion, lawRegistryVersion } as const;
+const versions = { schemaVersion: 2, engineVersion: 'headless-law-v1', contentVersion, rngVersion, lawRegistryVersion } as const;
 
 export interface LawPolicy {
   readonly changesPerTurn: number | null;
@@ -43,7 +44,7 @@ function parsePolicy(input: unknown): LawPolicy {
 export function startLawGame(fixture: unknown, seed: number, policy: LawPolicy = defaultPolicy): LawGame {
   return {
     ...startVillage(fixture, seed), versions: { ...versions }, policy: parsePolicy(policy),
-    book: { versions: [], notices: [] }, journal: [],
+    book: Object.freeze({ versions: Object.freeze([]), notices: Object.freeze([]) }), journal: [],
   };
 }
 
@@ -73,7 +74,32 @@ export function notifyLaw(game: LawGame, citizenId: string, lawId: string, versi
 }
 
 export function advanceLawGame(game: LawGame): LawGame {
-  return appendDay(game, advanceVillage(game.state, game.fixture, game.seed));
+  const turn = game.state.turn + 1;
+  const actual = authoritativeLaws(game.book, turn);
+  if (actual.length === 0) return appendDay(game, advanceVillage(game.state, game.fixture, game.seed));
+
+  const beliefs = new Map(game.state.citizens.map(({ id }) => [id, perceivedLaws(game.book, id, turn)]));
+  const notices = new Map(game.book.notices.filter((notice) => notice.learnedAtTurn < turn)
+    .map((notice) => [`${notice.citizenId}:${notice.lawId}:${notice.version}`, notice.eventId]));
+  return appendDay(game, resolveDay(game.state, game.fixture, game.seed, undefined,
+    (actor, day, slot, actionId, accountQuantity) => {
+      const frame = {
+        turn: day, slot, accountQuantity, occupation: actor.occupation, fatigue: actor.fatigue,
+        jurisdictionId: villageScope.jurisdictionId,
+      };
+      const perceived = resolveLegality(beliefs.get(actor.id) ?? [], frame, actionId);
+      const noticeEventIds = perceived.considered.map(({ ref }) => {
+        const id = notices.get(`${actor.id}:${ref.lawId}:${ref.version}`);
+        if (!id) throw new Error('Perceived law is missing its notice provenance.');
+        return id;
+      });
+      const pressure = perceived.status === 'required' ? game.policy.mustWeight
+        : perceived.status === 'prohibited' || perceived.status === 'unlicensed' ? -game.policy.mustNotWeight : 0;
+      return {
+        actionId, actual: resolveLegality(actual, frame, actionId), perceived,
+        noticeEventIds, pressure,
+      };
+    }));
 }
 
 export function lawGameHashes(game: LawGame): Readonly<{ state: string; events: string }> {
