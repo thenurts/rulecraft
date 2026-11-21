@@ -5,12 +5,13 @@ import { deviceDraftStore, type DecreeDraft } from './draft-store.ts';
 import { AdvancePanel, DayResults, Gazette, Inquiry, TrialSummary } from './results.tsx';
 import { Chronicle, ShareView, StoryCard } from './narrative/StoryViews.tsx';
 import { projectNarrative, type Incident } from './narrative/projection.ts';
+import { editorProfile, modeProfiles, scenarios, presets, type StartSelection, type Selection } from './profiles.ts';
 import { workerCodec } from './save-codec.ts';
 import { BrowserDatabase, deviceSaveStore, emptySave, SaveConflict, type LoadedSave } from './save-store.ts';
 import { createRoot } from 'react-dom/client';
 import {
-  browserId, citizenLabel, homeScreen, modeLabel, newSession, occupations, previous, trackLabel, villageReadModel, villageScreen, visit,
-  type GameSession, type Screen, type Selection,
+  browserId, citizenLabel, homeScreen, newSession, occupations, previous, sessionLabel, setupLabel, villageReadModel, villageScreen, visit,
+  type GameSession, type Screen,
 } from './world.ts';
 import './styles.css';
 
@@ -19,10 +20,12 @@ function PageHeading({ children }: { children: ReactNode }) {
 }
 
 function Home({ session, onStart, onResume, busy }: {
-  session: GameSession | null; onStart: (selection: Selection) => void; onResume: () => void; busy: boolean;
+  session: GameSession | null; onStart: (selection: StartSelection) => void; onResume: () => void; busy: boolean;
 }) {
   const [selection, setSelection] = useState<Selection>({ mode: 'junior', track: 'campaign' });
   const [replace, setReplace] = useState(false);
+  const scenario = scenarios[selection.track];
+  const starting = presets[scenario.defaultPreset];
   return <>
     <section className="hero">
       <p className="eyebrow">The village charter</p>
@@ -31,8 +34,8 @@ function Home({ session, onStart, onResume, busy }: {
     </section>
     {session && <section className="panel">
       <h2>Your village</h2>
-      <p>{modeLabel[session.mode]} · {trackLabel[session.track]} · Day {session.game.state.turn}</p>
-      <p className="muted">Saved on this device · Engine v{session.game.versions.schemaVersion}</p>
+      <p>{sessionLabel(session)} · Day {session.game.state.turn}</p>
+      <p className="muted">Saved on this device · Engine v{session.game.versions.schemaVersion}</p><p>{setupLabel(session)}</p>
       <button className="primary" disabled={busy} onClick={onResume}>Resume village</button>
     </section>}
     <section className="panel">
@@ -40,17 +43,17 @@ function Home({ session, onStart, onResume, busy }: {
       <div className="two-col">
         <label>Complexity
           <select disabled={busy} value={selection.mode} onChange={(event) => setSelection({ ...selection, mode: event.target.value as Selection['mode'] })}>
-            <option value="junior">Junior</option><option value="full">Full</option>
+            {Object.values(modeProfiles).map(({ id, label }) => <option key={id} value={id}>{label}</option>)}
           </select>
         </label>
         <label>Play option
           <select disabled={busy} value={selection.track} onChange={(event) => setSelection({ ...selection, track: event.target.value as Selection['track'] })}>
-            <option value="campaign">Campaign preview</option><option value="sandbox">12-day Sandbox trial</option>
+            <option value="campaign">Campaign · The Hungry Village</option><option value="sandbox">12-day Sandbox experiment</option>
           </select>
         </label>
       </div>
-      <p>{selection.track === 'campaign' ? 'Try The Hungry Village with provisional food targets.' :
-        'Try decrees for 12 days with no campaign target.'}</p>
+      <p>{modeProfiles[selection.mode].explanation}</p>
+      <p>{starting.label} preset v{scenario.version} · Seed {scenario.defaultSeed} · {starting.fixture.days} days</p>
       {replace ? <div className="notice" role="group" aria-label="Replace current village">
         <p>Starting a new village replaces the current one.</p>
         <div className="actions">
@@ -70,10 +73,11 @@ function Village({ session, children }: { session: GameSession; children?: React
   const village = villageReadModel(session.game);
   return <>
     <header className="page-header">
-      <p className="eyebrow">{modeLabel[session.mode]} · {trackLabel[session.track]}</p>
+      <p className="eyebrow">{sessionLabel(session)}</p>
       <PageHeading>Village</PageHeading>
       <p>Day {village.day} of {village.limit} · {village.remaining} days remaining</p>
-      {session.game.versions.schemaVersion === 3 && <p>Historical engine v3 · original replay rules</p>}
+      <p>{setupLabel(session)}</p>
+      {session.game.versions.schemaVersion === 3 ? <p>Historical engine v3 · original replay rules</p> : <p>Engine v4</p>}
     </header>
     {children}
     <section className="panel">
@@ -87,7 +91,7 @@ function Village({ session, children }: { session: GameSession; children?: React
         <Metric label="Average trust" value={village.trust === null ? 'Unavailable' : `${village.trust}/100`} />
       </dl>
     </section>
-    {session.track === 'campaign' && <section className="panel">
+    {session.track === 'campaign' && !session.setup && <section className="panel">
       <h2>The Hungry Village</h2>
       <p>Provisional targets by day 12. Feed residents on at least 90% of citizen-days and finish with 40 units of market food.</p>
       <p>{village.mealOpportunities ? `${village.fed} of ${village.mealOpportunities} citizen-days fed so far.` : 'Food access will be measured after the first day.'}</p>
@@ -245,7 +249,7 @@ function App() {
     draftQueue.current = waiting;
   }
 
-  async function start(selection: Selection) {
+  async function start(selection: StartSelection) {
     await persist(async () => {
       const next = newSession(selection, browserId());
       accept(await saves.commit(saveRef.current, next));
@@ -342,7 +346,7 @@ function App() {
       {screen.name === 'book' && session &&
         <Book game={session.game} draft={draft} busy={blocked} onCompose={openComposer} onCommit={enact} />}
       {screen.name === 'composer' && session && draft &&
-        <Composer key={draft.commandId} game={session.game} mode={session.mode} draft={draft} busy={blocked}
+        <Composer key={draft.commandId} game={session.game} profile={editorProfile(session, session.setup)} draft={draft} busy={blocked}
           onChange={(next) => storeDraft(session.id, next)} onCommit={enact}
           onDiscard={() => { storeDraft(session.id, null); setHistory(previous); }} />}
       {screen.name === 'home' && <Home session={session} busy={blocked} onStart={start} onResume={() => go(villageScreen)} />}

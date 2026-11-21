@@ -59,7 +59,7 @@ describe('revisioned device storage', () => {
 
   test('an unsupported snapshot is explicit, and historical v3 data retains its engine', async () => {
     const { db, saves } = initialize();
-    const v3 = { ...session, game: startSocietyV3(fixture, 42) };
+    const v3 = { id: session.id, mode: session.mode, track: session.track, game: startSocietyV3(fixture, 42) };
     await saves.commit(emptySave, v3);
     expect((await saves.load()).session?.game.versions.schemaVersion).toBe(3);
     const head = await db.request('world', 'readonly', (store) => store.get('village'));
@@ -81,4 +81,30 @@ describe('revisioned device storage', () => {
     await drafts.clear(session.id);
     expect(await drafts.load(session.id)).toBeNull();
   });
+});
+
+test('versioned setup is stored alongside the original payload and cannot silently change mode or seed', async () => {
+  const { db, saves } = initialize();
+  const current = await saves.commit(emptySave, changed);
+  const head = await db.request('world', 'readonly', (store) => store.get('village'));
+  expect(head.current.payload).toBe(encodeSociety(changed.game));
+  expect(head.current.setup).toEqual(changed.setup);
+  await expect(saves.commit(current, { ...changed, mode: 'full' })).rejects.toThrow(/does not match/);
+  await expect(saves.commit(current, newSession({ mode: 'junior', track: 'campaign', seed: 0 }, changed.id)))
+    .rejects.toThrow(/Starting setup is fixed/);
+  head.current.mode = 'full';
+  await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
+  await expect(saves.load()).rejects.toThrow(/No verified generation/);
+});
+
+test('a historical v4 preview stays a preview on resume and commit', async () => {
+  const { db, saves } = initialize();
+  const legacy = { id: 'preview', mode: 'junior', track: 'campaign', game: session.game } as const;
+  await saves.commit(emptySave, legacy);
+  const loaded = await saves.load();
+  expect(loaded.session).toEqual(legacy);
+  await saves.commit(loaded, loaded.session!);
+  const head = await db.request('world', 'readonly', (store) => store.get('village'));
+  expect(head.current).not.toHaveProperty('setup');
+  expect(head.current.payload).toBe(encodeSociety(legacy.game));
 });

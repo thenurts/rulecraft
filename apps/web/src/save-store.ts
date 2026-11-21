@@ -1,9 +1,11 @@
+import { canonicalJson } from '@rulecraft/simulation';
+import { verifiedSetup, type RunSetup } from './profiles.ts';
 import type { SaveCodec } from './save-codec.ts';
 import type { GameSession, Selection } from './world.ts';
 
 const slot = 'village';
 
-interface Generation extends Selection { id: string; at: number; payload: string }
+interface Generation extends Selection { id: string; at: number; payload: string; setup?: RunSetup }
 interface Head { revision: number; current: Generation; previous: Generation | null }
 
 export interface LoadedSave {
@@ -99,8 +101,9 @@ export function deviceSaveStore(database: BrowserDatabase, codec: SaveCodec): Ga
               (track !== 'campaign' && track !== 'sandbox') || typeof payload !== 'string' ||
               !Number.isSafeInteger(at) || at < 1 || at > head.revision) throw new Error('Save metadata is invalid.');
           const game = await codec.decode(payload);
+          const setup = verifiedSetup({ mode, track }, game, generation.setup);
           performance.measure('rulecraft.load', { start, detail: { bytes: payload.length, day: game.state.turn } });
-          return { revision: head.revision, generation: at, session: { id, mode, track, game }, recovered: index > 0 };
+          return { revision: head.revision, generation: at, session: { id, mode, track, game, ...(setup && { setup }) }, recovered: index > 0 };
         } catch (failure) {
           error = failure;
         }
@@ -111,10 +114,18 @@ export function deviceSaveStore(database: BrowserDatabase, codec: SaveCodec): Ga
     },
     async commit(expected, session) {
       const start = performance.now();
+      const setup = verifiedSetup(session, session.game, session.setup);
+      const current = expected.session;
+      if (current?.id === session.id && (current.mode !== session.mode || current.track !== session.track ||
+          current.game.seed !== session.game.seed || current.game.versions.schemaVersion !== session.game.versions.schemaVersion ||
+          canonicalJson(current.game.fixture) !== canonicalJson(session.game.fixture) ||
+          canonicalJson(current.setup ?? null) !== canonicalJson(setup ?? null))) {
+        throw new Error('Starting setup is fixed for this saved village.');
+      }
       const payload = await codec.encode(session.game);
       const db = await database.open();
       const revision = expected.revision + 1;
-      const generation: Generation = { id: session.id, mode: session.mode, track: session.track, payload, at: revision };
+      const generation: Generation = { id: session.id, mode: session.mode, track: session.track, payload, at: revision, ...(setup && { setup }) };
       await new Promise<void>((resolve, reject) => {
         const transaction = db.transaction('world', 'readwrite', { durability: 'strict' });
         let failure: unknown;

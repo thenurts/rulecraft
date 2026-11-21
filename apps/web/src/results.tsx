@@ -41,7 +41,7 @@ export function TrialSummary({ session }: { session: GameSession }) {
   return <section className="panel">
     <h2>Trial summary</h2>
     <p>{model.fed}/{model.mealOpportunities} citizen-days fully fed. {model.marketFood} units of market food remained.</p>
-    {session.track === 'campaign' && <p>{model.fed * 10 >= model.mealOpportunities * 9 && model.marketFood >= 40
+    {session.track === 'campaign' && !session.setup && <p>{model.fed * 10 >= model.mealOpportunities * 9 && model.marketFood >= 40
       ? 'This run met both provisional campaign targets.' : 'This run fell short of at least one provisional campaign target.'}</p>}
     <p>Return Home to start another trial.</p>
   </section>;

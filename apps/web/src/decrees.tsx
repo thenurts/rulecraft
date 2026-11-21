@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import {
-  actionRegistry, authoritativeLaws, listLawTokens, predicateRegistry, renderLaw, validateLaw,
+  actionRegistry, authoritativeLaws, predicateRegistry, renderLaw, validateLaw,
   updateLawDraft, villageScope, type LawAst, type LawCommand, type LawDraft, type LawIssue, type LawVersion,
   type SocietyGame,
 } from '@rulecraft/simulation';
 import type { DecreeDraft } from './draft-store.ts';
-import { browserId, lawRefLabel, occupations, type Mode } from './world.ts';
+import { editorTokens, type EditorProfile } from './profiles.ts';
+import { browserId, lawRefLabel, occupations } from './world.ts';
 
 const subjects = { ...occupations, 'all-citizens': 'All citizens' };
 const modalities = { MUST: 'Must', MUST_NOT: 'Must not', MAY: 'May' };
@@ -72,10 +73,10 @@ function Issues({ issues, game }: { issues: readonly LawIssue[]; game: SocietyGa
 
 type ClauseKey = 'when' | 'unless';
 
-function Clause({ field, wording, mode, onPatch, blocked }: {
-  field: ClauseKey; wording: LawDraft; mode: Mode; onPatch(patch: LawDraft): void; blocked: boolean;
+function Clause({ field, wording, options, onPatch, blocked }: {
+  field: ClauseKey; wording: LawDraft; options: ReturnType<typeof editorTokens>[ClauseKey];
+  onPatch(patch: LawDraft): void; blocked: boolean;
 }) {
-  const options = listLawTokens(wording, mode)[field];
   if (options.operands.length === 0) return null;
   const value = wording[field];
   const title = field === 'when' ? 'When' : 'Unless';
@@ -115,13 +116,13 @@ function Clause({ field, wording, mode, onPatch, blocked }: {
   </fieldset>;
 }
 
-export function Composer({ draft, mode, game, busy, onChange, onCommit, onDiscard }: {
-  draft: DecreeDraft; mode: Mode; game: SocietyGame; busy: boolean;
+export function Composer({ draft, profile, game, busy, onChange, onCommit, onDiscard }: {
+  draft: DecreeDraft; profile: EditorProfile; game: SocietyGame; busy: boolean;
   onChange(draft: DecreeDraft): void; onCommit(command: LawCommand): void; onDiscard(): void;
 }) {
   const [reviewing, setReviewing] = useState(false);
   const { wording } = draft;
-  const options = listLawTokens(wording, mode);
+  const options = editorTokens(wording, profile, game.state.turn);
   const preview = decreePreview(game, draft);
   const canConfirm = preview.ast && remainingChanges(game) !== 0 && game.state.turn < game.fixture.days;
   const targetDay = game.state.turn + 1;
@@ -157,8 +158,9 @@ export function Composer({ draft, mode, game, busy, onChange, onCommit, onDiscar
           </select>
         </label>
       </fieldset>
-      <Clause field="when" wording={wording} mode={mode} onPatch={patch} blocked={busy} />
-      <Clause field="unless" wording={wording} mode={mode} onPatch={patch} blocked={busy} />
+      {profile.clauseDay > game.state.turn && <p className="muted">You can add a condition or exception after day {profile.clauseDay}.</p>}
+      <Clause field="when" wording={wording} options={options.when} onPatch={patch} blocked={busy} />
+      <Clause field="unless" wording={wording} options={options.unless} onPatch={patch} blocked={busy} />
     </section>
     <section className="panel">
       <h2>Decree preview</h2>
