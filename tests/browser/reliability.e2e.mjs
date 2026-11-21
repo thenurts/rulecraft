@@ -25,6 +25,11 @@ async function mutateHead(page, operation, payload) {
         if (operation === 'read') result = head;
         else if (operation === 'seed') {
           store.put({ revision: 1, previous: null, current: { id: 'legacy', at: 1, mode: 'full', track: 'sandbox', payload } }, 'village');
+        } else if (operation === 'remove-setup') {
+          delete head.current.setup;
+          delete head.current.sessionFormat;
+          store.put(head, 'village');
+          result = head;
         } else {
           store.put({ ...head, current: { ...head.current, payload } }, 'village');
         }
@@ -104,6 +109,22 @@ test('a corrupted current generation recovers the prior one; unsupported saves f
   await page.reload();
   await expect(page.getByRole('alert')).toContainText('unsupported engine version');
   await expect(page.getByRole('button', { name: 'Start village', exact: true })).toBeDisabled();
+});
+
+test('a valid modern world missing scenario setup recovers the previous Hungry Village', async ({ page }) => {
+  await start(page);
+  await (await openAdvance(page, 1)).click();
+  await expect(page.getByRole('heading', { name: 'Day 1 results' })).toBeVisible();
+  const damaged = await mutateHead(page, 'remove-setup');
+  expect(loadSociety(damaged.current.payload).state.turn).toBe(1);
+
+  await page.reload();
+  await expect(page.getByRole('status')).toContainText('Recovered the previous complete save');
+  await page.getByRole('button', { name: 'Resume village' }).click();
+  await expect(page.getByText('Day 0 of 12')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The Hungry Village' })).toBeVisible();
+  await expect(page.getByText(/Provisional targets by day 12/)).toHaveCount(0);
+  expect(await mutateHead(page, 'read')).toEqual(damaged);
 });
 
 test('unavailable device storage never reports a successful start', async ({ page }) => {

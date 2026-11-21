@@ -1,6 +1,6 @@
 import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
 import { describe, expect, test, vi } from 'vitest';
-import { encodeSociety, loadSociety, startSociety, startSocietyV3 } from '@rulecraft/simulation';
+import { encodeSociety, loadSociety, societyDefaults, startSociety, startSocietyV3 } from '@rulecraft/simulation';
 import fixture from '../../../fixtures/task-01-village.json';
 import { authoredCommand, decreePreview, newDraft } from './decrees.tsx';
 import { deviceDraftStore } from './draft-store.ts';
@@ -178,4 +178,35 @@ test('an unsupported session format is rejected rather than silently treated as 
   await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
 
   await expect(saves.load()).rejects.toThrow(/No verified generation/);
+});
+
+test.each([
+  ['seed', startSociety(fixture, 43)],
+  ['society settings', startSociety(fixture, 42, { ...societyDefaults, bulletinBp: 10_000 })],
+  ['law policy', startSociety(fixture, 42, societyDefaults, { changesPerTurn: 1, mustWeight: 60, mustNotWeight: 55 })],
+] as const)('an untagged world with different %s is outside the historical preview signature', async (_field, game) => {
+  const { db, saves } = initialize();
+  const head = { revision: 1, previous: null, current: {
+    id: 'untagged', track: 'sandbox', mode: 'full', at: 1, payload: encodeSociety(game),
+  } };
+  await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
+  await expect(saves.load()).rejects.toThrow(/No verified generation/);
+  expect(await db.request('world', 'readonly', (store) => store.get('village'))).toEqual(head);
+});
+
+test('a modern generation with intact setup can resume without the later format marker', async () => {
+  const { db, saves } = initialize();
+  await saves.commit(emptySave, changed);
+  const head = await db.request('world', 'readonly', (store) => store.get('village'));
+  delete head.current.sessionFormat;
+  await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
+
+  const loaded = await saves.load();
+  expect(loaded).toMatchObject({ recovered: false, session: changed });
+  expect(await db.request('world', 'readonly', (store) => store.get('village'))).toEqual(head);
+  await saves.commit(loaded, loaded.session!);
+  const saved = await db.request('world', 'readonly', (store) => store.get('village'));
+  expect(saved.current.sessionFormat).toBe('scenario-v1');
+  expect(saved.current.payload).toBe(head.current.payload);
+  expect(saved.previous).toEqual(head.current);
 });

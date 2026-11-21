@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test';
 import { mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { advanceSociety, confirmLaw, encodeSociety, societyDefaults } from '@rulecraft/simulation';
-import { projectNarrative } from '../../apps/web/src/narrative/projection.ts';
 import { completedCompetingDutiesDay } from '../fixtures/task-05-competing-duties.ts';
 import { startVillage } from './helpers.mjs';
 
@@ -188,16 +187,9 @@ test('local share PNG matches the selectable evidence text and handles unavailab
 });
 
 test('a competing-duties card downloads with both evidenced decrees and exposes all text when PNG overflows', async ({ page }) => {
-  // Keep the browser save a genuine Task 04-compatible legacy preview: the
-  // research helper's 100% news setting is intentionally NOT a valid legacy
-  // configuration. Find a natural competing-duty witness under real defaults.
-  let dayOne;
-  for (let seed = 0; seed < 256 && !dayOne; seed++) {
-    const candidate = completedCompetingDutiesDay(societyDefaults.bulletinBp, seed);
-    if (projectNarrative(candidate, 'full').incidents.some(({ turn, facts }) =>
-      turn === 1 && facts.family === 'COMPETING_KNOWN_DUTIES')) dayOne = candidate;
-  }
-  expect(dayOne, 'Expected a natural competing-duty witness with historical settings').toBeDefined();
+  // Seed 2 produces competing duties on day one under the standard Sandbox settings.
+  const seed = 2;
+  const dayOne = completedCompetingDutiesDay(societyDefaults.bulletinBp, seed);
   const game = advanceSociety(confirmLaw(dayOne, {
     operation: 'ABOLISH', lawId: 'harvest-food', commandId: 'abolish-harvest',
   }).game);
@@ -213,20 +205,21 @@ test('a competing-duties card downloads with both evidenced decrees and exposes 
       return fill.call(this, text, x, y);
     };
   });
-  await startVillage(page, 'full', 'sandbox');
-  await page.evaluate((payload) => new Promise((resolve, reject) => {
+  await startVillage(page, 'full', 'sandbox', seed);
+  const initial = await readGeneration(page);
+  await page.evaluate((current) => new Promise((resolve, reject) => {
     const open = indexedDB.open('rulecraft-village', 1);
     open.onerror = () => reject(open.error);
     open.onsuccess = () => {
       const db = open.result;
       const tx = db.transaction('world', 'readwrite');
       tx.objectStore('world').put({
-        revision: 1, previous: null, current: { id: 'test-village', at: 1, mode: 'full', track: 'sandbox', payload },
+        revision: 1, previous: null, current,
       }, 'village');
       tx.oncomplete = () => { db.close(); resolve(); };
       tx.onabort = () => { db.close(); reject(tx.error); };
     };
-  }), encodeSociety(game));
+  }), { ...initial, payload: encodeSociety(game) });
   await page.reload();
   await button(page, 'Resume village').tap();
   await button(page, 'Chronicle').tap();

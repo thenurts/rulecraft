@@ -127,13 +127,13 @@ export function makeSetup(selection: StartSelection): RunSetup {
 }
 
 // Task 04 preview saves have no scenario metadata. Their starting parameters are
-// fixed to the original fixture and default v3/v4 society and law settings.
+// fixed to seed 42, the original fixture and default v3/v4 society and law settings.
 // A save from a newer preset must not be relabelled as a legacy preview.
 const legacyPreviewPolicy: LawPolicy = { changesPerTurn: 2, mustWeight: 60, mustNotWeight: 55 };
 
 function isLegacyPreview(game: SocietyGame): boolean {
   return (game.versions.schemaVersion === 3 || game.versions.schemaVersion === 4) &&
-    validSeed(game.seed) &&
+    game.seed === 42 &&
     canonicalJson(game.fixture) === canonicalJson(presets['standard-village-v1'].fixture) &&
     canonicalJson(game.config) === canonicalJson(societyDefaults) &&
     canonicalJson(game.policy) === canonicalJson(legacyPreviewPolicy);
