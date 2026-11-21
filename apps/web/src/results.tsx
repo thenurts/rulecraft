@@ -48,8 +48,8 @@ export function TrialSummary({ session }: { session: GameSession }) {
   </section>;
 }
 
-export function DayResults({ session, day, inspect, openGazette }: {
-  session: GameSession; day: number; inspect: OpenEvidence; openGazette: () => void;
+export function DayResults({ session, day, inspect, openGazette, story }: {
+  session: GameSession; day: number; inspect: OpenEvidence; openGazette: () => void; story?: ReactNode;
 }) {
   const digest = dayDigest(session.game, day);
   if (!digest) return <section className="panel"><Heading>Day results</Heading><p>No completed day to show.</p></section>;
@@ -60,6 +60,7 @@ export function DayResults({ session, day, inspect, openGazette }: {
       <p className="eyebrow">Completed day</p><Heading>Day {day} results</Heading>
       <p>{metrics.residentsFed}/{metrics.residentsFed + metrics.residentsUnmet} residents fully fed.</p>
     </header>
+    {story}
     <section className="panel">
       <h2>Food and work</h2>
       <p>Market food {metrics.marketFood} units ({signed(digest.marketChange)} since this day opened). Delivered {metrics.foodDelivered}; consumed {metrics.foodConsumed}.</p>
@@ -84,8 +85,8 @@ export function DayResults({ session, day, inspect, openGazette }: {
   </>;
 }
 
-export function Gazette({ game, day, onDay, inspect }: {
-  game: SocietyGame; day: number; onDay: (day: number) => void; inspect: OpenEvidence;
+export function Gazette({ game, day, onDay, inspect, stories }: {
+  game: SocietyGame; day: number; onDay: (day: number) => void; inspect: OpenEvidence; stories?: ReactNode;
 }) {
   const [all, setAll] = useState(false);
   const digest = dayDigest(game, day);
@@ -95,6 +96,7 @@ export function Gazette({ game, day, onDay, inspect }: {
       <label>Report day<select value={day} onChange={({ target }) => { setAll(false); onDay(Number(target.value)); }}>
         {game.days.map(({ turn }) => <option key={turn} value={turn}>Day {turn}</option>)}
       </select></label>
+      {stories}
       <section className="panel records">
         <h2>Day {day} events</h2>
         <p>{digest.events.length} recorded actions and outcomes · {digest.education} education · {digest.warnings} formal warnings.</p>

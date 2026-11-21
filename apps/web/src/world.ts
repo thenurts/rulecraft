@@ -9,7 +9,7 @@ export interface GameSession extends Selection { id: string; game: SocietyGame }
 export const modeLabel = { junior: 'Junior', full: 'Full' };
 export const trackLabel = { campaign: 'Campaign preview', sandbox: '12-day Sandbox trial' };
 export const occupations = { farmer: 'Farmers', forester: 'Foresters', merchant: 'Merchants', guard: 'Guards' };
-export type Screen = { name: 'home' | 'village' | 'book' | 'composer' | 'results' | 'gazette' | 'inquiry'; id?: string };
+export type Screen = { name: 'home' | 'village' | 'book' | 'composer' | 'results' | 'gazette' | 'inquiry' | 'chronicle' | 'share'; id?: string };
 export const homeScreen: Screen = { name: 'home' };
 export const villageScreen: Screen = { name: 'village' };
 
