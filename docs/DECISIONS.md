@@ -174,6 +174,11 @@ See the [Task 02 report](07_Task_02_Engine.md) for test evidence and open review
 - Voice, priority, rotation and share-card treatment remain open for playtest and owner review. The [engineering report](13_Task_05_Engineering.md) records the coverage and device limits.
 
 
+### Task 06 research proposal · compressed browser saves
+
+The research adapter keeps engine bytes and schema versions intact in a separate, versioned binary envelope. It verifies legacy or compressed current and previous records, with isolated browser tests for rollback and historical provenance. Review the storage savings separately from replay latency. Any production migration, rollback path or longer Sandbox horizon requires its own approval and physical browser checks. [Compressed save research](18_Compressed_Save_Research.md)
+
+
 ## Task 06 — real Junior/Full profiles, Campaign/Sandbox and first-playable validation · 21 November 2026
 
 **Status:** Design proposal for owner review following verified merge of PR #19; no Task 06 implementation started. See [Task 06 design contract](14_Task_06_Modes_Campaign_Sandbox.md) and [original task](../tasks/06_modes_campaign.md).
