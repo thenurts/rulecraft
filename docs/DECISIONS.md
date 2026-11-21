@@ -62,3 +62,11 @@ Increment 1 verification on Node 24.22.3 and npm 11.19.1. `npm ci --cache /tmp/r
 - Transactions stage all postings before applying them. Each leg records resource, quantity and account balances before and after. A transaction references its action event, which references the transaction in return. The audit reconstructs every account from fixture genesis, checks authorised sources/sinks, ownership, transaction shape and balances, and reconciles resource totals.
 
 Increment 2 verification on Node 24.22.3. `npm test` passed 28 tests in 3 files. `npm run build` passed both type checks and the Vite production build after tightening the clock's TypeScript narrowing. Tests covered zero and unavailable field stock, selection versus execution, contention, no delivery, insufficient funds, all-or-nothing posting, finite forestry, actor reordering and resource reconciliation.
+
+### SAVE-001 · Committed snapshots and replay
+
+- Schema v1 stores the fixture, seed, versions, resolved state, ordered events, linked transactions and daily metrics in each complete turn snapshot. Canonical JSON sorts object keys by code unit, preserves array order, encodes safe integers in decimal, and escapes non-ASCII UTF-16 units. FNV-1a 64 over the canonical ASCII bytes provides an accidental-corruption checksum and separate state and event digests. It is a non-cryptographic format. The loader rejects unsupported versions, checks the checksum, and replays through the saved turn to verify the entire payload.
+- The Node adapter keeps the latest and previous complete payloads in one file. It syncs a same-directory temporary file and atomically promotes it. A new checkpoint uses a hard link that fails if the destination exists. Updates use atomic rename. The tested Linux path also syncs the containing directory. This is a local, single-writer prototype with no migrations and a complete history retained in each checkpoint.
+- Keep checkpoint storage platform-specific and draft storage independent. Cross-runtime replay matched in Node and desktop Chromium. Physical mobile, native persistence, and save-size and recovery costs beyond the rule-free fixture remain open.
+
+See the [Task 01 kernel report](05_Task_01_Kernel.md) for final test counts, timing and acceptance evidence.

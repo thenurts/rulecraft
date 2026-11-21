@@ -17,3 +17,7 @@ export { auditResources } from './ledger.ts';
 export type { ResourceAudit, Transaction } from './ledger.ts';
 export { advanceVillage } from './turn.ts';
 export type { DailyMetrics, ResolvedDay, VillageEvent } from './turn.ts';
+export {
+  auditSnapshot, canonicalJson, encodeSnapshot, loadSnapshot, resolveNextTurn, snapshotHashes, startVillage,
+} from './snapshot.ts';
+export type { VillageSnapshot } from './snapshot.ts';
