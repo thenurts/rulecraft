@@ -35,6 +35,8 @@ See the [Task 01 report](docs/05_Task_01_Kernel.md) for conservation, replay and
 
 Run the Task 02 headless decree example with `npm run --silent simulate:law`. It checks a durable confirmation before the first turn, compares known laws over matched seeds, and replays from a suspended law with stale citizen knowledge. See the [Task 02 report](docs/07_Task_02_Engine.md) for results and review points.
 
+Run the Task 03 example with `npm run --silent simulate:society`. Run its predeclared 256-seed study with `npm run --silent study:society`. See the [Task 03 report](docs/09_Task_03_Engineering.md) for denominators, confidence intervals and replay evidence.
+
 ## Project layout
 
 | Path | Purpose |
