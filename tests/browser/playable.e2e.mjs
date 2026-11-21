@@ -37,3 +37,21 @@ test('a confirmed decree survives reload before advancing and never commits an a
   await expect(page.getByText(/Confirmed for day 1/)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Resume draft' })).toHaveCount(0);
 });
+
+test('advance saves one day before displaying actual results and an action ledger', async ({ page }) => {
+  await startVillage(page, 'full', 'sandbox');
+  await page.getByRole('button', { name: 'Advance day', exact: true }).click();
+  await page.getByRole('button', { name: 'Cancel advance' }).click();
+  await expect(page.getByText('Day 0 of 12')).toBeVisible();
+  await page.getByRole('button', { name: 'Advance day', exact: true }).click();
+  await page.getByRole('button', { name: 'Resolve day 1', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Day 1 results' })).toBeVisible();
+  await expect(page.getByText('Day 1 saved on this device.')).toBeVisible();
+  await page.getByRole('button', { name: /Citizen \d+ · harvest food/ }).first().click();
+  await expect(page.getByRole('heading', { name: 'Royal Inquiry' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Resource ledger' })).toBeVisible();
+  await expect(page.getByText(/tx\.1\./)).toBeVisible();
+  await page.reload();
+  await page.getByRole('button', { name: 'Resume village' }).click();
+  await expect(page.getByText('Day 1 of 12')).toBeVisible();
+});

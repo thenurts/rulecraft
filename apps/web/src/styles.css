@@ -81,3 +81,11 @@ details + details { border-block-start: 1px solid var(--rule); }
 .issues { padding-inline-start: 1.3em; line-height: 1.45; }
 code { overflow-wrap: anywhere; }
 article.panel > details { margin-top: .65rem; }
+.day-panel { border-color: #bda984; background: #f7ead0; }
+.recent-results { justify-self: start; }
+.records { display: grid; gap: .55rem; }
+.records > h2 { margin-bottom: .25rem; }
+.record { display: grid; inline-size: 100%; min-inline-size: 44px; gap: .25rem; text-align: start; margin: .2rem 0; padding: .65rem .8rem; border-color: var(--rule); background: #f7efe0; overflow-wrap: anywhere; }
+.record span, .record code { font-weight: 400; color: var(--muted); }
+.reference code { font-size: .8em; }
+.ruling { margin-block: .55rem 1rem; border-inline-start: 2px solid var(--rule); padding-inline-start: .65rem; }

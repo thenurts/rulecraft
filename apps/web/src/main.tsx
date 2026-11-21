@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { confirmLaw, type LawCommand, type LawVersion } from '@rulecraft/simulation';
+import { advanceSociety, confirmLaw, type LawCommand, type LawVersion } from '@rulecraft/simulation';
 import { Book, Composer, newDraft, usableDraft } from './decrees.tsx';
 import { deviceDraftStore, type DecreeDraft } from './draft-store.ts';
+import { AdvancePanel, DayResults, Gazette, Inquiry, TrialSummary } from './results.tsx';
 import { workerCodec } from './save-codec.ts';
 import { BrowserDatabase, deviceSaveStore, emptySave, SaveConflict, type LoadedSave } from './save-store.ts';
 import { createRoot } from 'react-dom/client';
@@ -259,6 +260,23 @@ function App() {
     });
   }
 
+  async function advance() {
+    return persist(async () => {
+      const current = saveRef.current;
+      if (!current.session || current.session.game.state.turn >= current.session.game.fixture.days) return;
+      // Give the progress state one paint before running the synchronous turn.
+      await new Promise<void>((resolve) => requestAnimationFrame(() => setTimeout(resolve, 0)));
+      const start = performance.now();
+      const game = advanceSociety(current.session.game);
+      performance.measure('rulecraft.turn', { start, detail: { day: game.state.turn } });
+      accept(await saves.commit(current, { ...current.session, game }));
+      setFeedback(`Day ${game.state.turn} saved on this device.`);
+      go({ name: 'results', id: String(game.state.turn) });
+    });
+  }
+
+  const inspect = (id: string) => go({ name: 'inquiry', id });
+  const openGazette = (day = session?.game.state.turn ?? 0) => go({ name: 'gazette', id: String(day) });
   const blocked = busy || stale || !storageReady;
   return <>
     <a className="skip" href="#main-content">Skip to content</a>
@@ -277,9 +295,19 @@ function App() {
       {feedback && !busy && <p className="notice" role="status">{feedback}</p>}
       {screen.name !== 'home' && session && <nav className="tabs" aria-label="Village navigation">
         <button disabled={busy} aria-current={screen.name === 'village' ? 'page' : undefined} onClick={() => go(villageScreen)}>Village</button>
-        <button disabled={busy} aria-current={screen.name === 'book' ? 'page' : undefined} onClick={() => go(bookScreen)}>Decree Book</button>
+        <button disabled={busy} aria-current={screen.name === 'book' || screen.name === 'composer' ? 'page' : undefined} onClick={() => go(bookScreen)}>Decree Book</button>
+        <button disabled={busy} aria-current={screen.name === 'gazette' ? 'page' : undefined} onClick={() => openGazette()}>Gazette</button>
       </nav>}
-      {screen.name === 'village' && session && <Village session={session} />}
+      {screen.name === 'village' && session && <Village session={session}>
+        <AdvancePanel day={session.game.state.turn} limit={session.game.fixture.days} busy={blocked} onAdvance={advance} />
+        {session.game.state.turn > 0 && <button className="recent-results" onClick={() => go({ name: 'results', id: String(session.game.state.turn) })}>Latest day results</button>}
+        <TrialSummary session={session} />
+      </Village>}
+      {screen.name === 'results' && session && <DayResults session={session} day={Number(screen.id)}
+        inspect={inspect} openGazette={() => openGazette(Number(screen.id))} />}
+      {screen.name === 'gazette' && session && <Gazette game={session.game} day={Number(screen.id)}
+        onDay={(day) => setHistory((previous) => [...previous.slice(0, -1), { name: 'gazette', id: String(day) }])} inspect={inspect} />}
+      {screen.name === 'inquiry' && session && screen.id && <Inquiry game={session.game} id={screen.id} inspect={inspect} />}
       {screen.name === 'book' && session &&
         <Book game={session.game} draft={draft} busy={blocked} onCompose={openComposer} onCommit={enact} />}
       {screen.name === 'composer' && session && draft &&
