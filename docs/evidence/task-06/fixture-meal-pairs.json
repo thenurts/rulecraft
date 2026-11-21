@@ -1,0 +1,104 @@
+{
+  "seeds": 256,
+  "groups": {
+    "farmer": {
+      "baselineFed": 50839,
+      "deliveryFed": 53767,
+      "baselineFundsShort": 195,
+      "deliveryFundsShort": 236,
+      "gainedFundsShortAfterMorePriorMeals": 99,
+      "treatmentOnlyFundsShort": 101,
+      "controlOnlyFundsShort": 60,
+      "treatmentOnlyFundsShortWithStock": 85,
+      "sameFundsShortWithAdditionalStock": 11
+    },
+    "forester": {
+      "baselineFed": 14135,
+      "deliveryFed": 14714,
+      "baselineFundsShort": 596,
+      "deliveryFundsShort": 946,
+      "gainedFundsShortAfterMorePriorMeals": 407,
+      "treatmentOnlyFundsShort": 407,
+      "controlOnlyFundsShort": 57,
+      "treatmentOnlyFundsShortWithStock": 319,
+      "sameFundsShortWithAdditionalStock": 68
+    },
+    "merchant": {
+      "baselineFed": 12142,
+      "deliveryFed": 12854,
+      "baselineFundsShort": 0,
+      "deliveryFundsShort": 0,
+      "gainedFundsShortAfterMorePriorMeals": 0,
+      "treatmentOnlyFundsShort": 0,
+      "controlOnlyFundsShort": 0,
+      "treatmentOnlyFundsShortWithStock": 0,
+      "sameFundsShortWithAdditionalStock": 0
+    },
+    "guard": {
+      "baselineFed": 19366,
+      "deliveryFed": 20545,
+      "baselineFundsShort": 0,
+      "deliveryFundsShort": 0,
+      "gainedFundsShortAfterMorePriorMeals": 0,
+      "treatmentOnlyFundsShort": 0,
+      "controlOnlyFundsShort": 0,
+      "treatmentOnlyFundsShortWithStock": 0,
+      "sameFundsShortWithAdditionalStock": 0
+    }
+  },
+  "example": {
+    "seed": 41000,
+    "history": {
+      "controlBought": 9,
+      "deliveryBought": 10
+    },
+    "control": {
+      "id": "event.11.148",
+      "turn": 11,
+      "phase": "dusk",
+      "actorId": "citizen.0022",
+      "action": "resident-meal",
+      "status": "completed",
+      "quantity": 1,
+      "reason": null,
+      "transactionId": "tx.11.15",
+      "fatigue": {
+        "before": 0,
+        "after": 0
+      },
+      "hunger": {
+        "before": 0,
+        "after": 0
+      },
+      "foodAccess": {
+        "marketAvailableBefore": 19,
+        "fundingShortfall": 0,
+        "supplyShortfall": 0
+      }
+    },
+    "delivery": {
+      "id": "event.11.148",
+      "turn": 11,
+      "phase": "dusk",
+      "actorId": "citizen.0022",
+      "action": "resident-meal",
+      "status": "blocked-at-execution",
+      "quantity": 0,
+      "reason": "insufficient-funds",
+      "transactionId": null,
+      "fatigue": {
+        "before": 0,
+        "after": 0
+      },
+      "hunger": {
+        "before": 0,
+        "after": 1
+      },
+      "foodAccess": {
+        "marketAvailableBefore": 23,
+        "fundingShortfall": 1,
+        "supplyShortfall": 0
+      }
+    }
+  }
+}

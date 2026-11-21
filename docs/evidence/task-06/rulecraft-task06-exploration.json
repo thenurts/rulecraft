@@ -1,0 +1,1263 @@
+{
+  "study": "exploration",
+  "objective": {
+    "fedPercent": 90,
+    "marketFood": 40
+  },
+  "fixture": "task-01-village.json",
+  "engine": "v4",
+  "profileAssumption": "Existing Junior and Full previews share the same fixture, seed and law policy. Every tested AST uses shared grammar.",
+  "strategies": {
+    "no-decree": [],
+    "harvest-duty": [
+      {
+        "issuerId": "council.village",
+        "jurisdictionId": "jurisdiction.village",
+        "targetSelector": "farmer",
+        "modality": "MUST",
+        "actionId": "harvest-food"
+      }
+    ],
+    "morning-harvest-duty": [
+      {
+        "issuerId": "council.village",
+        "jurisdictionId": "jurisdiction.village",
+        "targetSelector": "farmer",
+        "modality": "MUST",
+        "actionId": "harvest-food",
+        "when": {
+          "operand": "slot",
+          "operator": "EQ",
+          "value": "morning"
+        }
+      }
+    ],
+    "delivery-duty": [
+      {
+        "issuerId": "council.village",
+        "jurisdictionId": "jurisdiction.village",
+        "targetSelector": "merchant",
+        "modality": "MUST",
+        "actionId": "market-delivery"
+      }
+    ],
+    "harvest-and-delivery-duties": [
+      {
+        "issuerId": "council.village",
+        "jurisdictionId": "jurisdiction.village",
+        "targetSelector": "farmer",
+        "modality": "MUST",
+        "actionId": "harvest-food"
+      },
+      {
+        "issuerId": "council.village",
+        "jurisdictionId": "jurisdiction.village",
+        "targetSelector": "merchant",
+        "modality": "MUST",
+        "actionId": "market-delivery"
+      }
+    ],
+    "harvest-ban": [
+      {
+        "issuerId": "council.village",
+        "jurisdictionId": "jurisdiction.village",
+        "targetSelector": "farmer",
+        "modality": "MUST_NOT",
+        "actionId": "harvest-food"
+      }
+    ]
+  },
+  "firstSeed": 0,
+  "lastSeed": 255,
+  "seeds": 256,
+  "arms": {
+    "no-decree": {
+      "fedTarget": {
+        "hits": 256,
+        "percent": 100,
+        "wilson95Percent": [
+          98.52156082782743,
+          100
+        ]
+      },
+      "stockTarget": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "jointWin": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "summaries": {
+        "fed": {
+          "mean": 468,
+          "sd": 0,
+          "min": 468,
+          "max": 468
+        },
+        "fedPercent": {
+          "mean": 97.5,
+          "sd": 0,
+          "min": 97.5,
+          "max": 97.5
+        },
+        "marketFood": {
+          "mean": 27,
+          "sd": 0,
+          "min": 27,
+          "max": 27
+        },
+        "poorWithStock": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "affordShort": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "supplyShort": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "delivered": {
+          "mean": 450,
+          "sd": 0,
+          "min": 450,
+          "max": 450
+        },
+        "guardsPaid": {
+          "mean": 96,
+          "sd": 0,
+          "min": 96,
+          "max": 96
+        },
+        "guardWageCoins": {
+          "mean": 192,
+          "sd": 0,
+          "min": 192,
+          "max": 192
+        },
+        "deliveryCoins": {
+          "mean": 563,
+          "sd": 0,
+          "min": 563,
+          "max": 563
+        },
+        "paidMealCoins": {
+          "mean": 936,
+          "sd": 0,
+          "min": 936,
+          "max": 936
+        },
+        "deliveryFundingBarriers": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "knownFeasible": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "completedDuties": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "infeasibleDuties": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "unawareApplicable": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "performedProhibitions": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedVsNoDecree": {
+        "winPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "fedPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "marketFood": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        }
+      },
+      "firstNotice": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 256
+      },
+      "firstUnmetMeal": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 256,
+        "12": 0,
+        "none": 0
+      },
+      "firstFeedingOrStockDivergence": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 256
+      }
+    },
+    "harvest-duty": {
+      "fedTarget": {
+        "hits": 256,
+        "percent": 100,
+        "wilson95Percent": [
+          98.52156082782743,
+          100
+        ]
+      },
+      "stockTarget": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "jointWin": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "summaries": {
+        "fed": {
+          "mean": 468,
+          "sd": 0,
+          "min": 468,
+          "max": 468
+        },
+        "fedPercent": {
+          "mean": 97.5,
+          "sd": 0,
+          "min": 97.5,
+          "max": 97.5
+        },
+        "marketFood": {
+          "mean": 27,
+          "sd": 0,
+          "min": 27,
+          "max": 27
+        },
+        "poorWithStock": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "affordShort": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "supplyShort": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "delivered": {
+          "mean": 450,
+          "sd": 0,
+          "min": 450,
+          "max": 450
+        },
+        "guardsPaid": {
+          "mean": 96,
+          "sd": 0,
+          "min": 96,
+          "max": 96
+        },
+        "guardWageCoins": {
+          "mean": 192,
+          "sd": 0,
+          "min": 192,
+          "max": 192
+        },
+        "deliveryCoins": {
+          "mean": 563,
+          "sd": 0,
+          "min": 563,
+          "max": 563
+        },
+        "paidMealCoins": {
+          "mean": 936,
+          "sd": 0,
+          "min": 936,
+          "max": 936
+        },
+        "deliveryFundingBarriers": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "knownFeasible": {
+          "mean": 113.1484375,
+          "sd": 16.622021699906327,
+          "min": 61,
+          "max": 157
+        },
+        "completedDuties": {
+          "mean": 92.15234375,
+          "sd": 12.946808009024812,
+          "min": 47,
+          "max": 128
+        },
+        "infeasibleDuties": {
+          "mean": 184.6640625,
+          "sd": 9.95738161011276,
+          "min": 152,
+          "max": 209
+        },
+        "unawareApplicable": {
+          "mean": 86.1875,
+          "sd": 21.090932909200394,
+          "min": 30,
+          "max": 170
+        },
+        "performedProhibitions": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedVsNoDecree": {
+        "winPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "fedPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "marketFood": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        }
+      },
+      "firstNotice": {
+        "1": 256,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 0
+      },
+      "firstUnmetMeal": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 256,
+        "12": 0,
+        "none": 0
+      },
+      "firstFeedingOrStockDivergence": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 256
+      }
+    },
+    "morning-harvest-duty": {
+      "fedTarget": {
+        "hits": 256,
+        "percent": 100,
+        "wilson95Percent": [
+          98.52156082782743,
+          100
+        ]
+      },
+      "stockTarget": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "jointWin": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "summaries": {
+        "fed": {
+          "mean": 468,
+          "sd": 0,
+          "min": 468,
+          "max": 468
+        },
+        "fedPercent": {
+          "mean": 97.5,
+          "sd": 0,
+          "min": 97.5,
+          "max": 97.5
+        },
+        "marketFood": {
+          "mean": 27,
+          "sd": 0,
+          "min": 27,
+          "max": 27
+        },
+        "poorWithStock": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "affordShort": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "supplyShort": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "delivered": {
+          "mean": 450,
+          "sd": 0,
+          "min": 450,
+          "max": 450
+        },
+        "guardsPaid": {
+          "mean": 96,
+          "sd": 0,
+          "min": 96,
+          "max": 96
+        },
+        "guardWageCoins": {
+          "mean": 192,
+          "sd": 0,
+          "min": 192,
+          "max": 192
+        },
+        "deliveryCoins": {
+          "mean": 563,
+          "sd": 0,
+          "min": 563,
+          "max": 563
+        },
+        "paidMealCoins": {
+          "mean": 936,
+          "sd": 0,
+          "min": 936,
+          "max": 936
+        },
+        "deliveryFundingBarriers": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "knownFeasible": {
+          "mean": 66.9765625,
+          "sd": 9.080437791769517,
+          "min": 44,
+          "max": 94
+        },
+        "completedDuties": {
+          "mean": 56.421875,
+          "sd": 7.779419177875559,
+          "min": 34,
+          "max": 79
+        },
+        "infeasibleDuties": {
+          "mean": 82.125,
+          "sd": 3.530261335657633,
+          "min": 63,
+          "max": 89
+        },
+        "unawareApplicable": {
+          "mean": 42.8984375,
+          "sd": 9.801832436725649,
+          "min": 14,
+          "max": 71
+        },
+        "performedProhibitions": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedVsNoDecree": {
+        "winPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "fedPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "marketFood": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        }
+      },
+      "firstNotice": {
+        "1": 256,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 0
+      },
+      "firstUnmetMeal": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 256,
+        "12": 0,
+        "none": 0
+      },
+      "firstFeedingOrStockDivergence": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 256
+      }
+    },
+    "delivery-duty": {
+      "fedTarget": {
+        "hits": 256,
+        "percent": 100,
+        "wilson95Percent": [
+          98.52156082782743,
+          100
+        ]
+      },
+      "stockTarget": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "jointWin": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "summaries": {
+        "fed": {
+          "mean": 468,
+          "sd": 0,
+          "min": 468,
+          "max": 468
+        },
+        "fedPercent": {
+          "mean": 97.5,
+          "sd": 0,
+          "min": 97.5,
+          "max": 97.5
+        },
+        "marketFood": {
+          "mean": 27,
+          "sd": 0,
+          "min": 27,
+          "max": 27
+        },
+        "poorWithStock": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "affordShort": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "supplyShort": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "delivered": {
+          "mean": 450,
+          "sd": 0,
+          "min": 450,
+          "max": 450
+        },
+        "guardsPaid": {
+          "mean": 96,
+          "sd": 0,
+          "min": 96,
+          "max": 96
+        },
+        "guardWageCoins": {
+          "mean": 192,
+          "sd": 0,
+          "min": 192,
+          "max": 192
+        },
+        "deliveryCoins": {
+          "mean": 563.0078125,
+          "sd": 0.08821486691651266,
+          "min": 563,
+          "max": 564
+        },
+        "paidMealCoins": {
+          "mean": 936,
+          "sd": 0,
+          "min": 936,
+          "max": 936
+        },
+        "deliveryFundingBarriers": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "knownFeasible": {
+          "mean": 100.7421875,
+          "sd": 13.208580748595091,
+          "min": 56,
+          "max": 132
+        },
+        "completedDuties": {
+          "mean": 80.12890625,
+          "sd": 10.21163237008485,
+          "min": 41,
+          "max": 105
+        },
+        "infeasibleDuties": {
+          "mean": 86.5390625,
+          "sd": 7.012484490213878,
+          "min": 66,
+          "max": 106
+        },
+        "unawareApplicable": {
+          "mean": 52.71875,
+          "sd": 14.981786327692284,
+          "min": 18,
+          "max": 106
+        },
+        "performedProhibitions": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedVsNoDecree": {
+        "winPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "fedPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "marketFood": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        }
+      },
+      "firstNotice": {
+        "1": 256,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 0
+      },
+      "firstUnmetMeal": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 256,
+        "12": 0,
+        "none": 0
+      },
+      "firstFeedingOrStockDivergence": {
+        "1": 32,
+        "2": 103,
+        "3": 76,
+        "4": 38,
+        "5": 4,
+        "6": 3,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 0
+      }
+    },
+    "harvest-and-delivery-duties": {
+      "fedTarget": {
+        "hits": 256,
+        "percent": 100,
+        "wilson95Percent": [
+          98.52156082782743,
+          100
+        ]
+      },
+      "stockTarget": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "jointWin": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "summaries": {
+        "fed": {
+          "mean": 468,
+          "sd": 0,
+          "min": 468,
+          "max": 468
+        },
+        "fedPercent": {
+          "mean": 97.5,
+          "sd": 0,
+          "min": 97.5,
+          "max": 97.5
+        },
+        "marketFood": {
+          "mean": 27,
+          "sd": 0,
+          "min": 27,
+          "max": 27
+        },
+        "poorWithStock": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "affordShort": {
+          "mean": 12,
+          "sd": 0,
+          "min": 12,
+          "max": 12
+        },
+        "supplyShort": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "delivered": {
+          "mean": 450,
+          "sd": 0,
+          "min": 450,
+          "max": 450
+        },
+        "guardsPaid": {
+          "mean": 96,
+          "sd": 0,
+          "min": 96,
+          "max": 96
+        },
+        "guardWageCoins": {
+          "mean": 192,
+          "sd": 0,
+          "min": 192,
+          "max": 192
+        },
+        "deliveryCoins": {
+          "mean": 563,
+          "sd": 0,
+          "min": 563,
+          "max": 563
+        },
+        "paidMealCoins": {
+          "mean": 936,
+          "sd": 0,
+          "min": 936,
+          "max": 936
+        },
+        "deliveryFundingBarriers": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "knownFeasible": {
+          "mean": 213.91015625,
+          "sd": 20.477527959889084,
+          "min": 152,
+          "max": 264
+        },
+        "completedDuties": {
+          "mean": 172.28125,
+          "sd": 16.341904513772405,
+          "min": 124,
+          "max": 217
+        },
+        "infeasibleDuties": {
+          "mean": 271.18359375,
+          "sd": 12.57516554972304,
+          "min": 232,
+          "max": 302
+        },
+        "unawareApplicable": {
+          "mean": 138.90625,
+          "sd": 25.45074058015663,
+          "min": 74,
+          "max": 238
+        },
+        "performedProhibitions": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedVsNoDecree": {
+        "winPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "fedPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "marketFood": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        }
+      },
+      "firstNotice": {
+        "1": 256,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 0
+      },
+      "firstUnmetMeal": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 256,
+        "12": 0,
+        "none": 0
+      },
+      "firstFeedingOrStockDivergence": {
+        "1": 32,
+        "2": 103,
+        "3": 76,
+        "4": 38,
+        "5": 4,
+        "6": 3,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 0
+      }
+    },
+    "harvest-ban": {
+      "fedTarget": {
+        "hits": 143,
+        "percent": 55.859375,
+        "wilson95Percent": [
+          49.73446137629088,
+          61.81103403322014
+        ]
+      },
+      "stockTarget": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "jointWin": {
+        "hits": 0,
+        "percent": 0,
+        "wilson95Percent": [
+          0,
+          1.4784391721725851
+        ]
+      },
+      "summaries": {
+        "fed": {
+          "mean": 432.765625,
+          "sd": 23.9963998525269,
+          "min": 366,
+          "max": 468
+        },
+        "fedPercent": {
+          "mean": 90.15950520833333,
+          "sd": 4.999249969276434,
+          "min": 76.25,
+          "max": 97.5
+        },
+        "marketFood": {
+          "mean": 3.1875,
+          "sd": 6.755970489493124,
+          "min": 0,
+          "max": 32
+        },
+        "poorWithStock": {
+          "mean": 6.6328125,
+          "sd": 3.6090759096434404,
+          "min": 0,
+          "max": 12
+        },
+        "affordShort": {
+          "mean": 8.515625,
+          "sd": 3.4367891421853534,
+          "min": 0,
+          "max": 12
+        },
+        "supplyShort": {
+          "mean": 38.71875,
+          "sd": 26.969972409416844,
+          "min": 0,
+          "max": 114
+        },
+        "delivered": {
+          "mean": 390.953125,
+          "sd": 26.78552707684345,
+          "min": 321,
+          "max": 450
+        },
+        "guardsPaid": {
+          "mean": 96,
+          "sd": 0,
+          "min": 96,
+          "max": 96
+        },
+        "guardWageCoins": {
+          "mean": 192,
+          "sd": 0,
+          "min": 192,
+          "max": 192
+        },
+        "deliveryCoins": {
+          "mean": 491.578125,
+          "sd": 33.25554280794376,
+          "min": 406,
+          "max": 566
+        },
+        "paidMealCoins": {
+          "mean": 865.53125,
+          "sd": 47.9927997050538,
+          "min": 732,
+          "max": 936
+        },
+        "deliveryFundingBarriers": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "knownFeasible": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "completedDuties": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "infeasibleDuties": {
+          "mean": 0,
+          "sd": 0,
+          "min": 0,
+          "max": 0
+        },
+        "unawareApplicable": {
+          "mean": 50.7890625,
+          "sd": 10.933777377699714,
+          "min": 24,
+          "max": 98
+        },
+        "performedProhibitions": {
+          "mean": 132.0703125,
+          "sd": 8.682354062051578,
+          "min": 107,
+          "max": 150
+        }
+      },
+      "pairedVsNoDecree": {
+        "winPercentagePoints": {
+          "meanChange": 0,
+          "confidence95": [
+            0,
+            0
+          ]
+        },
+        "fedPercentagePoints": {
+          "meanChange": -7.340494791666666,
+          "confidence95": [
+            -7.9529029129030295,
+            -6.728086670430303
+          ]
+        },
+        "marketFood": {
+          "meanChange": -23.8125,
+          "confidence95": [
+            -24.64010638496291,
+            -22.98489361503709
+          ]
+        }
+      },
+      "firstNotice": {
+        "1": 256,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 0
+      },
+      "firstUnmetMeal": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 7,
+        "7": 29,
+        "8": 50,
+        "9": 53,
+        "10": 50,
+        "11": 66,
+        "12": 0,
+        "none": 0
+      },
+      "firstFeedingOrStockDivergence": {
+        "1": 0,
+        "2": 6,
+        "3": 70,
+        "4": 127,
+        "5": 41,
+        "6": 11,
+        "7": 1,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "none": 0
+      }
+    }
+  }
+}
