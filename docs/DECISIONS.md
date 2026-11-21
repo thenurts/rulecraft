@@ -70,3 +70,13 @@ Increment 2 verification on Node 24.22.3. `npm test` passed 28 tests in 3 files.
 - Keep checkpoint storage platform-specific and draft storage independent. Cross-runtime replay matched in Node and desktop Chromium. Physical mobile, native persistence, and save-size and recovery costs beyond the rule-free fixture remain open.
 
 See the [Task 01 kernel report](05_Task_01_Kernel.md) for final test counts, timing and acceptance evidence.
+
+## Task 02 — decree-engine semantic approval · 21 November 2026
+
+**Product owner confirmed:** immediate durable between-turn enactment effective from the next simulation turn; potentially stale citizen knowledge; current-authority-only enforcement; explicit authority/priority/tie precedence; `MAY` as permission rather than compulsion; no automatic passive enforcement. See [Task 02 semantic contract](06_Task_02_Law_Semantics.md) for implementation-level definitions and edge-case acceptance tests.
+
+**LAW-001 status:** Approved at principle level. The v1 modality/precedence/licence truth table and initial notice mechanism in `docs/06_Task_02_Law_Semantics.md` are **implementation proposals**, not separately playtested product decisions; escalate counterexamples rather than silently change rule semantics. `MUST` does not grant a missing licence. An action without an executable effect is unavailable in the player composer. 
+
+**Task 01 compatibility:** the published rule-free baseline and golden replay must remain reproducible or undergo an explicitly versioned, tested migration; no rewriting old save meanings. 
+
+**Remaining open:** citizen awareness/acceptance coefficients (Task 03); fairness under actor-ID allocation; timber income and campaign economics; native Android/iOS tests. All fixture numbers remain provisional.
