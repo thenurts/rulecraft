@@ -12,6 +12,7 @@
     "typecheck": "tsc -p packages/simulation/tsconfig.json && tsc",
     "test": "vitest run",
     "simulate": "node tools/task-01-run.mjs",
+    "simulate:law": "node tools/task-02-demo.mjs",
     "build": "npm run typecheck && vite build apps/web --outDir ../../dist --emptyOutDir",
     "preview": "vite preview apps/web --outDir ../../dist"
   },

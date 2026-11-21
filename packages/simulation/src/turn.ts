@@ -1,3 +1,5 @@
+import type { LegalDecision } from './law-book.ts';
+import { occupationAction, type ExecutableAction } from './law.ts';
 import { ResourceLedger, type Movement, type Transaction } from './ledger.ts';
 import {
   citizenAccount, compareIds, daySlots, nextTurn, villageAccounts,
@@ -5,16 +7,36 @@ import {
 } from './model.ts';
 import { keyedDraw, scaleDraw } from './rng.ts';
 
-const workByOccupation = {
-  farmer: 'harvest-food', forester: 'cut-timber', merchant: 'market-delivery', guard: 'patrol',
-} as const satisfies Record<Occupation, string>;
-
-type Work = typeof workByOccupation[Occupation];
-type Action = Work | 'rest';
+type Work = typeof occupationAction[Occupation];
+type Action = ExecutableAction;
 type EventAction = Action | 'guard-wage' | 'resident-meal' | 'sleep-recovery' | 'fixture-genesis';
 type Reason = 'occupation-mismatch' | 'unavailable-field' | 'unavailable-forest' | 'capacity-contention' |
   'no-stock' | 'insufficient-funds' | 'fatigue-limit';
 type Status = 'not-eligible' | 'not-feasible-at-selection' | 'blocked-at-execution' | 'completed' | 'partial';
+
+export interface LegalCandidate {
+  readonly actionId: Action;
+  readonly actual: LegalDecision;
+  readonly perceived: LegalDecision;
+  readonly noticeEventIds: readonly string[];
+  readonly pressure: number;
+}
+
+interface CandidateEvidence extends LegalCandidate {
+  readonly weight: number;
+  readonly selectionBarrier: Reason | null;
+  readonly perceivedDutyOutcome: 'infeasible-at-selection' | 'not-chosen' | 'blocked-at-execution' |
+    'partial-at-execution' | 'completed' | null;
+}
+
+type EvaluateLegal = (
+  actor: Citizen, turn: number, slot: DaySlot, action: Action, openingQuantity: (id: string) => number,
+) => LegalCandidate;
+
+type Intent = {
+  readonly action: Action;
+  readonly legal?: readonly Omit<CandidateEvidence, 'perceivedDutyOutcome'>[];
+};
 
 export interface VillageEvent {
   readonly id: string;
@@ -28,6 +50,7 @@ export interface VillageEvent {
   readonly transactionId: string | null;
   readonly fatigue: Readonly<{ before: number; after: number }> | null;
   readonly hunger: Readonly<{ before: number; after: number }> | null;
+  readonly legalChoice?: readonly CandidateEvidence[];
 }
 
 export interface DailyMetrics {
@@ -64,6 +87,7 @@ function limit(record: Citizen, fatigue: number): Citizen {
 export function resolveDay(
   state: VillageState, fixture: VillageFixture, seed: number,
   chooseForTest?: (actor: Citizen, slot: DaySlot) => Action | undefined,
+  evaluateLegal?: EvaluateLegal,
 ): ResolvedDay {
   const next = nextTurn(state.turn, fixture);
   if (next === null) throw new RangeError('The fixture is complete.');
@@ -81,6 +105,7 @@ export function resolveDay(
   function emit(
     phase: Phase, actor: Citizen, action: EventAction, status: Status,
     plan: WorkPlan, movements: readonly Movement[] = [], updated?: Citizen,
+    legalChoice?: readonly CandidateEvidence[],
   ): void {
     const id = `event.${turn}.${events.length + 1}`;
     let transaction: Transaction | null = null;
@@ -94,6 +119,7 @@ export function resolveDay(
       id, turn, phase, actorId: actor.id, action, status, ...plan, transactionId: transaction?.id ?? null,
       fatigue: updated ? { before: actor.fatigue, after: updated.fatigue } : null,
       hunger: updated ? { before: actor.hunger, after: updated.hunger } : null,
+      ...(legalChoice && { legalChoice }),
     });
   }
 
@@ -147,10 +173,22 @@ export function resolveDay(
     return { reason, quantity };
   }
 
-  function performWork(actor: Citizen, work: Work, phase: DaySlot, plan: WorkPlan): Citizen {
+  function evidence(intent: Intent, status: 'completed' | 'partial' | 'blocked-at-execution') {
+    return intent.legal?.map((candidate): CandidateEvidence => {
+      let perceivedDutyOutcome: CandidateEvidence['perceivedDutyOutcome'] = null;
+      if (candidate.perceived.status === 'required') {
+        perceivedDutyOutcome = candidate.selectionBarrier ? 'infeasible-at-selection'
+          : candidate.actionId !== intent.action ? 'not-chosen'
+          : status === 'partial' ? 'partial-at-execution' : status;
+      }
+      return { ...candidate, perceivedDutyOutcome };
+    });
+  }
+
+  function performWork(actor: Citizen, work: Work, phase: DaySlot, plan: WorkPlan, intent: Intent): Citizen {
     const { quantity, reason } = plan;
     if (quantity === 0) {
-      emit(phase, actor, work, 'blocked-at-execution', plan);
+      emit(phase, actor, work, 'blocked-at-execution', plan, [], undefined, evidence(intent, 'blocked-at-execution'));
       return actor;
     }
     let movements: Movement[] = [];
@@ -164,38 +202,58 @@ export function resolveDay(
     }
     const updated = limit(actor, actor.fatigue +
       (work === 'harvest-food' ? behaviour.harvestFatigue : behaviour.otherWorkFatigue));
-    emit(phase, actor, work, reason === null ? 'completed' : 'partial', plan, movements, updated);
+    const status = reason === null ? 'completed' : 'partial';
+    emit(phase, actor, work, status, plan, movements, updated, evidence(intent, status));
     return updated;
   }
 
   for (const phase of daySlots) {
     const slots = { ...configured };
-    // All choices read the slot-opening balances before any action executes.
-    const intents = citizens.map((actor): Action => {
+    // All choices read the same opening balances before execution mutates the ledger.
+    const opening = evaluateLegal && new Map(ledger.balances().map(({ id, quantity }) => [id, quantity]));
+    const openingQuantity = (id: string): number => {
+      const quantity = opening?.get(id);
+      if (quantity === undefined) throw new Error(`Unknown slot-opening account ${id}.`);
+      return quantity;
+    };
+    const intents = citizens.map((actor): Intent => {
       const injected = chooseForTest?.(actor, phase);
-      if (injected !== undefined) return injected;
-      const work = workByOccupation[actor.occupation];
+      if (injected !== undefined) return { action: injected };
+      const work = occupationAction[actor.occupation];
       const plan = planWork(actor, work, slots[work]);
+      const workLaw = evaluateLegal?.(actor, turn, phase, work, openingQuantity);
+      const restLaw = evaluateLegal?.(actor, turn, phase, 'rest', openingQuantity);
+      const base = behaviour.workWeight === 0 ? 0 : behaviour.workWeight + actor.workDisposition;
+      const workWeight = plan.quantity > 0 ? Math.max(base > 0 ? 1 : 0, base + (workLaw?.pressure ?? 0)) : 0;
+      const restWeight = Math.max(1, behaviour.restWeight + (restLaw?.pressure ?? 0));
+      const selectionBarrier = plan.quantity === 0 ? plan.reason : null;
+      const legal = workLaw && restLaw && [workLaw, restLaw].some((rule) =>
+        rule.actual.considered.length > 0 || rule.perceived.considered.length > 0)
+        ? [{ ...workLaw, weight: workWeight, selectionBarrier },
+          { ...restLaw, weight: restWeight, selectionBarrier: null }]
+        : undefined;
+
       if (plan.quantity === 0) {
         emit(phase, actor, work, 'not-feasible-at-selection', plan);
-        return 'rest';
+        return { action: 'rest', legal };
       }
-      const weight = behaviour.workWeight === 0 ? 0 : behaviour.workWeight + actor.workDisposition;
       const draw = keyedDraw({ seed, turn, slot: phase, actorId: actor.id, subsystem: 'choice', drawIndex: 0 });
-      return scaleDraw(draw, weight + behaviour.restWeight) < weight ? work : 'rest';
+      const action = scaleDraw(draw, workWeight + restWeight) < workWeight ? work : 'rest';
+      return { action, legal };
     });
 
     for (const [index, actor] of citizens.entries()) {
-      const action = intents[index];
+      const intent = intents[index];
+      const { action } = intent;
       if (action === 'rest') {
         const updated = limit(actor, actor.fatigue - behaviour.restRecovery);
-        emit(phase, actor, action, 'completed', { quantity: 0, reason: null }, [], updated);
+        emit(phase, actor, action, 'completed', { quantity: 0, reason: null }, [], updated, evidence(intent, 'completed'));
         citizens[index] = updated;
-      } else if (action !== workByOccupation[actor.occupation]) {
+      } else if (action !== occupationAction[actor.occupation]) {
         emit(phase, actor, action, 'not-eligible', { quantity: 0, reason: 'occupation-mismatch' });
       } else {
         const plan = planWork(actor, action, slots[action]);
-        citizens[index] = performWork(actor, action, phase, plan);
+        citizens[index] = performWork(actor, action, phase, plan, intent);
         if (plan.quantity > 0) slots[action]--;
       }
     }

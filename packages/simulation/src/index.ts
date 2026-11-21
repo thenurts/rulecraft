@@ -21,3 +21,9 @@ export {
   auditSnapshot, canonicalJson, encodeSnapshot, loadSnapshot, resolveNextTurn, snapshotHashes, startVillage,
 } from './snapshot.ts';
 export type { VillageSnapshot } from './snapshot.ts';
+export { actionRegistry, lawRegistryVersion, listLawTokens, predicateRegistry, renderLaw, updateLawDraft, validateLaw, villageScope } from './law.ts';
+export type { ExecutableAction, LawAction, LawAst, LawDraft, LawIssue, Modality, Predicate, TargetSelector } from './law.ts';
+export { authoritativeLaws, perceivedLaws, resolveLegality, LawError } from './law-book.ts';
+export type { LawBook, LawCommand, LawRef, LawVersion, LegalDecision, LegalFrame } from './law-book.ts';
+export { advanceLawGame, confirmLaw, encodeLawGame, lawGameHashes, loadLawGame, notifyLaw, startLawGame } from './law-game.ts';
+export type { LawGame, LawPolicy } from './law-game.ts';
