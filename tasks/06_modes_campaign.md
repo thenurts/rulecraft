@@ -1,0 +1,3 @@
+# Task 06 - Junior/Full, Campaign/Sandbox and first-playable gate
+
+Implement a single engine with data-driven mode profiles, both campaign and sandbox in each, configured initial decree vocabulary, first Hungry Village scenario, end-state detection, tutorial/hints and difficulty tuning. Same decree semantics under identical shared settings; reject unsupported mode conversion. Run acceptance table from `docs/03_Vertical_Slice.md` and collect measured mobile performance and user-playtest findings where actually available. Deliver a gap list instead of asserting readiness from automated tests alone.
