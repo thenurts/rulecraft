@@ -23,6 +23,7 @@ export interface LawVersion extends LawRef {
 export interface LawNotice extends LawRef {
   readonly citizenId: string;
   readonly learnedAtTurn: number;
+  readonly learnedAtPhase?: 'dawn' | 'warning';
   readonly eventId: string;
 }
 
@@ -58,10 +59,14 @@ export function authoritativeLaws(book: LawBook, turn: number): readonly LawVers
   return [...latest.values()];
 }
 
+export function noticeKnownAt(notice: LawNotice, turn: number): boolean {
+  return notice.learnedAtTurn < turn || (notice.learnedAtTurn === turn && notice.learnedAtPhase === 'dawn');
+}
+
 export function perceivedLaws(book: LawBook, citizenId: string, turn: number): readonly LawVersion[] {
   const learned = new Map<string, number>();
   for (const notice of book.notices) {
-    if (notice.citizenId === citizenId && notice.learnedAtTurn < turn) learned.set(notice.lawId, notice.version);
+    if (notice.citizenId === citizenId && noticeKnownAt(notice, turn)) learned.set(notice.lawId, notice.version);
   }
   return book.versions.filter(({ lawId, version, effectiveFromTurn }) =>
     learned.get(lawId) === version && effectiveFromTurn <= turn);
@@ -124,6 +129,7 @@ export function prepareLawCommand(book: LawBook, turn: number, input: unknown, a
 
 export function addLawNotice(
   book: LawBook, turn: number, citizenId: string, lawId: string, version: number,
+  phase?: LawNotice['learnedAtPhase'],
 ): LawBook {
   if (!book.versions.some((law) => law.lawId === lawId && law.version === version && law.confirmedAtTurn <= turn)) {
     throw new LawError('UNKNOWN_LAW_VERSION');
@@ -132,7 +138,7 @@ export function addLawNotice(
   if (prior?.version === version) return book;
   if (prior && prior.version > version) throw new LawError('OBSOLETE_NOTICE');
   const notice = Object.freeze({
-    citizenId, lawId, version, learnedAtTurn: turn, eventId: `notice.${citizenId}.${lawId}.${version}`,
+    citizenId, lawId, version, learnedAtTurn: turn, ...(phase && { learnedAtPhase: phase }), eventId: `notice.${citizenId}.${lawId}.${version}`,
   });
   return Object.freeze({ ...book, notices: Object.freeze([...book.notices, notice]) });
 }

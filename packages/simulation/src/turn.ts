@@ -29,7 +29,7 @@ interface CandidateEvidence extends LegalCandidate {
     'partial-at-execution' | 'completed' | null;
 }
 
-type EvaluateLegal = (
+export type EvaluateLegal = (
   actor: Citizen, turn: number, slot: DaySlot, action: Action, openingQuantity: (id: string) => number,
 ) => LegalCandidate;
 

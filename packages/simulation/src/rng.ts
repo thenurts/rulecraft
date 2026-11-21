@@ -5,7 +5,7 @@ export const rngVersion = 'fnv1a32-fmix32-v1';
 export interface DrawKey {
   readonly seed: number;
   readonly turn: number;
-  readonly slot: Phase;
+  readonly slot: Phase | 'dawn';
   readonly actorId: string;
   readonly subsystem: string;
   readonly drawIndex: number;
@@ -23,7 +23,7 @@ export function keyedDraw({ seed, turn, slot, actorId, subsystem, drawIndex }: D
   if (!token.test(actorId) || !token.test(subsystem)) {
     throw new RangeError('RNG actor and subsystem IDs must be lowercase ASCII tokens.');
   }
-  if (slot !== 'genesis' && slot !== 'morning' && slot !== 'afternoon' && slot !== 'dusk') {
+  if (slot !== 'dawn' && slot !== 'genesis' && slot !== 'morning' && slot !== 'afternoon' && slot !== 'dusk') {
     throw new RangeError('Invalid RNG slot.');
   }
   const bytes = JSON.stringify([
