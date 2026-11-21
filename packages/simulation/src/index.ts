@@ -13,3 +13,7 @@ export type {
   Account, Citizen, DaySlot, Occupation, Phase, Resource, VillageFixture, VillageState,
 } from './model.ts';
 export { keyedDraw, rngVersion, scaleDraw } from './rng.ts';
+export { auditResources } from './ledger.ts';
+export type { ResourceAudit, Transaction } from './ledger.ts';
+export { advanceVillage } from './turn.ts';
+export type { DailyMetrics, ResolvedDay, VillageEvent } from './turn.ts';
