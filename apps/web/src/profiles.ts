@@ -126,8 +126,24 @@ export function makeSetup(selection: StartSelection): RunSetup {
     scenario: definition.id, scenarioVersion: definition.version, preset, seed });
 }
 
+// Task 04 preview saves have no scenario metadata. Their starting parameters are
+// fixed to the original fixture and default v3/v4 society and law settings.
+// A save from a newer preset must not be relabelled as a legacy preview.
+const legacyPreviewPolicy: LawPolicy = { changesPerTurn: 2, mustWeight: 60, mustNotWeight: 55 };
+
+function isLegacyPreview(game: SocietyGame): boolean {
+  return (game.versions.schemaVersion === 3 || game.versions.schemaVersion === 4) &&
+    validSeed(game.seed) &&
+    canonicalJson(game.fixture) === canonicalJson(presets['standard-village-v1'].fixture) &&
+    canonicalJson(game.config) === canonicalJson(societyDefaults) &&
+    canonicalJson(game.policy) === canonicalJson(legacyPreviewPolicy);
+}
+
 export function verifiedSetup(selection: Selection, game: SocietyGame, input: unknown): RunSetup | undefined {
-  if (input === undefined) return undefined;
+  if (input === undefined) {
+    if (!isLegacyPreview(game)) throw new Error('Missing scenario setup is not a valid historical preview.');
+    return undefined;
+  }
   if (!input || typeof input !== 'object') throw new Error('Invalid saved scenario metadata.');
   const { preset, seed } = input as Partial<RunSetup>;
   if (!preset || !validSeed(seed)) throw new Error('Invalid saved preset or seed.');
