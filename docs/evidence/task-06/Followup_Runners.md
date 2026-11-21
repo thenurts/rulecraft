@@ -391,3 +391,63 @@ try {
   await browser.close();
 }
 ```
+
+## Matched meal and affordability follow-up
+
+Save as `tools/task-06-meal-pairs.mjs`. It pairs each resident meal by seed, day and citizen within the selected fixture. Run it with Node and capture standard output.
+
+```js
+import assert from 'node:assert/strict';
+import { advanceSociety, auditSnapshot, confirmLaw, startSociety, villageScope } from '@rulecraft/simulation';
+import baseline from '../fixtures/task-01-village.json' with { type: 'json' };
+const fixture = { ...baseline, population: { farmer: 21, forester: 6, merchant: 5, guard: 8 } };
+const groups = Object.fromEntries(Object.keys(fixture.population).map((role) =>
+  [role, { baselineFed: 0, deliveryFed: 0, baselineFundsShort: 0, deliveryFundsShort: 0, gainedFundsShortAfterMorePriorMeals: 0,
+    treatmentOnlyFundsShort: 0, controlOnlyFundsShort: 0, treatmentOnlyFundsShortWithStock: 0,
+    sameFundsShortWithAdditionalStock: 0 }]));
+let example = null;
+function simulate(seed, delivery) {
+  let game = startSociety(fixture, seed);
+  if (delivery) game = confirmLaw(game, { operation: 'CREATE', lawId: 'delivery-duty', commandId: 'confirm-delivery-duty',
+    ast: { ...villageScope, targetSelector: 'merchant', actionId: 'market-delivery', modality: 'MUST' } }).game;
+  while (game.state.turn < fixture.days) game = advanceSociety(game);
+  auditSnapshot(game);
+  return game;
+}
+for (let seed = 41000; seed <= 41255; seed++) {
+  const control = simulate(seed, false);
+  const delivery = simulate(seed, true);
+  const key = ({ turn, actorId }) => `${turn}:${actorId}`;
+  const treatedMeals = new Map(delivery.events.filter(({ foodAccess }) => foodAccess).map((event) => [key(event), event]));
+  const citizens = new Map(control.state.citizens.map(({ id, occupation }) => [id, occupation]));
+  const histories = new Map();
+  for (const before of control.events.filter(({ foodAccess }) => foodAccess)) {
+    const after = treatedMeals.get(key(before));
+    assert.ok(after);
+    const role = citizens.get(before.actorId);
+    const group = groups[role];
+    const history = histories.get(before.actorId) ?? { controlBought: 0, deliveryBought: 0 };
+    group.baselineFed += before.quantity;
+    group.deliveryFed += after.quantity;
+    group.baselineFundsShort += before.foodAccess.fundingShortfall;
+    group.deliveryFundsShort += after.foodAccess.fundingShortfall;
+    if (after.foodAccess.fundingShortfall > 0 && before.foodAccess.fundingShortfall === 0) {
+      group.treatmentOnlyFundsShort++;
+      if (after.foodAccess.marketAvailableBefore > 0) group.treatmentOnlyFundsShortWithStock++;
+      if (history.deliveryBought > history.controlBought) {
+        group.gainedFundsShortAfterMorePriorMeals++;
+        if (!example && role === 'forester') example = { seed, history: { ...history }, control: before, delivery: after };
+      }
+    }
+    if (before.foodAccess.fundingShortfall > 0 && after.foodAccess.fundingShortfall === 0) group.controlOnlyFundsShort++;
+    if (before.foodAccess.fundingShortfall > 0 && after.foodAccess.fundingShortfall > 0 &&
+        before.foodAccess.marketAvailableBefore === 0 && after.foodAccess.marketAvailableBefore > 0) {
+      group.sameFundsShortWithAdditionalStock++;
+    }
+    history.controlBought += before.quantity;
+    history.deliveryBought += after.quantity;
+    histories.set(before.actorId, history);
+  }
+}
+console.log(JSON.stringify({ seeds: 256, groups, example }, null, 2));
+```

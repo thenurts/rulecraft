@@ -41,7 +41,7 @@ The fixture, four arms and primary agency check were locked before running the h
 
 The unconditional delivery duty raised feeding from 376.88 to 397.97 of 480 resident-days (78.52% to 82.91%). Both arms harvested all 450 field units. The duty moved 21.33 more units into the market and left 21.33 fewer units with producers. It created 5.33 more successful delivery jobs, paid 5.33 extra merchant-fee coins and 21.33 extra producer coins through recorded market transfers, and led to 42.17 more coins in resident-to-market meal payments. Guard wages stayed at 192 coins and there were zero delivery funding barriers in both arms. This is a distribution effect. Closing market stock averaged 0.04 without a decree and 0.28 with the duty.
 
-The affordability cost is real. Recorded affordability shortfalls rose from 3.09 to 4.62, and cases of insufficient funds while the market still held food rose from 2.17 to 3.70. More meals reached the market. Some missed meals that had previously been masked by stock shortage appeared as purchasing-power failures. Aggregate counts do not identify which individual meal would have changed category in the absence of a decree. The six foresters still lack timber earnings. The measured benefit is fewer missed meals overall, driven by delivery rather than improved affordability.
+The affordability cost is real. Recorded affordability shortfalls rose from 3.09 to 4.62 per trial, and cases of insufficient funds while the market still held food rose from 2.17 to 3.70. Pairing every meal by seed, day and citizen shows that foresters accounted for 350 of the 391 additional affordability shortfall units across the holdout. All 407 forester meals with a funding shortfall only in the delivery arm occurred after that resident had bought more meals earlier in that arm. The opposite transition occurred 57 times. Foresters nevertheless ate 579 more meals in aggregate. In seed 41000, one forester had bought ten meals under the duty and nine without it by day 11. The treated resident was out of money while the market still held 23 units, and the matched control resident could buy that day's meal. Separately, 68 already-unaffordable forester meals in both arms also had stock present only in the delivery arm. This distinguishes earlier depletion of fixed household cash from cases where delivery exposed a pre-existing lack of funds. [Matched meal counts and witness](evidence/task-06/fixture-meal-pairs.json)
 
 ### Recorded choice and ledger witness
 
@@ -95,7 +95,7 @@ Five samples per operation make p95 the maximum observed. These storage timings 
 
 The baseline regression rerun passed 151 unit and integration tests, 19 Chromium browser tests, standalone type checks and the production build. Both fixture cohorts passed ledger audits in every arm. The isolated storage fault-injection and provenance checks passed.
 
-Extract the two programs from the [research-runner appendix](evidence/task-06/Followup_Runners.md) into `tools/` from the repository root. Run with Node 24.22.3. The output directory is local.
+Extract the programs from the [research-runner appendix](evidence/task-06/Followup_Runners.md) into `tools/` from the repository root. Run with Node 24.22.3. The output directory is local.
 
 ```sh
 node tools/task-06-fixture-research.mjs explore \
@@ -104,6 +104,7 @@ node tools/task-06-fixture-research.mjs explore \
   five-merchants-farmers-v1,five-merchants-farmers-low-market-v1
 node tools/task-06-fixture-research.mjs holdout five-merchants-farmers-v1 delivery
 node tools/task-06-fixture-research.mjs trace five-merchants-farmers-v1 delivery 20000
+node tools/task-06-meal-pairs.mjs
 RULECRAFT_CHROMIUM=/usr/bin/chromium node tools/task-06-save-research.mjs
 ```
 
