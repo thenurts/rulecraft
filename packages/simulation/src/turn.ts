@@ -46,7 +46,7 @@ export interface UtilityEvidence {
 interface ChoiceEvidence {
   readonly draw: number | null;
   readonly candidates: readonly Readonly<{
-    actionId: Action; base: number; pressure: number; utility: UtilityEvidence;
+    actionId: Action; base: number; disposition: number; pressure: number; utility: UtilityEvidence;
     weight: number; selectionBarrier: Reason | null;
   }>[];
 }
@@ -298,8 +298,9 @@ export function resolveDay(
         : undefined;
       const draw = physical ? keyedDraw({ seed, turn, slot: phase, actorId: actor.id, subsystem: 'choice', drawIndex: 0 }) : null;
       const choice = workUtility && restUtility ? { draw, candidates: [
-        { actionId: work, base, pressure: workLaw?.pressure ?? 0, utility: workUtility, weight: workWeight, selectionBarrier },
-        { actionId: 'rest' as const, base: behaviour.restWeight, pressure: restLaw?.pressure ?? 0,
+        { actionId: work, base: behaviour.workWeight, disposition: base - behaviour.workWeight,
+          pressure: workLaw?.pressure ?? 0, utility: workUtility, weight: workWeight, selectionBarrier },
+        { actionId: 'rest' as const, base: behaviour.restWeight, disposition: 0, pressure: restLaw?.pressure ?? 0,
           utility: restUtility, weight: restWeight, selectionBarrier: null },
       ] } : undefined;
       if (!physical) emit(phase, actor, work, 'not-feasible-at-selection', plan);

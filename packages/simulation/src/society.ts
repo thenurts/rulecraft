@@ -8,6 +8,7 @@ import {
   allocationDraw, attitudeKey, behaviourDefaults, initialiseAttitudes, settleExperiences,
   socialMetrics, sortedAttitudes, utilityParts, type Attitude, type BehaviourPolicy, type Experience,
 } from './social-behaviour.ts';
+import { patrolDefaults, resolvePatrols, type Investigation, type PatrolPolicy, type PatrolReport } from './social-patrol.ts';
 import { resolveDay, type AllocationEvidence } from './turn.ts';
 
 const versions = { schemaVersion: 3, engineVersion: 'headless-society-v1', contentVersion, rngVersion,
@@ -15,9 +16,11 @@ const versions = { schemaVersion: 3, engineVersion: 'headless-society-v1', conte
 
 export interface SocietyConfig extends NewsPolicy {
   readonly behaviour: BehaviourPolicy;
+  readonly patrol: PatrolPolicy;
 }
 export const societyDefaults: Readonly<SocietyConfig> = Object.freeze({
   bulletinBp: 1_500, peerBp: 2_500, contacts: 3, behaviour: Object.freeze(behaviourDefaults),
+  patrol: Object.freeze(patrolDefaults),
 });
 
 export interface SocietyDay {
@@ -26,6 +29,7 @@ export interface SocietyDay {
   readonly experiences: readonly Experience[];
   readonly allocations: readonly AllocationEvidence[];
   readonly metrics: ReturnType<typeof socialMetrics>;
+  readonly patrol: PatrolReport;
 }
 
 export interface SocietyGame extends LawRun {
@@ -49,10 +53,18 @@ export function startSociety(fixture: unknown, seed: number, config: SocietyConf
   if (!isRecord(config.behaviour)) throw new TypeError('Invalid behaviour settings.');
   const behaviour = Object.fromEntries(Object.keys(behaviourDefaults).map((key) =>
     [key, configNumber(config.behaviour, key, 100)])) as BehaviourPolicy;
+  if (!isRecord(config.patrol)) throw new TypeError('Invalid patrol settings.');
+  const patrol: PatrolPolicy = {
+    encountersPerPatrol: configNumber(config.patrol, 'encountersPerPatrol', 20),
+    detectionBp: configNumber(config.patrol, 'detectionBp', 10_000),
+    warningRiskWeight: configNumber(config.patrol, 'warningRiskWeight', 100),
+    warningMemoryDays: configNumber(config.patrol, 'warningMemoryDays', 30),
+    warningTrustLoss: configNumber(config.patrol, 'warningTrustLoss', 100),
+  };
   const settings = {
     bulletinBp: configNumber(config, 'bulletinBp', 10_000),
     peerBp: configNumber(config, 'peerBp', 10_000),
-    contacts: configNumber(config, 'contacts', 12), behaviour,
+    contacts: configNumber(config, 'contacts', 12), behaviour, patrol,
   };
   const game = startLawGame(fixture, seed, policy);
   return { ...game, versions: { ...versions }, config: settings,
@@ -66,16 +78,29 @@ export function advanceSociety(game: SocietyGame): SocietyGame {
   const experiences: Experience[] = [];
   const attitudes = initialiseAttitudes(informed, experiences);
   const allocations: AllocationEvidence[] = [];
+  const recentWarnings = new Map<string, Investigation>();
+  for (const previous of game.societyDays) {
+    if (turn - previous.turn > game.config.patrol.warningMemoryDays) continue;
+    for (const inspection of previous.patrol.investigations) {
+      if (inspection.detected) recentWarnings.set(`${inspection.act.citizenId}:${inspection.act.action}`, inspection);
+    }
+  }
   const day = resolveDay(game.state, game.fixture, game.seed, undefined, lawEvaluator(informed), {
     rank: (phase, resource, actorId) => allocationDraw(game.seed, turn, phase, resource, actorId),
     allocation: (record) => allocations.push(record),
-    utility: (actor, action, quantities, law, pressure) => utilityParts(actor, action, game.fixture,
-      game.config.behaviour, quantities, pressure, law ? attitudes.get(attitudeKey(actor.id, law))?.score ?? 0 : 0),
+    utility: (actor, action, quantities, law, pressure) => {
+      const base = utilityParts(actor, action, game.fixture, game.config.behaviour, quantities, pressure,
+        law ? attitudes.get(attitudeKey(actor.id, law))?.score ?? 0 : 0);
+      const remembered = pressure < 0 ? recentWarnings.get(`${actor.id}:${action}`) : undefined;
+      return remembered ? { ...base, risk: -game.config.patrol.warningRiskWeight, riskEventIds: [remembered.id] } : base;
+    },
   });
-  const settled = settleExperiences(informed, day, attitudes, experiences);
+  const patrol = resolvePatrols(dawn.book, day, game.seed, game.config.patrol);
+  const settled = settleExperiences(informed, day, attitudes, experiences, patrol.report.investigations);
   return appendDay({
-    ...informed, attitudes: sortedAttitudes(attitudes),
-    societyDays: [...game.societyDays, { turn, news: dawn.news, experiences, allocations, metrics: socialMetrics(day) }],
+    ...informed, book: patrol.book, attitudes: sortedAttitudes(attitudes),
+    societyDays: [...game.societyDays, { turn, news: dawn.news, experiences, allocations,
+      metrics: socialMetrics(day), patrol: patrol.report }],
   }, settled);
 }
 

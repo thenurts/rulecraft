@@ -3,6 +3,7 @@ import type { LawRef } from './law-book.ts';
 import { citizenAccount, compareIds, villageAccounts, type Citizen, type VillageFixture, type Phase } from './model.ts';
 import { keyedDraw } from './rng.ts';
 import type { SocietyGame } from './society.ts';
+import type { Investigation } from './social-patrol.ts';
 import type { ResolvedDay, UtilityEvidence, VillageEvent } from './turn.ts';
 
 export const behaviourDefaults = {
@@ -19,7 +20,7 @@ export interface Attitude extends LawRef {
 export interface Experience {
   readonly citizenId: string;
   readonly sourceEventId: string;
-  readonly component: 'expected-benefit' | 'expected-cost' | 'disposition' | 'meal-access' | 'exertion';
+  readonly component: 'expected-benefit' | 'expected-cost' | 'disposition' | 'meal-access' | 'exertion' | 'patrol-warning';
   readonly law: LawRef | null;
   readonly change: number;
 }
@@ -98,16 +99,26 @@ export function initialiseAttitudes(game: SocietyGame, experiences: Experience[]
 
 export function settleExperiences(
   game: SocietyGame, day: ResolvedDay, attitudes: Map<string, Attitude>, experiences: Experience[],
+  investigations: readonly Investigation[],
 ) {
   const meals = new Map(day.events.filter(({ action }) => action === 'resident-meal').map((event) => [event.actorId, event]));
   const citizens = day.state.citizens.map((citizen) => {
     const meal = meals.get(citizen.id);
     if (!meal) return citizen;
     const requested = meal.status === 'completed' ? game.config.behaviour.mealTrustGain : -game.config.behaviour.unmetMealTrustLoss;
-    const trust = clamp(citizen.trust + requested, 0, 100);
+    let trust = clamp(citizen.trust + requested, 0, 100);
     if (trust !== citizen.trust) experiences.push({
       citizenId: citizen.id, sourceEventId: meal.id, law: null, component: 'meal-access', change: trust - citizen.trust,
     });
+    for (const inspection of investigations) {
+      if (inspection.disposition === null || inspection.act.citizenId !== citizen.id) continue;
+      const next = clamp(trust - game.config.patrol.warningTrustLoss, 0, 100);
+      if (trust !== next) experiences.push({
+        citizenId: citizen.id, sourceEventId: inspection.id, law: inspection.act.law,
+        component: 'patrol-warning', change: next - trust,
+      });
+      trust = next;
+    }
     return { ...citizen, trust };
   });
 

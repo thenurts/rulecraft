@@ -6,6 +6,7 @@ import {
 } from '@rulecraft/simulation';
 import { buildContacts, learnAtDawn } from './social-news.ts';
 
+const newsOnly = { ...societyDefaults, patrol: { ...societyDefaults.patrol, encountersPerPatrol: 0 } };
 const command = {
   operation: 'CREATE', lawId: 'field', commandId: 'create-field',
   ast: { ...villageScope, targetSelector: 'farmer', actionId: 'harvest-food', modality: 'MUST_NOT' },
@@ -17,7 +18,7 @@ test('zero reach, no informed source and isolated citizens give no unsupported l
     { bulletinBp: 0, peerBp: 10_000, contacts: 3 },
     { bulletinBp: 0, peerBp: 10_000, contacts: 0 },
   ]) {
-    const game = confirmLaw(startSociety(fixture, 42, { ...societyDefaults, ...config }), command).game;
+    const game = confirmLaw(startSociety(fixture, 42, { ...newsOnly, ...config }), command).game;
     const initial = config.contacts === 0 ? notifyLaw(game, 'citizen.0001', 'field', 1) : game;
     const day = advanceSociety(initial);
     expect(day.book.notices).toEqual(initial.book.notices);
@@ -40,7 +41,7 @@ test('a bulletin links to the confirmed version and known dawn learning applies 
 });
 
 test('peer-only learning refers to one named prior-day notice and never cascades in the same dawn', () => {
-  let game = confirmLaw(startSociety(fixture, 42, { ...societyDefaults, bulletinBp: 0, peerBp: 10_000, contacts: 1 }), command).game;
+  let game = confirmLaw(startSociety(fixture, 42, { ...newsOnly, bulletinBp: 0, peerBp: 10_000, contacts: 1 }), command).game;
   game = notifyLaw(game, 'citizen.0001', 'field', 1);
   const one = advanceSociety(game);
   expect(one.societyDays[0].news).toEqual([expect.objectContaining({
