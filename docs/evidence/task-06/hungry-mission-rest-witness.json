@@ -1,0 +1,428 @@
+{
+  "seed": 52001,
+  "policy": "rest65",
+  "control": {
+    "day": {
+      "turn": 4,
+      "residentsFed": 32,
+      "residentsUnmet": 8,
+      "foodConsumed": 32,
+      "foodDelivered": 32,
+      "guardsPaid": 8,
+      "marketFood": 0
+    },
+    "nextDay": {
+      "turn": 5,
+      "residentsFed": 32,
+      "residentsUnmet": 8,
+      "foodConsumed": 32,
+      "foodDelivered": 32,
+      "guardsPaid": 8,
+      "marketFood": 0
+    },
+    "metrics": {
+      "fed": 385,
+      "fed6": 205,
+      "stockout": 91,
+      "affordability": 4,
+      "delivered": 340,
+      "stock": 0,
+      "merchantFatigueBlocks": 3,
+      "feasible": 0,
+      "completed": 0,
+      "noticedBySix": 0,
+      "residentsMissed3": 18,
+      "residentsConsecutive3": 4
+    },
+    "audit": {
+      "transactions": 777,
+      "movements": 1795,
+      "genesis": {
+        "food": 495,
+        "timber": 120,
+        "coin": 1500
+      },
+      "consumed": {
+        "food": 385,
+        "timber": 0,
+        "coin": 0
+      },
+      "remaining": {
+        "food": 110,
+        "timber": 120,
+        "coin": 1500
+      }
+    },
+    "actorFollowUp": [
+      {
+        "id": "event.5.19",
+        "phase": "morning",
+        "action": "market-delivery",
+        "fatigue": {
+          "before": 80,
+          "after": 100
+        }
+      },
+      {
+        "id": "event.5.82",
+        "phase": "afternoon",
+        "action": "rest",
+        "fatigue": {
+          "before": 100,
+          "after": 65
+        }
+      }
+    ],
+    "choice": {
+      "id": "event.4.61",
+      "turn": 4,
+      "phase": "afternoon",
+      "actorId": "citizen.0032",
+      "action": "market-delivery",
+      "status": "completed",
+      "reason": null,
+      "quantity": 4,
+      "transactionId": "tx.4.40",
+      "fatigue": {
+        "before": 75,
+        "after": 95
+      },
+      "hunger": {
+        "before": 0,
+        "after": 0
+      },
+      "choice": {
+        "draw": 1631224174,
+        "candidates": [
+          {
+            "actionId": "market-delivery",
+            "base": 75,
+            "disposition": 0,
+            "pressure": 0,
+            "utility": {
+              "need": 0,
+              "income": 5,
+              "fatigue": -37,
+              "trust": 0,
+              "acceptance": 0,
+              "risk": 0,
+              "riskEventIds": []
+            },
+            "weight": 43,
+            "selectionBarrier": null
+          },
+          {
+            "actionId": "rest",
+            "base": 25,
+            "disposition": 0,
+            "pressure": 0,
+            "utility": {
+              "need": 0,
+              "income": 0,
+              "fatigue": 0,
+              "trust": 0,
+              "acceptance": 0,
+              "risk": 0,
+              "riskEventIds": []
+            },
+            "weight": 25,
+            "selectionBarrier": null
+          }
+        ]
+      }
+    },
+    "transaction": {
+      "id": "tx.4.40",
+      "eventId": "event.4.61",
+      "turn": 4,
+      "phase": "afternoon",
+      "actorId": "citizen.0032",
+      "reason": "market-delivery",
+      "legs": [
+        {
+          "resource": "food",
+          "quantity": 4,
+          "from": {
+            "accountId": "account.citizen.0019.food",
+            "before": 12,
+            "after": 8
+          },
+          "to": {
+            "accountId": "account.market.food",
+            "before": 28,
+            "after": 32
+          }
+        },
+        {
+          "resource": "coin",
+          "quantity": 4,
+          "from": {
+            "accountId": "account.market.coin",
+            "before": 306,
+            "after": 302
+          },
+          "to": {
+            "accountId": "account.citizen.0019.coin",
+            "before": 22,
+            "after": 26
+          }
+        },
+        {
+          "resource": "coin",
+          "quantity": 1,
+          "from": {
+            "accountId": "account.market.coin",
+            "before": 302,
+            "after": 301
+          },
+          "to": {
+            "accountId": "account.citizen.0032.coin",
+            "before": 20,
+            "after": 21
+          }
+        }
+      ]
+    }
+  },
+  "treatment": {
+    "day": {
+      "turn": 4,
+      "residentsFed": 28,
+      "residentsUnmet": 12,
+      "foodConsumed": 28,
+      "foodDelivered": 28,
+      "guardsPaid": 8,
+      "marketFood": 0
+    },
+    "nextDay": {
+      "turn": 5,
+      "residentsFed": 32,
+      "residentsUnmet": 8,
+      "foodConsumed": 32,
+      "foodDelivered": 32,
+      "guardsPaid": 8,
+      "marketFood": 0
+    },
+    "metrics": {
+      "fed": 373,
+      "fed6": 201,
+      "stockout": 103,
+      "affordability": 4,
+      "delivered": 328,
+      "stock": 0,
+      "merchantFatigueBlocks": 0,
+      "feasible": 8,
+      "completed": 6,
+      "noticedBySix": 5,
+      "residentsMissed3": 19,
+      "residentsConsecutive3": 4
+    },
+    "audit": {
+      "transactions": 762,
+      "movements": 1750,
+      "genesis": {
+        "food": 495,
+        "timber": 120,
+        "coin": 1500
+      },
+      "consumed": {
+        "food": 373,
+        "timber": 0,
+        "coin": 0
+      },
+      "remaining": {
+        "food": 122,
+        "timber": 120,
+        "coin": 1500
+      }
+    },
+    "actorFollowUp": [
+      {
+        "id": "event.5.19",
+        "phase": "morning",
+        "action": "market-delivery",
+        "fatigue": {
+          "before": 25,
+          "after": 45
+        }
+      },
+      {
+        "id": "event.5.81",
+        "phase": "afternoon",
+        "action": "rest",
+        "fatigue": {
+          "before": 45,
+          "after": 10
+        }
+      }
+    ],
+    "choice": {
+      "id": "event.4.75",
+      "turn": 4,
+      "phase": "afternoon",
+      "actorId": "citizen.0032",
+      "action": "rest",
+      "status": "completed",
+      "quantity": 0,
+      "reason": null,
+      "transactionId": null,
+      "fatigue": {
+        "before": 75,
+        "after": 40
+      },
+      "hunger": {
+        "before": 0,
+        "after": 0
+      },
+      "legalChoice": [
+        {
+          "actionId": "market-delivery",
+          "actual": {
+            "licence": "not-required",
+            "licenceRef": null,
+            "status": "optional",
+            "unlicensedDuty": false,
+            "winner": null,
+            "overridden": [],
+            "considered": []
+          },
+          "perceived": {
+            "licence": "not-required",
+            "licenceRef": null,
+            "status": "optional",
+            "unlicensedDuty": false,
+            "winner": null,
+            "overridden": [],
+            "considered": []
+          },
+          "noticeEventIds": [],
+          "pressure": 0,
+          "weight": 43,
+          "selectionBarrier": null,
+          "perceivedDutyOutcome": null
+        },
+        {
+          "actionId": "rest",
+          "actual": {
+            "licence": "not-required",
+            "licenceRef": null,
+            "status": "required",
+            "unlicensedDuty": false,
+            "winner": {
+              "lawId": "merchant-rest-65",
+              "version": 1
+            },
+            "overridden": [],
+            "considered": [
+              {
+                "ref": {
+                  "lawId": "merchant-rest-65",
+                  "version": 1
+                },
+                "eventId": "law-event.confirm-merchant-rest-65",
+                "modality": "MUST",
+                "when": {
+                  "predicate": {
+                    "operand": "fatigue",
+                    "operator": "GTE",
+                    "value": 65
+                  },
+                  "observed": 75,
+                  "matched": true
+                },
+                "unless": null,
+                "applicable": true
+              }
+            ]
+          },
+          "perceived": {
+            "licence": "not-required",
+            "licenceRef": null,
+            "status": "required",
+            "unlicensedDuty": false,
+            "winner": {
+              "lawId": "merchant-rest-65",
+              "version": 1
+            },
+            "overridden": [],
+            "considered": [
+              {
+                "ref": {
+                  "lawId": "merchant-rest-65",
+                  "version": 1
+                },
+                "eventId": "law-event.confirm-merchant-rest-65",
+                "modality": "MUST",
+                "when": {
+                  "predicate": {
+                    "operand": "fatigue",
+                    "operator": "GTE",
+                    "value": 65
+                  },
+                  "observed": 75,
+                  "matched": true
+                },
+                "unless": null,
+                "applicable": true
+              }
+            ]
+          },
+          "noticeEventIds": [
+            "notice.citizen.0032.merchant-rest-65.1"
+          ],
+          "pressure": 60,
+          "weight": 92,
+          "selectionBarrier": null,
+          "perceivedDutyOutcome": "completed"
+        }
+      ],
+      "choice": {
+        "draw": 1631224174,
+        "candidates": [
+          {
+            "actionId": "market-delivery",
+            "base": 75,
+            "disposition": 0,
+            "pressure": 0,
+            "utility": {
+              "need": 0,
+              "income": 5,
+              "fatigue": -37,
+              "trust": 0,
+              "acceptance": 0,
+              "risk": 0,
+              "riskEventIds": []
+            },
+            "weight": 43,
+            "selectionBarrier": null
+          },
+          {
+            "actionId": "rest",
+            "base": 25,
+            "disposition": 0,
+            "pressure": 60,
+            "utility": {
+              "need": 0,
+              "income": 0,
+              "fatigue": 0,
+              "trust": 7,
+              "acceptance": 0,
+              "risk": 0,
+              "riskEventIds": []
+            },
+            "weight": 92,
+            "selectionBarrier": null
+          }
+        ]
+      }
+    },
+    "notice": {
+      "citizenId": "citizen.0032",
+      "lawId": "merchant-rest-65",
+      "version": 1,
+      "learnedAtTurn": 1,
+      "learnedAtPhase": "dawn",
+      "eventId": "notice.citizen.0032.merchant-rest-65.1"
+    }
+  }
+}
