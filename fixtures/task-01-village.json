@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "days": 12,
+  "population": { "farmer": 16, "forester": 6, "merchant": 10, "guard": 8 },
+  "opening": {
+    "marketFood": 45, "fieldFood": 450, "forestTimber": 120,
+    "marketCoin": 200, "treasuryCoin": 500, "citizenCoin": 20
+  },
+  "capacity": { "fieldPerSlot": 16, "forestPerSlot": 6, "deliveriesPerSlot": 10, "patrolsPerSlot": 8 },
+  "economy": {
+    "harvestYield": 3, "timberYield": 2, "deliverySize": 4, "producerPrice": 1,
+    "deliveryFee": 1, "residentPrice": 2, "foodPerDay": 1, "guardWage": 2
+  },
+  "behaviour": {
+    "workWeight": 75, "restWeight": 25, "fatigueLimit": 85,
+    "harvestFatigue": 25, "otherWorkFatigue": 20, "restRecovery": 35, "sleepRecovery": 15,
+    "startingFatigueMin": 15, "startingFatigueMax": 35,
+    "startingTrustMin": 35, "startingTrustMax": 75, "maxWorkDisposition": 10
+  }
+}

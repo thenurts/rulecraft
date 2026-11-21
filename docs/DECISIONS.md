@@ -40,3 +40,16 @@ Owner review is pending. See the [architecture report](04_Task_00_Architecture.m
 | LAW-001 | Before Task 02, approve actual versus perceived decree versions, durable between-turn enactment, clause exposure, a full precedence/licence table and the rule-free Task 01 scope. Resolve the passive detection policy before enforcement. | LAW-02 through LAW-06, BUILD-05, BUILD-06, BUILD-09 |
 | SAVE-001 | Approve whole-turn snapshot commits with a prior checkpoint and separate editable drafts. Define schema compatibility and failure handling before Task 01 persistence. Browser and native store implementations follow platform testing. | SAVE-01, MOB-03, BUILD-18, BUILD-22 |
 | UX-001, PERF-001, PROD-001 | Keep portrait-first as a candidate. Agree the device matrix, orientation and release thresholds after physical-device checks. Validate Junior's disclosure and reading demands through supervised playtesting. | BUILD-20, BUILD-21, MOB-01 |
+
+## Task 01 · Headless kernel
+
+[Issue #1](https://github.com/thenurts/rulecraft/issues/1) approves the rule-free fixture contract and the keyed RNG approach. The implementation below supplies concrete engineering versions. Starting stocks, populations, prices, yields, capacity and behaviour weights are **PROPOSED** fixture values. Campaign targets remain **PROPOSED** and outside this milestone.
+
+### SIM-001 · Keyed draws and integer quantities
+
+- Engine `headless-v1`, content `village-v1`, fixture/schema version 1, RNG `fnv1a32-fmix32-v1`. Clock 0 is genesis. A turn visits morning, afternoon and dusk in that order. Within each phase, actors and accounts use ascending, case-sensitive ASCII ID order. Initial traits use independent genesis draws.
+- Key bytes are the compact ASCII JSON array `[rngVersion, seed, turn, slot, actorId, subsystem, drawIndex]`. IDs are lowercase ASCII tokens. Seed, turn and draw index are unsigned 32-bit integers. Use FNV-1a starting at `0x811c9dc5` with prime `0x01000193`, then the MurmurHash3 32-bit finaliser. Its steps are xor-shift by 16, multiply by `0x85ebca6b`, xor-shift by 13, multiply by `0xc2b2ae35`, xor-shift by 16. All products wrap via ECMAScript `Math.imul`. Use the final word unsigned. This is a non-cryptographic keyed draw, without a shared stream or host entropy.
+- Range mapping is `floor(draw * size / 2^32)`. Size is capped at 1,000,000 so the product fits exactly in a JavaScript safe integer. Bins differ by at most one of the 2³² possible words. Fixtures use whole units for goods and coin, with validated bounds for opening balances, population, days, prices, yields and weights. The independent package targets ES2022.
+- Golden example for seed 42, turn 1, actor `citizen.0001`, subsystem `choice`, draw 0 gives 1345397066 in the morning and 3899484680 in the afternoon. Tests pin both plus changes to the seed, turn, actor, subsystem and draw index.
+
+Increment 1 verification on Node 24.22.3 and npm 11.19.1. `npm ci --cache /tmp/rulecraft-npm-cache` installed 44 packages, `npm test` passed 21 tests in 2 files, and `npm run build` passed both type checks and the Vite production build. The first build exposed the need to enable TypeScript extension imports for the later Node CLI. The rerun passed with that setting.

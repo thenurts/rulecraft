@@ -4,3 +4,12 @@ export function encodePortabilityFixture(seed: number): string {
   }
   return JSON.stringify({ fixtureVersion: 1, seed });
 }
+
+export { createVillage, parseVillageFixture } from './fixture.ts';
+export {
+  citizenAccount, compareIds, contentVersion, daySlots, engineVersion, nextTurn, schemaVersion, villageAccounts,
+} from './model.ts';
+export type {
+  Account, Citizen, DaySlot, Occupation, Phase, Resource, VillageFixture, VillageState,
+} from './model.ts';
+export { keyedDraw, rngVersion, scaleDraw } from './rng.ts';
