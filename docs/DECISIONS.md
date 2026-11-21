@@ -147,3 +147,20 @@ See the [Task 02 report](07_Task_02_Engine.md) for test evidence and open review
 - IndexedDB stores the latest complete world and a last-good previous generation in one transaction. A same-transaction revision check rejects stale writers. The independent draft store is isolated from the world. A worker encodes and verifies engine snapshots. Existing v3 saves keep their stored simulation version when opened and advanced.
 - The shell reports a change only after commit. Before committing a day, the user can cancel from the advancement prompt. The day and its recorded consequences appear together after storage confirms. Gazette and the Royal Inquiry show typed legal, choice, resource and enforcement evidence. Patrol education and formal warnings use the recorded dispositions.
 - This is a local 12-day preview, with one active village per origin. Multi-profile saves, export and native lifecycle adapters remain future work. See the [Task 04 report](11_Task_04_Engineering.md).
+
+
+## Task 05 — grounded advisers, incidents and sharing · 21 November 2026
+
+**Status:** Design proposal for owner review. PR #14 Task 04 implementation is merged; the first mobile web trial is playable locally. See [Task 05 narrative/adviser contract](12_Task_05_Narrative_Advisers.md).
+
+**Preserved confirmed product direction:** Zoey covers economy, Liam safety/enforcement, Mia creativity/surprising behaviours, Noah wellbeing. The Gazette/Chronicle/incident card must give cheeky, meaningful reactions to **real logged village events**, not invent causal mechanisms, finances, actions or emotions. This narrative milestone must not modify the simulation's world state or alter v1–v4 replay and resource checks.
+
+**New proposals pending product-owner sign-off:**
+- Read-only typed incident projection with verified source events, law versions, eligibility predicates, severity and explicitly distinguished *direct evidence vs contextual coincidence*. Minimum four **reachable** families; negative test for each. Exclude export/rental/fine/population-psychology stories unless actually simulated.
+- Multiple distinct, fact-safe templates for each adviser, Junior/Full wording profile, short optional citizen-aside **stylised captions** (not attributed actual speech).
+- Stable seeded/typed content IDs, deliberate incident priority, at most three selected headlines per day and three-day identical-template cooldown **PROPOSED**. No forced jokes for quiet days or suppression of severe welfare events.
+- Deterministic Chronicle based on immutable historical event records; version or freeze narrative copy/template mappings to avoid arbitrary rewording of old stories across app upgrades. No write-back to the society engine.
+- Fact-checked portrait **1080×1350 PNG** local share-card export **PROPOSED**; correct or explicitly absent source law, actual outcomes, validated adviser line, no user/child identifying data, no remote upload.
+- Keep phone-optimised and screen-reader-aware event drill-down, with actual Android Chrome/iOS Safari export QA reported separately from desktop emulation. Owner should assess genuinely amusing storytelling and not equate passing text validation tests with game quality.
+
+**Related independent follow-ups:** the current production build has no verified stable hosted URL; assess an access-controlled HTTPS staging preview before remote physical phone testing (separate permission/release gate). The Task 04 320px/200%-text composer screenshot shows selected value truncation and heading split; improve legibility in a narrow UX issue. Neither authorises public release or Task 06 expansion.
