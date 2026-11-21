@@ -33,14 +33,14 @@ export async function writeCheckpoint(path, current, previous, { create = false,
   }
 }
 
-export async function readCheckpoint(path) {
+export async function readCheckpoint(path, decode = loadSnapshot) {
   const envelope = JSON.parse(await readFile(path, 'utf8'));
   const failures = [];
   for (const source of ['current', 'previous']) {
     const encoded = envelope?.[source];
     if (typeof encoded !== 'string') continue;
     try {
-      return { snapshot: loadSnapshot(encoded), encoded, source };
+      return { snapshot: decode(encoded), encoded, source };
     } catch (error) {
       failures.push(error);
     }
