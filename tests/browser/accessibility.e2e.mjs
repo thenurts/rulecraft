@@ -70,7 +70,7 @@ test('composer fits narrow portrait, tablet and landscape and remains usable wit
 });
 
 test('touch scrolling and actual results and Inquiry screens', async ({ page, context }) => {
-  await page.goto('/');
+  await page.goto('./');
   await expect(page.getByRole('button', { name: 'Start village', exact: true })).toBeEnabled();
   await capture(page, 'home-390');
   await page.getByRole('button', { name: 'Start village', exact: true }).tap();

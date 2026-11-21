@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 
 export async function startVillage(page, mode = 'junior', track = 'campaign', seed) {
-  await page.goto('/');
+  await page.goto('./');
   await page.getByLabel('Complexity').selectOption(mode);
   await page.getByLabel('Play option').selectOption(track);
   if (seed !== undefined) await page.getByLabel('Seed', { exact: true }).fill(String(seed));

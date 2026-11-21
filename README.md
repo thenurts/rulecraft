@@ -21,6 +21,8 @@ The Gazette highlights incidents from verified simulation records and keeps the 
 
 For the built site, run `npm run preview` after building. For a phone on the same trusted network, run `npm run dev -- --host 0.0.0.0` and open the host machine’s LAN address and Vite port.
 
+For the public, unpromoted HTTPS phone playtest, see the [GitHub Pages setup and physical QA guide](docs/20_Pages_Playtest.md).
+
 ### Browser tests
 
 ```sh

@@ -5,7 +5,7 @@ import { advanceSociety, auditSnapshot, encodeSociety, loadSociety, startSociety
 const fixture = JSON.parse(readFileSync(new URL('../../fixtures/task-01-village.json', import.meta.url), 'utf8'));
 
 async function start(page) {
-  await page.goto('/');
+  await page.goto('./');
   await page.getByRole('button', { name: 'Start village', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Village', exact: true })).toBeVisible();
 }
@@ -83,7 +83,7 @@ test('aborted and quota-failed writes leave the last good day; duplicate activat
 test('two browser tabs cannot overwrite the same committed revision', async ({ page, context }) => {
   await start(page);
   const other = await context.newPage();
-  await other.goto('/');
+  await other.goto('./');
   await other.getByRole('button', { name: 'Resume village' }).click();
   await (await openAdvance(page, 1)).click();
   await expect(page.getByRole('heading', { name: 'Day 1 results' })).toBeVisible();
@@ -130,7 +130,7 @@ test('a valid modern world missing scenario setup recovers the previous Hungry V
 test('unavailable device storage never reports a successful start', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(globalThis, 'indexedDB', { configurable: true,
     get() { throw new DOMException('Storage denied in test', 'SecurityError'); } }));
-  await page.goto('/');
+  await page.goto('./');
   await expect(page.getByRole('alert')).toContainText('Storage denied in test');
   await expect(page.getByRole('button', { name: 'Start village', exact: true })).toBeDisabled();
   await expect(page.getByRole('button', { name: 'Resume village' })).toHaveCount(0);
@@ -138,7 +138,7 @@ test('unavailable device storage never reports a successful start', async ({ pag
 
 test('a historical v3 game resumes and advances using the original engine', async ({ page }) => {
   const previous = advanceSociety(startSocietyV3(fixture, 42));
-  await page.goto('/');
+  await page.goto('./');
   await expect(page.getByRole('button', { name: 'Start village', exact: true })).toBeEnabled();
   await mutateHead(page, 'seed', encodeSociety(previous));
   await page.reload();

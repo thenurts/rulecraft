@@ -212,3 +212,9 @@ The research adapter keeps engine bytes and schema versions intact in a separate
 - The canonical snapshot checksum verifies simulation history. To identify a setup-less historical browser preview, the loader checks v3/v4, the original fixture, default society and law settings, and the shipped preview UI's fixed seed 42.
 - Versioned generations use an outer `sessionFormat: 'scenario-v1'` marker alongside their setup. Missing setup on a marked generation or an unknown marker triggers the existing verified-generation recovery path. Loading is read-only.
 - A standard Sandbox and a legacy preview are indistinguishable when both outer identity fields are absent and the seed, fixture and settings are identical. An unmarked modern record with intact setup still opens and is marked on its next commit. [Post-review validation and caveat](19_Task_06_First_Playable_Engineering.md#post-review-correction--save-identity-and-legacy-preview-recovery)
+
+## Issue 16 · HTTPS playtest hosting
+
+- GitHub Pages is the preferred static host for the authorised public, unpromoted playtest. The source repository stays private. A Pages build uses `/rulecraft/` as its Vite base, and the default development and production commands keep the root base.
+- The workflow takes an explicit dispatch on `main` and publishes only checked `dist/` assets. Merge and PR CI do not publish. The private repository’s Pages eligibility still needs an owner check in Settings. [Setup, fallback and QA](20_Pages_Playtest.md)
+- No search indexing is requested by the HTML robots directive. The site's content is accessible to anyone who discovers it. Saves remain local to the browser origin.
