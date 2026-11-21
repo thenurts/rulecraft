@@ -81,10 +81,10 @@ test('the bulletin covers only the final same-turn version, then suspension and 
 });
 
 test('dawn is part of the atomic turn and replay preserves missed repeal knowledge and historical codecs', () => {
-  let old = startLawGame(fixture, 42);
+  const old = startLawGame(fixture, 42);
   expect(loadLawGame(encodeLawGame(old))).toEqual(old);
   expect(() => loadSociety(encodeLawGame(old))).toThrow('UNSUPPORTED_SOCIETY_SAVE_VERSION');
-  let game = confirmLaw(startSociety(fixture, 42, { bulletinBp: 0, peerBp: 0, contacts: 0 }), command).game;
+  let game = confirmLaw(startSociety(fixture, 42, { ...societyDefaults, bulletinBp: 0, peerBp: 0, contacts: 0 }), command).game;
   game = notifyLaw(game, 'citizen.0001', 'field', 1);
   game = advanceSociety(game);
   game = confirmLaw(game, { operation: 'ABOLISH', lawId: 'field', commandId: 'abolish' }).game;

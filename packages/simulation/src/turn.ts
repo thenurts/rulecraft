@@ -1,4 +1,4 @@
-import type { LegalDecision } from './law-book.ts';
+import type { LegalDecision, LawRef } from './law-book.ts';
 import { occupationAction, type ExecutableAction } from './law.ts';
 import { ResourceLedger, type Movement, type Transaction } from './ledger.ts';
 import {
@@ -33,8 +33,48 @@ export type EvaluateLegal = (
   actor: Citizen, turn: number, slot: DaySlot, action: Action, openingQuantity: (id: string) => number,
 ) => LegalCandidate;
 
+export interface UtilityEvidence {
+  readonly need: number;
+  readonly income: number;
+  readonly fatigue: number;
+  readonly trust: number;
+  readonly acceptance: number;
+  readonly risk: number;
+  readonly riskEventIds: readonly string[];
+}
+
+interface ChoiceEvidence {
+  readonly draw: number | null;
+  readonly candidates: readonly Readonly<{
+    actionId: Action; base: number; pressure: number; utility: UtilityEvidence;
+    weight: number; selectionBarrier: Reason | null;
+  }>[];
+}
+
+export interface AllocationEvidence {
+  readonly phase: Phase;
+  readonly resource: string;
+  readonly applicants: readonly Readonly<{ citizenId: string; requested: number }>[];
+  readonly winners: readonly Readonly<{ citizenId: string; quantity: number; eventId: string }>[];
+  readonly reason: 'slot-capacity' | 'stock' | 'funding' | 'mixed' | 'delivery-throughput';
+}
+
+interface FoodAccess {
+  readonly marketAvailableBefore: number;
+  readonly fundingShortfall: number;
+  readonly supplyShortfall: number;
+}
+
+export interface TurnHooks {
+  rank(phase: Phase, resource: string, actorId: string): number;
+  utility(actor: Citizen, action: Action, quantity: (id: string) => number, law: LawRef | null,
+    pressure: number): UtilityEvidence;
+  allocation(record: AllocationEvidence): void;
+}
+
 type Intent = {
   readonly action: Action;
+  readonly choice?: ChoiceEvidence;
   readonly legal?: readonly Omit<CandidateEvidence, 'perceivedDutyOutcome'>[];
 };
 
@@ -51,6 +91,8 @@ export interface VillageEvent {
   readonly fatigue: Readonly<{ before: number; after: number }> | null;
   readonly hunger: Readonly<{ before: number; after: number }> | null;
   readonly legalChoice?: readonly CandidateEvidence[];
+  readonly choice?: ChoiceEvidence;
+  readonly foodAccess?: FoodAccess;
 }
 
 export interface DailyMetrics {
@@ -88,6 +130,7 @@ export function resolveDay(
   state: VillageState, fixture: VillageFixture, seed: number,
   chooseForTest?: (actor: Citizen, slot: DaySlot) => Action | undefined,
   evaluateLegal?: EvaluateLegal,
+  hooks?: TurnHooks,
 ): ResolvedDay {
   const next = nextTurn(state.turn, fixture);
   if (next === null) throw new RangeError('The fixture is complete.');
@@ -105,7 +148,7 @@ export function resolveDay(
   function emit(
     phase: Phase, actor: Citizen, action: EventAction, status: Status,
     plan: WorkPlan, movements: readonly Movement[] = [], updated?: Citizen,
-    legalChoice?: readonly CandidateEvidence[],
+    legalChoice?: readonly CandidateEvidence[], choice?: ChoiceEvidence, foodAccess?: FoodAccess,
   ): void {
     const id = `event.${turn}.${events.length + 1}`;
     let transaction: Transaction | null = null;
@@ -119,14 +162,30 @@ export function resolveDay(
       id, turn, phase, actorId: actor.id, action, status, ...plan, transactionId: transaction?.id ?? null,
       fatigue: updated ? { before: actor.fatigue, after: updated.fatigue } : null,
       hunger: updated ? { before: actor.hunger, after: updated.hunger } : null,
-      ...(legalChoice && { legalChoice }),
+      ...(legalChoice && { legalChoice }), ...(choice && { choice }), ...(foodAccess && { foodAccess }),
     });
   }
 
-  function deliver(merchant: Citizen, quantity: number): Movement[] {
+  function ordered<T>(items: readonly T[], phase: Phase, resource: string, id: (item: T) => string): readonly T[] {
+    if (!hooks) return items;
+    return items.map((item) => ({ item, id: id(item), rank: hooks.rank(phase, resource, id(item)) }))
+      .sort((a, b) => a.rank - b.rank || compareIds(a.id, b.id)).map(({ item }) => item);
+  }
+
+  function allocation(
+    phase: Phase, resource: string, applicants: AllocationEvidence['applicants'], winners: AllocationEvidence['winners'],
+    reason: AllocationEvidence['reason'],
+  ): void {
+    if (applicants.length < 2) return;
+    const requested = applicants.reduce((sum, entry) => sum + entry.requested, 0);
+    const awarded = winners.reduce((sum, entry) => sum + entry.quantity, 0);
+    if (awarded < requested) hooks?.allocation({ phase, resource, applicants, winners, reason });
+  }
+
+  function deliver(merchant: Citizen, quantity: number, phase: DaySlot): Movement[] {
     const movements: Movement[] = [];
     let remaining = quantity;
-    for (const farmer of farmers) {
+    for (const farmer of ordered(farmers, phase, 'producer-sale', ({ id }) => id)) {
       if (remaining === 0) break;
       const goods = citizenAccount(farmer.id, 'food');
       const taken = Math.min(remaining, ledger.quantity(goods));
@@ -188,7 +247,7 @@ export function resolveDay(
   function performWork(actor: Citizen, work: Work, phase: DaySlot, plan: WorkPlan, intent: Intent): Citizen {
     const { quantity, reason } = plan;
     if (quantity === 0) {
-      emit(phase, actor, work, 'blocked-at-execution', plan, [], undefined, evidence(intent, 'blocked-at-execution'));
+      emit(phase, actor, work, 'blocked-at-execution', plan, [], undefined, evidence(intent, 'blocked-at-execution'), intent.choice);
       return actor;
     }
     let movements: Movement[] = [];
@@ -197,20 +256,20 @@ export function resolveDay(
     } else if (work === 'cut-timber') {
       movements = [transfer(villageAccounts.forestTimber, citizenAccount(actor.id, 'timber'), quantity)];
     } else if (work === 'market-delivery') {
-      movements = deliver(actor, quantity);
+      movements = deliver(actor, quantity, phase);
       foodDelivered += quantity;
     }
     const updated = limit(actor, actor.fatigue +
       (work === 'harvest-food' ? behaviour.harvestFatigue : behaviour.otherWorkFatigue));
     const status = reason === null ? 'completed' : 'partial';
-    emit(phase, actor, work, status, plan, movements, updated, evidence(intent, status));
+    emit(phase, actor, work, status, plan, movements, updated, evidence(intent, status), intent.choice);
     return updated;
   }
 
   for (const phase of daySlots) {
     const slots = { ...configured };
     // All choices read the same opening balances before execution mutates the ledger.
-    const opening = evaluateLegal && new Map(ledger.balances().map(({ id, quantity }) => [id, quantity]));
+    const opening = (evaluateLegal || hooks) && new Map(ledger.balances().map(({ id, quantity }) => [id, quantity]));
     const openingQuantity = (id: string): number => {
       const quantity = opening?.get(id);
       if (quantity === undefined) throw new Error(`Unknown slot-opening account ${id}.`);
@@ -224,44 +283,84 @@ export function resolveDay(
       const workLaw = evaluateLegal?.(actor, turn, phase, work, openingQuantity);
       const restLaw = evaluateLegal?.(actor, turn, phase, 'rest', openingQuantity);
       const base = behaviour.workWeight === 0 ? 0 : behaviour.workWeight + actor.workDisposition;
-      const workWeight = plan.quantity > 0 ? Math.max(base > 0 ? 1 : 0, base + (workLaw?.pressure ?? 0)) : 0;
-      const restWeight = Math.max(1, behaviour.restWeight + (restLaw?.pressure ?? 0));
-      const selectionBarrier = plan.quantity === 0 ? plan.reason : null;
+      const workUtility = hooks?.utility(actor, work, openingQuantity, workLaw?.perceived.winner ?? null, workLaw?.pressure ?? 0);
+      const restUtility = hooks?.utility(actor, 'rest', openingQuantity, restLaw?.perceived.winner ?? null, restLaw?.pressure ?? 0);
+      const sum = (item: UtilityEvidence | undefined) =>
+        item ? item.need + item.income + item.fatigue + item.trust + item.acceptance + item.risk : 0;
+      const physical = plan.quantity > 0;
+      const workWeight = physical ? Math.max(base > 0 ? 1 : 0, base + (workLaw?.pressure ?? 0) + sum(workUtility)) : 0;
+      const restWeight = Math.max(1, behaviour.restWeight + (restLaw?.pressure ?? 0) + sum(restUtility));
+      const selectionBarrier = physical ? null : plan.reason;
       const legal = workLaw && restLaw && [workLaw, restLaw].some((rule) =>
         rule.actual.considered.length > 0 || rule.perceived.considered.length > 0)
         ? [{ ...workLaw, weight: workWeight, selectionBarrier },
           { ...restLaw, weight: restWeight, selectionBarrier: null }]
         : undefined;
-
-      if (plan.quantity === 0) {
-        emit(phase, actor, work, 'not-feasible-at-selection', plan);
-        return { action: 'rest', legal };
-      }
-      const draw = keyedDraw({ seed, turn, slot: phase, actorId: actor.id, subsystem: 'choice', drawIndex: 0 });
-      const action = scaleDraw(draw, workWeight + restWeight) < workWeight ? work : 'rest';
-      return { action, legal };
+      const draw = physical ? keyedDraw({ seed, turn, slot: phase, actorId: actor.id, subsystem: 'choice', drawIndex: 0 }) : null;
+      const choice = workUtility && restUtility ? { draw, candidates: [
+        { actionId: work, base, pressure: workLaw?.pressure ?? 0, utility: workUtility, weight: workWeight, selectionBarrier },
+        { actionId: 'rest' as const, base: behaviour.restWeight, pressure: restLaw?.pressure ?? 0,
+          utility: restUtility, weight: restWeight, selectionBarrier: null },
+      ] } : undefined;
+      if (!physical) emit(phase, actor, work, 'not-feasible-at-selection', plan);
+      const action = draw !== null && scaleDraw(draw, workWeight + restWeight) < workWeight ? work : 'rest';
+      return { action, legal, choice };
     });
 
-    for (const [index, actor] of citizens.entries()) {
+    const indexes = citizens.map((_, index) => index);
+    const groups = ['harvest-food', 'cut-timber', 'market-delivery', 'patrol', 'rest'] as const;
+    const sequence = hooks ? groups.flatMap((resource) =>
+      ordered(indexes.filter((index) => intents[index].action === resource), phase, resource, (index) => citizens[index].id)) : indexes;
+    const actionStart = events.length;
+    let saleApplicants: AllocationEvidence['applicants'] | undefined;
+    const saleStart = ledger.transactions.length;
+    for (const index of sequence) {
+      const actor = citizens[index];
       const intent = intents[index];
       const { action } = intent;
       if (action === 'rest') {
         const updated = limit(actor, actor.fatigue - behaviour.restRecovery);
-        emit(phase, actor, action, 'completed', { quantity: 0, reason: null }, [], updated, evidence(intent, 'completed'));
+        emit(phase, actor, action, 'completed', { quantity: 0, reason: null }, [], updated, evidence(intent, 'completed'), intent.choice);
         citizens[index] = updated;
       } else if (action !== occupationAction[actor.occupation]) {
         emit(phase, actor, action, 'not-eligible', { quantity: 0, reason: 'occupation-mismatch' });
       } else {
+        if (hooks && action === 'market-delivery' && !saleApplicants) {
+          saleApplicants = farmers.map(({ id }) => ({ citizenId: id, requested: ledger.quantity(citizenAccount(id, 'food')) }))
+            .filter(({ requested }) => requested > 0);
+        }
         const plan = planWork(actor, action, slots[action]);
         citizens[index] = performWork(actor, action, phase, plan, intent);
         if (plan.quantity > 0) slots[action]--;
       }
     }
+    if (hooks) {
+      const actionEvents = events.slice(actionStart);
+      for (const resource of groups) {
+        if (resource === 'rest') continue;
+        const attempts = actionEvents.filter(({ action }) => action === resource);
+        const reasons = new Set(attempts.map(({ reason }) => reason).filter(Boolean));
+        const shortage = reasons.size > 1 ? 'mixed' : reasons.has('capacity-contention') ? 'slot-capacity'
+          : reasons.has('insufficient-funds') ? 'funding' : 'stock';
+        allocation(phase, resource, attempts.map((event) => ({ citizenId: event.actorId, requested: target[resource] })),
+          attempts.filter(({ quantity }) => quantity > 0)
+            .map(({ actorId, quantity, id }) => ({ citizenId: actorId, quantity, eventId: id })), shortage);
+      }
+      if (saleApplicants) {
+        const owners = new Map(farmers.map(({ id }) => [citizenAccount(id, 'food'), id]));
+        const sales = ledger.transactions.slice(saleStart).filter(({ reason }) => reason === 'market-delivery')
+          .flatMap(({ eventId, legs }) => legs.filter(({ to }) => to?.accountId === villageAccounts.marketFood)
+            .map(({ from, quantity }) => ({ citizenId: owners.get(from!.accountId)!, quantity, eventId })));
+        allocation(phase, 'producer-sale', saleApplicants, sales, 'delivery-throughput');
+      }
+    }
   }
 
   // Dusk settles wages before meals. A guard's daily wage is payable in full or logged as unfunded.
-  for (const actor of citizens) {
-    if (actor.occupation !== 'guard' || economy.guardWage === 0) continue;
+  const wageStart = events.length;
+  const guards = citizens.filter(({ occupation }) => occupation === 'guard');
+  for (const actor of ordered(guards, 'dusk', 'guard-wage', ({ id }) => id)) {
+    if (economy.guardWage === 0) continue;
     const funded = ledger.quantity(villageAccounts.treasuryCoin) >= economy.guardWage;
     if (funded) {
       guardsPaid++;
@@ -273,12 +372,25 @@ export function resolveDay(
     }
   }
 
-  for (const [index, actor] of citizens.entries()) {
+  if (hooks) {
+    allocation('dusk', 'guard-wage', guards.map(({ id }) => ({ citizenId: id, requested: economy.guardWage })),
+      events.slice(wageStart).filter(({ quantity }) => quantity > 0)
+        .map(({ actorId, quantity, id }) => ({ citizenId: actorId, quantity, eventId: id })), 'funding');
+  }
+  const mealApplicants: { citizenId: string; requested: number }[] = [];
+  const mealStart = events.length;
+  for (const index of ordered(citizens.map((_, index) => index), 'dusk', 'market-food', (index) => citizens[index].id)) {
+    const actor = citizens[index];
     const coin = citizenAccount(actor.id, 'coin');
     const food = citizenAccount(actor.id, 'food');
     const stock = ledger.quantity(villageAccounts.marketFood);
     const affordable = Math.floor(ledger.quantity(coin) / economy.residentPrice);
-    const quantity = Math.min(economy.foodPerDay, stock, affordable);
+    const request = Math.min(economy.foodPerDay, affordable);
+    const quantity = Math.min(request, stock);
+    if (hooks && request > 0) mealApplicants.push({ citizenId: actor.id, requested: request });
+    const access = hooks ? {
+      marketAvailableBefore: stock, fundingShortfall: economy.foodPerDay - request, supplyShortfall: request - quantity,
+    } : undefined;
     const shortfall = economy.foodPerDay - quantity;
     const reason = shortfall === 0 ? null : affordable < stock ? 'insufficient-funds' : 'no-stock';
     const afterMeal = {
@@ -292,13 +404,19 @@ export function resolveDay(
     ] : [];
     emit('dusk', actor, 'resident-meal',
       shortfall === 0 ? 'completed' : quantity > 0 ? 'partial' : 'blocked-at-execution',
-      { quantity, reason }, movements, afterMeal);
+      { quantity, reason }, movements, afterMeal, undefined, undefined, access);
     foodConsumed += quantity;
     if (shortfall === 0) residentsFed++;
 
     const recovered = limit(afterMeal, actor.fatigue - behaviour.sleepRecovery);
     emit('dusk', afterMeal, 'sleep-recovery', 'completed', { quantity: 0, reason: null }, [], recovered);
     citizens[index] = recovered;
+  }
+
+  if (hooks) {
+    allocation('dusk', 'market-food', mealApplicants,
+      events.slice(mealStart).filter(({ action, quantity }) => action === 'resident-meal' && quantity > 0)
+        .map(({ actorId, quantity, id }) => ({ citizenId: actorId, quantity, eventId: id })), 'stock');
   }
 
   return {
