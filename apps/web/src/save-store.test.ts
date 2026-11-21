@@ -1,6 +1,6 @@
 import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
 import { describe, expect, test, vi } from 'vitest';
-import { encodeSociety, loadSociety, startSocietyV3 } from '@rulecraft/simulation';
+import { encodeSociety, loadSociety, startSociety, startSocietyV3 } from '@rulecraft/simulation';
 import fixture from '../../../fixtures/task-01-village.json';
 import { authoredCommand, decreePreview, newDraft } from './decrees.tsx';
 import { deviceDraftStore } from './draft-store.ts';
@@ -97,14 +97,85 @@ test('versioned setup is stored alongside the original payload and cannot silent
   await expect(saves.load()).rejects.toThrow(/No verified generation/);
 });
 
-test('a historical v4 preview stays a preview on resume and commit', async () => {
+test.each([
+  ['v3', startSocietyV3(fixture, 42)],
+  ['v4', startSociety(fixture, 42)],
+])('a genuine historical %s preview retains its identity and engine on commit', async (_version, game) => {
   const { db, saves } = initialize();
-  const legacy = { id: 'preview', mode: 'junior', track: 'campaign', game: session.game } as const;
+  const legacy = { id: 'preview', mode: 'junior', track: 'campaign', game } as const;
   await saves.commit(emptySave, legacy);
   const loaded = await saves.load();
   expect(loaded.session).toEqual(legacy);
   await saves.commit(loaded, loaded.session!);
   const head = await db.request('world', 'readonly', (store) => store.get('village'));
   expect(head.current).not.toHaveProperty('setup');
-  expect(head.current.payload).toBe(encodeSociety(legacy.game));
+  expect(head.current).not.toHaveProperty('sessionFormat');
+  expect(head.current.payload).toBe(encodeSociety(game));
+});
+
+test('missing modern Campaign setup recovers the prior verified generation without rewriting the corrupt head', async () => {
+  const { db, saves } = initialize();
+  const first = await saves.commit(emptySave, changed);
+  await saves.commit(first, changed);
+  const head = await db.request('world', 'readonly', (store) => store.get('village'));
+  expect(head.current.sessionFormat).toBe('scenario-v1');
+  delete head.current.setup;
+  await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
+
+  const recovered = await saves.load();
+  expect(recovered).toMatchObject({ revision: 2, generation: 1, recovered: true, session: changed });
+  expect(await db.request('world', 'readonly', (store) => store.get('village'))).toEqual(head);
+
+  await saves.commit(recovered, changed);
+  const repaired = await db.request('world', 'readonly', (store) => store.get('village'));
+  expect(repaired.current.setup).toEqual(changed.setup);
+  expect(repaired.current.sessionFormat).toBe('scenario-v1');
+  expect(repaired.previous).toEqual(head.previous);
+});
+
+test('a modern Hungry Village with missing setup is not a legacy preview even without a format marker', async () => {
+  const { db, saves } = initialize();
+  await saves.commit(emptySave, changed);
+  const head = await db.request('world', 'readonly', (store) => store.get('village'));
+  delete head.current.setup;
+  delete head.current.sessionFormat; // Simulate an older untagged modern save.
+  await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
+
+  await expect(saves.load()).rejects.toThrow(/No verified generation/);
+  expect(await db.request('world', 'readonly', (store) => store.get('village'))).toEqual(head);
+});
+
+test('a modern alternate Sandbox preset cannot masquerade as an untagged historical preview', async () => {
+  const { db, saves } = initialize();
+  const alternate = newSession({ mode: 'junior', track: 'sandbox', preset: 'five-merchants-farmers-v1' }, 'alternate');
+  await saves.commit(emptySave, alternate);
+  const head = await db.request('world', 'readonly', (store) => store.get('village'));
+  delete head.current.setup;
+  delete head.current.sessionFormat;
+  await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
+
+  await expect(saves.load()).rejects.toThrow(/No verified generation/);
+  expect(await db.request('world', 'readonly', (store) => store.get('village'))).toEqual(head);
+});
+
+test('the modern format marker prevents misidentifying an identical-standard-preset Sandbox save', async () => {
+  const { db, saves } = initialize();
+  await saves.commit(emptySave, session); // Same engine fixture as the older preview.
+  const head = await db.request('world', 'readonly', (store) => store.get('village'));
+  expect(head.current.sessionFormat).toBe('scenario-v1');
+  delete head.current.setup;
+  await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
+
+  await expect(saves.load()).rejects.toThrow(/No verified generation/);
+  expect(await db.request('world', 'readonly', (store) => store.get('village'))).toEqual(head);
+});
+
+test('an unsupported session format is rejected rather than silently treated as a preview', async () => {
+  const { db, saves } = initialize();
+  await saves.commit(emptySave, session);
+  const head = await db.request('world', 'readonly', (store) => store.get('village'));
+  head.current.sessionFormat = 'scenario-v999';
+  await db.request('world', 'readwrite', (store) => store.put(head, 'village'));
+
+  await expect(saves.load()).rejects.toThrow(/No verified generation/);
 });
