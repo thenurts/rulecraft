@@ -21,3 +21,5 @@ export {
   auditSnapshot, canonicalJson, encodeSnapshot, loadSnapshot, resolveNextTurn, snapshotHashes, startVillage,
 } from './snapshot.ts';
 export type { VillageSnapshot } from './snapshot.ts';
+export { actionRegistry, lawRegistryVersion, listLawTokens, predicateRegistry, renderLaw, updateLawDraft, validateLaw, villageScope } from './law.ts';
+export type { ExecutableAction, LawAction, LawAst, LawDraft, LawIssue, Modality, Predicate, TargetSelector } from './law.ts';
