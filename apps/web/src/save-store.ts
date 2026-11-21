@@ -5,7 +5,7 @@ import type { GameSession, Selection } from './world.ts';
 
 const slot = 'village';
 
-interface Generation extends Selection { id: string; at: number; payload: string; setup?: RunSetup }
+interface Generation extends Selection { id: string; at: number; payload: string; setup?: RunSetup; sessionFormat?: 'scenario-v1' }
 interface Head { revision: number; current: Generation; previous: Generation | null }
 
 export interface LoadedSave {
@@ -100,6 +100,14 @@ export function deviceSaveStore(database: BrowserDatabase, codec: SaveCodec): Ga
           if (typeof id !== 'string' || (mode !== 'junior' && mode !== 'full') ||
               (track !== 'campaign' && track !== 'sandbox') || typeof payload !== 'string' ||
               !Number.isSafeInteger(at) || at < 1 || at > head.revision) throw new Error('Save metadata is invalid.');
+          // The format marker is stored outside the engine snapshot. A missing setup
+          // must not silently convert a versioned run into a historical preview.
+          if (generation.sessionFormat !== undefined && generation.sessionFormat !== 'scenario-v1') {
+            throw new Error('Unsupported session metadata format.');
+          }
+          if (generation.sessionFormat === 'scenario-v1' && generation.setup === undefined) {
+            throw new Error('Versioned scenario setup is missing.');
+          }
           const game = await codec.decode(payload);
           const setup = verifiedSetup({ mode, track }, game, generation.setup);
           performance.measure('rulecraft.load', { start, detail: { bytes: payload.length, day: game.state.turn } });
@@ -125,7 +133,7 @@ export function deviceSaveStore(database: BrowserDatabase, codec: SaveCodec): Ga
       const payload = await codec.encode(session.game);
       const db = await database.open();
       const revision = expected.revision + 1;
-      const generation: Generation = { id: session.id, mode: session.mode, track: session.track, payload, at: revision, ...(setup && { setup }) };
+      const generation: Generation = { id: session.id, mode: session.mode, track: session.track, payload, at: revision, ...(setup && { setup, sessionFormat: 'scenario-v1' as const }) };
       await new Promise<void>((resolve, reject) => {
         const transaction = db.transaction('world', 'readwrite', { durability: 'strict' });
         let failure: unknown;
