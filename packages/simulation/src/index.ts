@@ -27,3 +27,5 @@ export { authoritativeLaws, perceivedLaws, resolveLegality, LawError } from './l
 export type { LawBook, LawCommand, LawRef, LawVersion, LegalDecision, LegalFrame } from './law-book.ts';
 export { advanceLawGame, confirmLaw, encodeLawGame, lawGameHashes, loadLawGame, notifyLaw, startLawGame } from './law-game.ts';
 export type { LawGame, LawPolicy } from './law-game.ts';
+export { advanceSociety, encodeSociety, loadSociety, societyDefaults, societyHashes, startSociety } from './society.ts';
+export type { SocietyConfig, SocietyDay, SocietyGame } from './society.ts';
