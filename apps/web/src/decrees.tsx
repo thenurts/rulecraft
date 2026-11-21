@@ -5,7 +5,7 @@ import {
   type SocietyGame,
 } from '@rulecraft/simulation';
 import type { DecreeDraft } from './draft-store.ts';
-import { occupations, type Mode } from './world.ts';
+import { browserId, occupations, type Mode } from './world.ts';
 
 const subjects = { ...occupations, 'all-citizens': 'All citizens' };
 const modalities = { MUST: 'Must', MUST_NOT: 'Must not', MAY: 'May' };
@@ -53,9 +53,12 @@ export function usableDraft(game: SocietyGame, draft: DecreeDraft | null): boole
   return target !== undefined && target.version === draft.baseVersion && target.status !== 'abolished';
 }
 
-export function authoredCommand(draft: DecreeDraft, ast: LawAst): LawCommand {
+export function authoredCommand(draft: DecreeDraft, ast: LawAst, game: SocietyGame): LawCommand {
+  const assigned = new Set(game.book.versions.map(({ lawId }) => lawId));
+  let number = 1;
+  while (assigned.has(`law-${number}`)) number++;
   return {
-    commandId: draft.commandId, lawId: draft.lawId ?? `law-${draft.commandId}`,
+    commandId: draft.commandId, lawId: draft.lawId ?? `law-${number}`,
     operation: draft.lawId ? 'AMEND' : 'CREATE', ast,
   };
 }
@@ -66,11 +69,11 @@ export function lawRefLabel(game: SocietyGame, lawId: string, version?: number):
   return `${number > 0 ? `Decree ${number}` : lawId}${version === undefined ? '' : ` · Version ${version}`}`;
 }
 
-function Issues({ issues }: { issues: readonly LawIssue[] }) {
+function Issues({ issues, game }: { issues: readonly LawIssue[]; game: SocietyGame }) {
   if (issues.length === 0) return null;
   return <ul className="issues">{issues.map((issue, index) =>
     <li key={`${issue.code}-${index}`}><strong>{issue.severity === 'WARNING' ? 'Warning' : 'Needs attention'}</strong>{' '}
-      {issueCopy[issue.code] ?? issue.code}</li>)}</ul>;
+      {issueCopy[issue.code] ?? issue.code}{issue.relatedLawId ? ` Related decree: ${lawRefLabel(game, issue.relatedLawId)}.` : ''}</li>)}</ul>;
 }
 
 type ClauseKey = 'when' | 'unless';
@@ -166,12 +169,12 @@ export function Composer({ draft, mode, game, busy, onChange, onCommit, onDiscar
     <section className="panel">
       <h2>Decree preview</h2>
       <p className="decree-text" aria-live="polite">{preview.ast ? renderLaw(preview.ast) : 'Complete the wording to preview the decree.'}</p>
-      <Issues issues={preview.issues} />
+      <Issues issues={preview.issues} game={game} />
       {remainingChanges(game) === 0 && <p>Today’s decree allowance is used. Advance a day to make another change.</p>}
       {reviewing ? <div className="notice" role="group" aria-label="Final decree confirmation">
         <p>Confirm this wording for day {targetDay}. This uses one decree change.</p>
         <div className="actions">
-          <button className="primary" disabled={busy || !canConfirm} onClick={() => preview.ast && onCommit(authoredCommand(draft, preview.ast))}>
+          <button className="primary" disabled={busy || !canConfirm} onClick={() => preview.ast && onCommit(authoredCommand(draft, preview.ast, game))}>
             {draft.lawId ? 'Confirm amendment' : 'Confirm decree'}
           </button>
           <button disabled={busy} onClick={() => setReviewing(false)}>Keep editing</button>
@@ -212,6 +215,7 @@ export function Book({ game, draft, busy, onCompose, onCommit }: {
         .map(({ citizenId, version }) => [citizenId, version]));
       const learned = [...known.values()].filter((version) => version === law.version).length;
       const older = [...known.values()].filter((version) => version < law.version).length;
+      const attitudes = game.attitudes.filter((attitude) => attitude.lawId === law.lawId && attitude.version === law.version);
       return <article className="panel" key={law.lawId}>
         <h2>{lawRefLabel(game, law.lawId, law.version)}</h2>
         <p className="decree-text">{renderLaw(law.ast)}</p>
@@ -219,11 +223,14 @@ export function Book({ game, draft, busy, onCompose, onCommit }: {
           ? `Confirmed for day ${law.effectiveFromTurn} · ${law.status}. ${operative ? `Version ${operative.version} is ${operative.status} through day ${game.state.turn}.` : 'No operative version yet.'}`
           : `Current status · ${law.status} from day ${law.effectiveFromTurn}.`}</p>
         <p>{learned}/{game.state.citizens.length} residents learned this version · {older} know an older version · {game.state.citizens.length - known.size} have no notice.</p>
+        {attitudes.length > 0 && <details><summary>Recorded attitudes ({attitudes.length})</summary>
+          <p>{attitudes.filter(({ score }) => score > 0).length} positive · {attitudes.filter(({ score }) => score === 0).length} neutral · {attitudes.filter(({ score }) => score < 0).length} negative.</p>
+        </details>}
         {law.status !== 'abolished' && <div className="actions">
           <button disabled={!canChange || hasDraft} onClick={() => onCompose(law)}>Amend</button>
           {([law.status === 'suspended' ? 'REINSTATE' : 'SUSPEND', 'ABOLISH'] as const).map((operation) =>
             <button disabled={!canChange} key={operation} onClick={() => setPending({
-              operation, command: { commandId: crypto.randomUUID(), lawId: law.lawId, operation },
+              operation, command: { commandId: browserId(), lawId: law.lawId, operation },
             })}>{operations[operation]}</button>)}
         </div>}
         {pending?.command.lawId === law.lawId && <div className="notice" role="group" aria-label={`Confirm ${operations[pending.operation].toLowerCase()}`}>

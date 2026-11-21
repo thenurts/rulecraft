@@ -7,7 +7,7 @@ import { workerCodec } from './save-codec.ts';
 import { BrowserDatabase, deviceSaveStore, emptySave, SaveConflict, type LoadedSave } from './save-store.ts';
 import { createRoot } from 'react-dom/client';
 import {
-  citizenLabel, homeScreen, modeLabel, newSession, occupations, previous, trackLabel, villageReadModel, villageScreen, visit,
+  browserId, citizenLabel, homeScreen, modeLabel, newSession, occupations, previous, trackLabel, villageReadModel, villageScreen, visit,
   type GameSession, type Screen, type Selection,
 } from './world.ts';
 import './styles.css';
@@ -37,12 +37,12 @@ function Home({ session, onStart, onResume, busy }: {
       <h2>Start a village</h2>
       <div className="two-col">
         <label>Complexity
-          <select value={selection.mode} onChange={(event) => setSelection({ ...selection, mode: event.target.value as Selection['mode'] })}>
+          <select disabled={busy} value={selection.mode} onChange={(event) => setSelection({ ...selection, mode: event.target.value as Selection['mode'] })}>
             <option value="junior">Junior</option><option value="full">Full</option>
           </select>
         </label>
         <label>Play option
-          <select value={selection.track} onChange={(event) => setSelection({ ...selection, track: event.target.value as Selection['track'] })}>
+          <select disabled={busy} value={selection.track} onChange={(event) => setSelection({ ...selection, track: event.target.value as Selection['track'] })}>
             <option value="campaign">Campaign preview</option><option value="sandbox">12-day Sandbox trial</option>
           </select>
         </label>
@@ -53,7 +53,7 @@ function Home({ session, onStart, onResume, busy }: {
         <p>Starting a new village replaces the current one.</p>
         <div className="actions">
           <button className="primary" disabled={busy} onClick={() => onStart(selection)}>Replace and start</button>
-          <button onClick={() => setReplace(false)}>Cancel</button>
+          <button disabled={busy} onClick={() => setReplace(false)}>Cancel</button>
         </div>
       </div> : <button className={session ? '' : 'primary'} disabled={busy} onClick={() => session ? setReplace(true) : onStart(selection)}>Start village</button>}
     </section>
@@ -105,10 +105,11 @@ function Village({ session, children }: { session: GameSession; children?: React
           <summary>{label} ({residents.length})</summary>
           {!residents.length && <p>No residents in this occupation.</p>}
           <ul className="list">{residents.map((person) =>
-            <li key={person.id}><strong>{citizenLabel(person.id)}</strong>
+            <li key={person.id}><details><summary>{citizenLabel(person.id)}</summary>
               <span>Coins {person.coin} · Hunger {person.hunger} · Fatigue {person.fatigue} · Trust {person.trust}/100</span>
               {occupation === 'forester' && <span>Timber {person.timber} · This trial has no timber buyer.</span>}
-            </li>)}</ul>
+              <span>{session.game.book.notices.filter(({ citizenId }) => citizenId === person.id).length} recorded decree-version notices.</span>
+            </details></li>)}</ul>
         </details>;
       })}
     </section>
@@ -229,7 +230,7 @@ function App() {
 
   async function start(selection: Selection) {
     await persist(async () => {
-      const next = newSession(selection, crypto.randomUUID());
+      const next = newSession(selection, browserId());
       accept(await saves.commit(saveRef.current, next));
       setDraft(null);
       setDraftProblem('');
@@ -241,8 +242,9 @@ function App() {
   function openComposer(version?: LawVersion) {
     if (!session) return;
     const next = draft && usableDraft(session.game, draft) && (version ? draft.lawId === version.lawId : true)
-      ? draft : newDraft(crypto.randomUUID(), version);
+      ? draft : newDraft(browserId(), version);
     if (next !== draft) storeDraft(session.id, next);
+    setFeedback('');
     go({ name: 'composer', id: next.commandId });
   }
 
@@ -286,7 +288,7 @@ function App() {
         {screen.name !== 'home' && <button className="quiet" disabled={busy} onClick={() => setHistory(previous)}>Back</button>}
       </div>
     </header>
-    <main id="main-content" className="shell">
+    <main id="main-content" className="shell" tabIndex={-1}>
       {problem && <div className="notice" role="alert"><p>{problem}</p>
         <button disabled={busy} onClick={() => void load()}>Reload saved village</button></div>}
       {draftProblem && <p className="notice" role="status">{draftProblem}</p>}

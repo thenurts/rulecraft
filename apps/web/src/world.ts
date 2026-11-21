@@ -24,6 +24,12 @@ export function previous(history: readonly Screen[]): readonly Screen[] {
   return history.length > 1 ? history.slice(0, -1) : history;
 }
 
+export function browserId(): string {
+  if (typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+  return Array.from(crypto.getRandomValues(new Uint8Array(16)),
+    (byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
 export function newSession(selection: Selection, id: string, seed = 42): GameSession {
   return { ...selection, id, game: startSociety(fixture, seed) };
 }

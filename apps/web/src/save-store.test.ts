@@ -77,7 +77,7 @@ describe('revisioned device storage', () => {
     expect((await saves.load()).session?.game.book.versions).toEqual([]);
     const preview = decreePreview(session.game, draft);
     expect(preview.issues).toContainEqual({ severity: 'WARNING', code: 'BROAD_REST_DUTY' });
-    expect(authoredCommand(draft, preview.ast!)).toMatchObject({ operation: 'CREATE', commandId: 'test-command' });
+    expect(authoredCommand(draft, preview.ast!, session.game)).toMatchObject({ operation: 'CREATE', commandId: 'test-command' });
     await drafts.clear(session.id);
     expect(await drafts.load(session.id)).toBeNull();
   });
