@@ -162,15 +162,25 @@ interface RuleEvidence {
   readonly applicable: boolean;
 }
 
-export interface LegalDecision {
-  readonly status: 'optional' | 'required' | 'prohibited' | 'unlicensed';
-  readonly licence: 'not-required' | 'granted' | 'missing';
-  readonly unlicensedDuty: boolean;
-  readonly licenceRef: LawRef | null;
-  readonly winner: LawRef | null;
-  readonly overridden: readonly LawRef[];
-  readonly considered: readonly RuleEvidence[];
-}
+type LicenceEvidence =
+  | Readonly<{ licence: 'not-required'; licenceRef: null; contributingLicence?: never }>
+  | Readonly<{
+    licence: 'granted' | 'missing';
+    /** Highest-ranked applicable grant, including a grant blocked by a winning prohibition. */
+    licenceRef: LawRef | null;
+    /** Grant that supplies the licence for the final ruling. Null under a winning prohibition. */
+    contributingLicence: LawRef | null;
+  }>;
+
+export type LegalDecision = LicenceEvidence & Readonly<{
+  status: 'optional' | 'required' | 'prohibited' | 'unlicensed';
+  unlicensedDuty: boolean;
+  /** Winner of the same-action precedence contest. */
+  winner: LawRef | null;
+  /** Losing rules that do not contribute an effective licence. */
+  overridden: readonly LawRef[];
+  considered: readonly RuleEvidence[];
+}>;
 
 const modalityRank = { MUST_NOT: 3, MUST: 2, MAY: 1 };
 const reference = ({ lawId, version }: LawVersion): LawRef => ({ lawId, version });
@@ -211,9 +221,19 @@ export function resolveLegality(
   const status = modality === 'MUST_NOT' ? 'prohibited'
     : licence === 'missing' ? 'unlicensed'
     : modality === 'MUST' ? 'required' : 'optional';
+  const contributingGrant = status === 'prohibited' ? undefined : grant;
+  const licenceEvidence: LicenceEvidence = licence === 'not-required'
+    ? { licence, licenceRef: null }
+    : {
+      licence,
+      licenceRef: grant ? reference(grant) : null,
+      contributingLicence: contributingGrant ? reference(contributingGrant) : null,
+    };
   return {
-    status, licence, unlicensedDuty: licence === 'missing' && modality === 'MUST',
-    licenceRef: grant ? reference(grant) : null, winner: winner ? reference(winner) : null,
-    overridden: applicable.slice(1).map(({ law }) => reference(law)), considered,
+    ...licenceEvidence,
+    status, unlicensedDuty: licence === 'missing' && modality === 'MUST',
+    winner: winner ? reference(winner) : null,
+    overridden: applicable.slice(1).filter(({ law }) => law !== contributingGrant).map(({ law }) => reference(law)),
+    considered,
   };
 }

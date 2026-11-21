@@ -90,6 +90,36 @@ test.each([
   expect(result.licenceRef?.lawId ?? null).toBe(licence === 'granted' ? 'permit' : null);
 });
 
+test('a lower-ranked MAY that licenses the winning MUST contributes and is excluded from overridden evidence', () => {
+  const laws = [exportRule('duty', 'MUST', 2), exportRule('permit', 'MAY', 1)];
+  const result = resolveLegality(laws, { ...farmer, occupation: 'merchant' }, exportAction);
+  const permit = { lawId: 'permit', version: 1 };
+  expect(result).toMatchObject({
+    status: 'required',
+    licence: 'granted',
+    winner: { lawId: 'duty', version: 1 },
+    licenceRef: permit,
+    contributingLicence: permit,
+    overridden: [],
+  });
+  expect(result.considered).toContainEqual(expect.objectContaining({ ref: permit, applicable: true }));
+});
+
+test('a winning MUST_NOT leaves the applicable MAY visible but ineffective in the final ruling', () => {
+  const laws = [exportRule('permit', 'MAY', 1), exportRule('ban', 'MUST_NOT', 2)];
+  const result = resolveLegality(laws, { ...farmer, occupation: 'merchant' }, exportAction);
+  const permit = { lawId: 'permit', version: 1 };
+  expect(result).toMatchObject({
+    status: 'prohibited',
+    licence: 'granted',
+    winner: { lawId: 'ban', version: 1 },
+    licenceRef: permit,
+    contributingLicence: null,
+    overridden: [permit],
+  });
+  expect(result.considered).toContainEqual(expect.objectContaining({ ref: permit, applicable: true }));
+});
+
 test('confirmed versions are immutable, same-turn replacement is ordered, and retries do not consume allowance', () => {
   const initial = startLawGame(fixture, 42);
   const created = confirmLaw(initial, attempt('CREATE', 'one', 'farm', wording));
