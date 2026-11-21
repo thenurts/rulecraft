@@ -125,7 +125,15 @@ If real devices, private staging or human testers are not available in this mile
 - Publish engineering + **product validation** report: scenario distribution, two valid contrasting policies, Junior/Full comprehension and iteration observations, useful/harmful surprises, playtest fun findings, physical-device results, content limits, unresolved design decisions and recommendations.
 - Open Task 06 implementation PR for product-owner technical review and distinct first-playable **go/no-go** assessment; do not automatically merge or claim a production-ready mobile game.
 
-## 9. Explicit design/approval decisions
+## 9. Product-owner evidence gates
+
+[PR #21 review](https://github.com/thenurts/rulecraft/pull/21#pullrequestreview-6005316387) and the [pre-implementation report](15_Task_06_Preimplementation_Evidence.md) govern the next decision.
+
+- **Hungry Village — Not Balanced / Blocked.** The measured baseline fed 468 of 480 resident-days and ended with 27 market-food units. Four constructive policies produced the same endpoints. With a total of 495 food units, setting aside 40 for the market permits at most 455 to be consumed. Pairing the old goals can therefore reward leaving meals unmet. Test versioned fixture-only changes with matched exploratory seeds and an untouched holdout. Require a benefit traceable to lawful choices and ledger transactions, plus a distinct policy with an explained difference, before proposing objectives for approval.
+- **Longer Sandbox — blocked pending persistence evidence.** Keep the current 12-day trial. The 30-day desktop benchmark reached 1.22 seconds save p95 and 46.8 MB for the logical two-generation record. Longer play requires physical browser latency and quota/fault recovery, exact historical Inquiry/Chronicle provenance, and a reviewed versioned persistence design.
+- The design and evidence review is separate from approving a fixture, objectives, economy changes, gameplay changes or a Sandbox release. Physical Android and iOS checks, the composer clipping follow-up and first-time playtests remain open.
+
+## 10. Explicit design/approval decisions
 
 **Preserve:** decree-only authority; one engine; Junior + Full and Campaign + Sandbox as confirmed products; real legal awareness, choice, resource conservation and enquiry; narrative truth; existing v1–v4 golden semantics; no unapproved The Nurts canon.
 
@@ -138,7 +146,7 @@ If real devices, private staging or human testers are not available in this mile
 
 **Do not silently introduce:** new currency/timber buyer, unlogged “aid”, fines, child behavioural tracking, cloud accounts, free-text law interpretation, altered old save meaning, a claim that Sandbox is unlimited, or a claim of phone/children's readiness without real evidence.
 
-## 10. Known dependencies and next boundaries
+## 11. Known dependencies and next boundaries
 
 - **Issue #16:** access-controlled HTTPS staging & real-device test — planned, **not deployed or authorised as a public site**.
 - **Issue #17:** 320px / 200% composer selection clipping — genuine accessibility gap pending correction.

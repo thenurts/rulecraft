@@ -1,0 +1,5426 @@
+{
+  "seed": 42,
+  "arms": {
+    "no-decree": {
+      "commands": [],
+      "noticeSample": [],
+      "daily": [
+        {
+          "turn": 1,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 32,
+          "guardsPaid": 8,
+          "marketFood": 37,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 40,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 2,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 76,
+          "guardsPaid": 8,
+          "marketFood": 73,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 30,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 3,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 48,
+          "guardsPaid": 8,
+          "marketFood": 81,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 51,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 4,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 60,
+          "guardsPaid": 8,
+          "marketFood": 101,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 57,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 5,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 52,
+          "guardsPaid": 8,
+          "marketFood": 113,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 77,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 6,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 48,
+          "guardsPaid": 8,
+          "marketFood": 121,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 80,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 7,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 52,
+          "guardsPaid": 8,
+          "marketFood": 133,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 82,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 8,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 56,
+          "guardsPaid": 8,
+          "marketFood": 149,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 26,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 9,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 26,
+          "guardsPaid": 8,
+          "marketFood": 135,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 10,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 95,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 11,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 61,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 12,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 27,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        }
+      ],
+      "sample": {
+        "harvest": {
+          "id": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "action": "harvest-food",
+          "status": "completed",
+          "reason": null,
+          "quantity": 3,
+          "transactionId": "tx.1.1",
+          "fatigue": {
+            "before": 32,
+            "after": 57
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "choice": {
+            "draw": 995608940,
+            "candidates": [
+              {
+                "actionId": "harvest-food",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 15,
+                  "fatigue": -16,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 80,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "delivery": {
+          "id": "event.1.66",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "action": "market-delivery",
+          "status": "completed",
+          "reason": null,
+          "quantity": 4,
+          "transactionId": "tx.1.36",
+          "fatigue": {
+            "before": 0,
+            "after": 20
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "choice": {
+            "draw": 2294778251,
+            "candidates": [
+              {
+                "actionId": "market-delivery",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 5,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 86,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "meal": {
+          "id": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "action": "resident-meal",
+          "status": "completed",
+          "quantity": 1,
+          "reason": null,
+          "transactionId": "tx.1.52",
+          "fatigue": {
+            "before": 58,
+            "after": 58
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 77,
+            "fundingShortfall": 0,
+            "supplyShortfall": 0
+          }
+        },
+        "unaffordable": {
+          "id": "event.11.155",
+          "turn": 11,
+          "phase": "dusk",
+          "actorId": "citizen.0017",
+          "action": "resident-meal",
+          "status": "blocked-at-execution",
+          "quantity": 0,
+          "reason": "insufficient-funds",
+          "transactionId": null,
+          "fatigue": {
+            "before": 0,
+            "after": 0
+          },
+          "hunger": {
+            "before": 0,
+            "after": 1
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 94,
+            "fundingShortfall": 1,
+            "supplyShortfall": 0
+          }
+        }
+      },
+      "transactions": [
+        {
+          "id": "tx.1.1",
+          "eventId": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "reason": "harvest-food",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.field.food",
+                "before": 450,
+                "after": 447
+              },
+              "to": {
+                "accountId": "account.citizen.0002.food",
+                "before": 0,
+                "after": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.36",
+          "eventId": "event.1.66",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "reason": "market-delivery",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.citizen.0012.food",
+                "before": 3,
+                "after": 0
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 45,
+                "after": 48
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 200,
+                "after": 197
+              },
+              "to": {
+                "accountId": "account.citizen.0012.coin",
+                "before": 20,
+                "after": 23
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0013.food",
+                "before": 6,
+                "after": 5
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 48,
+                "after": 49
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 197,
+                "after": 196
+              },
+              "to": {
+                "accountId": "account.citizen.0013.coin",
+                "before": 20,
+                "after": 21
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 196,
+                "after": 195
+              },
+              "to": {
+                "accountId": "account.citizen.0031.coin",
+                "before": 20,
+                "after": 21
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.52",
+          "eventId": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "reason": "resident-meal",
+          "legs": [
+            {
+              "resource": "coin",
+              "quantity": 2,
+              "from": {
+                "accountId": "account.citizen.0019.coin",
+                "before": 20,
+                "after": 18
+              },
+              "to": {
+                "accountId": "account.market.coin",
+                "before": 160,
+                "after": 162
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.food",
+                "before": 77,
+                "after": 76
+              },
+              "to": {
+                "accountId": "account.citizen.0019.food",
+                "before": 0,
+                "after": 1
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0019.food",
+                "before": 1,
+                "after": 0
+              },
+              "to": null
+            }
+          ]
+        }
+      ],
+      "audit": {
+        "transactions": 888,
+        "movements": 2178,
+        "genesis": {
+          "food": 495,
+          "timber": 120,
+          "coin": 1500
+        },
+        "consumed": {
+          "food": 468,
+          "timber": 0,
+          "coin": 0
+        },
+        "remaining": {
+          "food": 27,
+          "timber": 120,
+          "coin": 1500
+        }
+      }
+    },
+    "harvest-duty": {
+      "commands": [
+        {
+          "operation": "CREATE",
+          "lawId": "harvest-food-must",
+          "commandId": "confirm-harvest-food-must",
+          "ast": {
+            "issuerId": "council.village",
+            "jurisdictionId": "jurisdiction.village",
+            "targetSelector": "farmer",
+            "modality": "MUST",
+            "actionId": "harvest-food"
+          }
+        }
+      ],
+      "noticeSample": [
+        {
+          "citizenId": "citizen.0002",
+          "lawId": "harvest-food-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0002.harvest-food-must.1"
+        },
+        {
+          "citizenId": "citizen.0011",
+          "lawId": "harvest-food-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0011.harvest-food-must.1"
+        },
+        {
+          "citizenId": "citizen.0016",
+          "lawId": "harvest-food-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0016.harvest-food-must.1"
+        },
+        {
+          "citizenId": "citizen.0022",
+          "lawId": "harvest-food-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0022.harvest-food-must.1"
+        }
+      ],
+      "daily": [
+        {
+          "turn": 1,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 32,
+          "guardsPaid": 8,
+          "marketFood": 37,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 43,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 26,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 6,
+            "infeasibleDuties": 0,
+            "completedDuties": 5,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 1,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 7
+        },
+        {
+          "turn": 2,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 76,
+          "guardsPaid": 8,
+          "marketFood": 73,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 36,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 12,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 19,
+            "infeasibleDuties": 1,
+            "completedDuties": 15,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 4,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 12
+        },
+        {
+          "turn": 3,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 48,
+          "guardsPaid": 8,
+          "marketFood": 81,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 60,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 12,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 19,
+            "infeasibleDuties": 1,
+            "completedDuties": 16,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 3,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 6
+        },
+        {
+          "turn": 4,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 60,
+          "guardsPaid": 8,
+          "marketFood": 101,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 60,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 8,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 20,
+            "infeasibleDuties": 4,
+            "completedDuties": 16,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 4,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 5
+        },
+        {
+          "turn": 5,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 52,
+          "guardsPaid": 8,
+          "marketFood": 113,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 89,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 4,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 26,
+            "infeasibleDuties": 2,
+            "completedDuties": 24,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 2,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 4
+        },
+        {
+          "turn": 6,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 48,
+          "guardsPaid": 8,
+          "marketFood": 121,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 98,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 23,
+            "infeasibleDuties": 7,
+            "completedDuties": 18,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 5,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 3
+        },
+        {
+          "turn": 7,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 52,
+          "guardsPaid": 8,
+          "marketFood": 133,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 82,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 15,
+            "infeasibleDuties": 15,
+            "completedDuties": 11,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 4,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 1
+        },
+        {
+          "turn": 8,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 56,
+          "guardsPaid": 8,
+          "marketFood": 149,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 26,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 30,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 9,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 26,
+          "guardsPaid": 8,
+          "marketFood": 135,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 30,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 10,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 95,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 30,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 11,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 61,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 30,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 12,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 27,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 32,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 1
+        }
+      ],
+      "sample": {
+        "harvest": {
+          "id": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "action": "harvest-food",
+          "status": "completed",
+          "reason": null,
+          "quantity": 3,
+          "transactionId": "tx.1.1",
+          "fatigue": {
+            "before": 32,
+            "after": 57
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "legalChoice": [
+            {
+              "actionId": "harvest-food",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "harvest-food-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "harvest-food-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-harvest-food-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "harvest-food-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "harvest-food-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-harvest-food-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "noticeEventIds": [
+                "notice.citizen.0002.harvest-food-must.1"
+              ],
+              "pressure": 60,
+              "weight": 146,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": "completed"
+            },
+            {
+              "actionId": "rest",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 25,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            }
+          ],
+          "choice": {
+            "draw": 995608940,
+            "candidates": [
+              {
+                "actionId": "harvest-food",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 60,
+                "utility": {
+                  "need": 0,
+                  "income": 15,
+                  "fatigue": -16,
+                  "trust": 6,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 146,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "delivery": {
+          "id": "event.1.67",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "action": "market-delivery",
+          "status": "completed",
+          "reason": null,
+          "quantity": 4,
+          "transactionId": "tx.1.37",
+          "fatigue": {
+            "before": 0,
+            "after": 20
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "choice": {
+            "draw": 2294778251,
+            "candidates": [
+              {
+                "actionId": "market-delivery",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 5,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 86,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "meal": {
+          "id": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "action": "resident-meal",
+          "status": "completed",
+          "quantity": 1,
+          "reason": null,
+          "transactionId": "tx.1.53",
+          "fatigue": {
+            "before": 58,
+            "after": 58
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 77,
+            "fundingShortfall": 0,
+            "supplyShortfall": 0
+          }
+        },
+        "unaffordable": {
+          "id": "event.11.155",
+          "turn": 11,
+          "phase": "dusk",
+          "actorId": "citizen.0017",
+          "action": "resident-meal",
+          "status": "blocked-at-execution",
+          "quantity": 0,
+          "reason": "insufficient-funds",
+          "transactionId": null,
+          "fatigue": {
+            "before": 0,
+            "after": 0
+          },
+          "hunger": {
+            "before": 0,
+            "after": 1
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 94,
+            "fundingShortfall": 1,
+            "supplyShortfall": 0
+          }
+        }
+      },
+      "transactions": [
+        {
+          "id": "tx.1.1",
+          "eventId": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "reason": "harvest-food",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.field.food",
+                "before": 450,
+                "after": 447
+              },
+              "to": {
+                "accountId": "account.citizen.0002.food",
+                "before": 0,
+                "after": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.37",
+          "eventId": "event.1.67",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "reason": "market-delivery",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.citizen.0012.food",
+                "before": 3,
+                "after": 0
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 45,
+                "after": 48
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 200,
+                "after": 197
+              },
+              "to": {
+                "accountId": "account.citizen.0012.coin",
+                "before": 20,
+                "after": 23
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0013.food",
+                "before": 6,
+                "after": 5
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 48,
+                "after": 49
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 197,
+                "after": 196
+              },
+              "to": {
+                "accountId": "account.citizen.0013.coin",
+                "before": 20,
+                "after": 21
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 196,
+                "after": 195
+              },
+              "to": {
+                "accountId": "account.citizen.0031.coin",
+                "before": 20,
+                "after": 21
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.53",
+          "eventId": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "reason": "resident-meal",
+          "legs": [
+            {
+              "resource": "coin",
+              "quantity": 2,
+              "from": {
+                "accountId": "account.citizen.0019.coin",
+                "before": 20,
+                "after": 18
+              },
+              "to": {
+                "accountId": "account.market.coin",
+                "before": 160,
+                "after": 162
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.food",
+                "before": 77,
+                "after": 76
+              },
+              "to": {
+                "accountId": "account.citizen.0019.food",
+                "before": 0,
+                "after": 1
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0019.food",
+                "before": 1,
+                "after": 0
+              },
+              "to": null
+            }
+          ]
+        }
+      ],
+      "audit": {
+        "transactions": 888,
+        "movements": 2182,
+        "genesis": {
+          "food": 495,
+          "timber": 120,
+          "coin": 1500
+        },
+        "consumed": {
+          "food": 468,
+          "timber": 0,
+          "coin": 0
+        },
+        "remaining": {
+          "food": 27,
+          "timber": 120,
+          "coin": 1500
+        }
+      }
+    },
+    "morning-harvest-duty": {
+      "commands": [
+        {
+          "operation": "CREATE",
+          "lawId": "harvest-food-must-morning",
+          "commandId": "confirm-harvest-food-must-morning",
+          "ast": {
+            "issuerId": "council.village",
+            "jurisdictionId": "jurisdiction.village",
+            "targetSelector": "farmer",
+            "modality": "MUST",
+            "actionId": "harvest-food",
+            "when": {
+              "operand": "slot",
+              "operator": "EQ",
+              "value": "morning"
+            }
+          }
+        }
+      ],
+      "noticeSample": [
+        {
+          "citizenId": "citizen.0004",
+          "lawId": "harvest-food-must-morning",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0004.harvest-food-must-morning.1"
+        },
+        {
+          "citizenId": "citizen.0022",
+          "lawId": "harvest-food-must-morning",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0022.harvest-food-must-morning.1"
+        },
+        {
+          "citizenId": "citizen.0032",
+          "lawId": "harvest-food-must-morning",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0032.harvest-food-must-morning.1"
+        },
+        {
+          "citizenId": "citizen.0040",
+          "lawId": "harvest-food-must-morning",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0040.harvest-food-must-morning.1"
+        }
+      ],
+      "daily": [
+        {
+          "turn": 1,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 32,
+          "guardsPaid": 8,
+          "marketFood": 37,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 40,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 15,
+            "knownInapplicable": 1,
+            "knownFeasibleDuties": 1,
+            "infeasibleDuties": 0,
+            "completedDuties": 1,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 4
+        },
+        {
+          "turn": 2,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 76,
+          "guardsPaid": 8,
+          "marketFood": 73,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 30,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 11,
+            "knownInapplicable": 5,
+            "knownFeasibleDuties": 5,
+            "infeasibleDuties": 0,
+            "completedDuties": 4,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 1,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 7
+        },
+        {
+          "turn": 3,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 48,
+          "guardsPaid": 8,
+          "marketFood": 81,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 51,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 8,
+            "knownInapplicable": 8,
+            "knownFeasibleDuties": 7,
+            "infeasibleDuties": 1,
+            "completedDuties": 6,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 1,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 6
+        },
+        {
+          "turn": 4,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 60,
+          "guardsPaid": 8,
+          "marketFood": 101,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 57,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 6,
+            "knownInapplicable": 10,
+            "knownFeasibleDuties": 10,
+            "infeasibleDuties": 0,
+            "completedDuties": 7,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 3,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 8
+        },
+        {
+          "turn": 5,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 52,
+          "guardsPaid": 8,
+          "marketFood": 113,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 77,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 4,
+            "knownInapplicable": 12,
+            "knownFeasibleDuties": 12,
+            "infeasibleDuties": 0,
+            "completedDuties": 11,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 1,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 5
+        },
+        {
+          "turn": 6,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 48,
+          "guardsPaid": 8,
+          "marketFood": 121,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 80,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 14,
+            "knownFeasibleDuties": 14,
+            "infeasibleDuties": 0,
+            "completedDuties": 11,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 3,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 3
+        },
+        {
+          "turn": 7,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 52,
+          "guardsPaid": 8,
+          "marketFood": 133,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 82,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 1,
+            "knownInapplicable": 15,
+            "knownFeasibleDuties": 15,
+            "infeasibleDuties": 0,
+            "completedDuties": 13,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 2,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 4
+        },
+        {
+          "turn": 8,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 56,
+          "guardsPaid": 8,
+          "marketFood": 149,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 26,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 1,
+            "knownInapplicable": 15,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 15,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 1
+        },
+        {
+          "turn": 9,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 26,
+          "guardsPaid": 8,
+          "marketFood": 135,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 1,
+            "knownInapplicable": 15,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 15,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 10,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 95,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 1,
+            "knownInapplicable": 15,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 15,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 11,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 61,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 16,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 16,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 1
+        },
+        {
+          "turn": 12,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 27,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 16,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 16,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        }
+      ],
+      "sample": {
+        "harvest": {
+          "id": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "action": "harvest-food",
+          "status": "completed",
+          "reason": null,
+          "quantity": 3,
+          "transactionId": "tx.1.1",
+          "fatigue": {
+            "before": 32,
+            "after": 57
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "legalChoice": [
+            {
+              "actionId": "harvest-food",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "harvest-food-must-morning",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "harvest-food-must-morning",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-harvest-food-must-morning",
+                    "modality": "MUST",
+                    "when": {
+                      "predicate": {
+                        "operand": "slot",
+                        "operator": "EQ",
+                        "value": "morning"
+                      },
+                      "observed": "morning",
+                      "matched": true
+                    },
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 80,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            },
+            {
+              "actionId": "rest",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 25,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            }
+          ],
+          "choice": {
+            "draw": 995608940,
+            "candidates": [
+              {
+                "actionId": "harvest-food",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 15,
+                  "fatigue": -16,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 80,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "delivery": {
+          "id": "event.1.66",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "action": "market-delivery",
+          "status": "completed",
+          "reason": null,
+          "quantity": 4,
+          "transactionId": "tx.1.36",
+          "fatigue": {
+            "before": 0,
+            "after": 20
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "choice": {
+            "draw": 2294778251,
+            "candidates": [
+              {
+                "actionId": "market-delivery",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 5,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 86,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "meal": {
+          "id": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "action": "resident-meal",
+          "status": "completed",
+          "quantity": 1,
+          "reason": null,
+          "transactionId": "tx.1.52",
+          "fatigue": {
+            "before": 58,
+            "after": 58
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 77,
+            "fundingShortfall": 0,
+            "supplyShortfall": 0
+          }
+        },
+        "unaffordable": {
+          "id": "event.11.155",
+          "turn": 11,
+          "phase": "dusk",
+          "actorId": "citizen.0017",
+          "action": "resident-meal",
+          "status": "blocked-at-execution",
+          "quantity": 0,
+          "reason": "insufficient-funds",
+          "transactionId": null,
+          "fatigue": {
+            "before": 0,
+            "after": 0
+          },
+          "hunger": {
+            "before": 0,
+            "after": 1
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 94,
+            "fundingShortfall": 1,
+            "supplyShortfall": 0
+          }
+        }
+      },
+      "transactions": [
+        {
+          "id": "tx.1.1",
+          "eventId": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "reason": "harvest-food",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.field.food",
+                "before": 450,
+                "after": 447
+              },
+              "to": {
+                "accountId": "account.citizen.0002.food",
+                "before": 0,
+                "after": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.36",
+          "eventId": "event.1.66",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "reason": "market-delivery",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.citizen.0012.food",
+                "before": 3,
+                "after": 0
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 45,
+                "after": 48
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 200,
+                "after": 197
+              },
+              "to": {
+                "accountId": "account.citizen.0012.coin",
+                "before": 20,
+                "after": 23
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0013.food",
+                "before": 6,
+                "after": 5
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 48,
+                "after": 49
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 197,
+                "after": 196
+              },
+              "to": {
+                "accountId": "account.citizen.0013.coin",
+                "before": 20,
+                "after": 21
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 196,
+                "after": 195
+              },
+              "to": {
+                "accountId": "account.citizen.0031.coin",
+                "before": 20,
+                "after": 21
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.52",
+          "eventId": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "reason": "resident-meal",
+          "legs": [
+            {
+              "resource": "coin",
+              "quantity": 2,
+              "from": {
+                "accountId": "account.citizen.0019.coin",
+                "before": 20,
+                "after": 18
+              },
+              "to": {
+                "accountId": "account.market.coin",
+                "before": 160,
+                "after": 162
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.food",
+                "before": 77,
+                "after": 76
+              },
+              "to": {
+                "accountId": "account.citizen.0019.food",
+                "before": 0,
+                "after": 1
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0019.food",
+                "before": 1,
+                "after": 0
+              },
+              "to": null
+            }
+          ]
+        }
+      ],
+      "audit": {
+        "transactions": 888,
+        "movements": 2176,
+        "genesis": {
+          "food": 495,
+          "timber": 120,
+          "coin": 1500
+        },
+        "consumed": {
+          "food": 468,
+          "timber": 0,
+          "coin": 0
+        },
+        "remaining": {
+          "food": 27,
+          "timber": 120,
+          "coin": 1500
+        }
+      }
+    },
+    "delivery-duty": {
+      "commands": [
+        {
+          "operation": "CREATE",
+          "lawId": "market-delivery-must",
+          "commandId": "confirm-market-delivery-must",
+          "ast": {
+            "issuerId": "council.village",
+            "jurisdictionId": "jurisdiction.village",
+            "targetSelector": "merchant",
+            "modality": "MUST",
+            "actionId": "market-delivery"
+          }
+        }
+      ],
+      "noticeSample": [
+        {
+          "citizenId": "citizen.0006",
+          "lawId": "market-delivery-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0006.market-delivery-must.1"
+        },
+        {
+          "citizenId": "citizen.0008",
+          "lawId": "market-delivery-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0008.market-delivery-must.1"
+        },
+        {
+          "citizenId": "citizen.0019",
+          "lawId": "market-delivery-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0019.market-delivery-must.1"
+        },
+        {
+          "citizenId": "citizen.0020",
+          "lawId": "market-delivery-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0020.market-delivery-must.1"
+        }
+      ],
+      "daily": [
+        {
+          "turn": 1,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 32,
+          "guardsPaid": 8,
+          "marketFood": 37,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 40,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 14,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 3,
+            "infeasibleDuties": 3,
+            "completedDuties": 3,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 7
+        },
+        {
+          "turn": 2,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 80,
+          "guardsPaid": 8,
+          "marketFood": 77,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 26,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 14,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 6,
+            "infeasibleDuties": 0,
+            "completedDuties": 6,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 8
+        },
+        {
+          "turn": 3,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 56,
+          "guardsPaid": 8,
+          "marketFood": 93,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 39,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 12,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 8,
+            "infeasibleDuties": 0,
+            "completedDuties": 7,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 1,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 5
+        },
+        {
+          "turn": 4,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 64,
+          "guardsPaid": 8,
+          "marketFood": 117,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 41,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 12,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 8,
+            "infeasibleDuties": 0,
+            "completedDuties": 7,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 1,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 7
+        },
+        {
+          "turn": 5,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 52,
+          "guardsPaid": 8,
+          "marketFood": 129,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 61,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 6,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 11,
+            "infeasibleDuties": 3,
+            "completedDuties": 9,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 2,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 7
+        },
+        {
+          "turn": 6,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 56,
+          "guardsPaid": 8,
+          "marketFood": 145,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 56,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 4,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 16,
+            "infeasibleDuties": 0,
+            "completedDuties": 10,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 6,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 3
+        },
+        {
+          "turn": 7,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 64,
+          "guardsPaid": 8,
+          "marketFood": 169,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 46,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 16,
+            "infeasibleDuties": 2,
+            "completedDuties": 14,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 2,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 1
+        },
+        {
+          "turn": 8,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 46,
+          "guardsPaid": 8,
+          "marketFood": 175,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 4,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 20,
+            "infeasibleDuties": 0,
+            "completedDuties": 11,
+            "blockedDuties": 4,
+            "partialDuties": 1,
+            "unchosenDuties": 4,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 2
+        },
+        {
+          "turn": 9,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 135,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 20,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 10,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 95,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 20,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 11,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 61,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 20,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 12,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 27,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 20,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        }
+      ],
+      "sample": {
+        "harvest": {
+          "id": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "action": "harvest-food",
+          "status": "completed",
+          "reason": null,
+          "quantity": 3,
+          "transactionId": "tx.1.1",
+          "fatigue": {
+            "before": 32,
+            "after": 57
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "choice": {
+            "draw": 995608940,
+            "candidates": [
+              {
+                "actionId": "harvest-food",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 15,
+                  "fatigue": -16,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 80,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "delivery": {
+          "id": "event.1.66",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "action": "market-delivery",
+          "status": "completed",
+          "reason": null,
+          "quantity": 4,
+          "transactionId": "tx.1.36",
+          "fatigue": {
+            "before": 0,
+            "after": 20
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "legalChoice": [
+            {
+              "actionId": "market-delivery",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "market-delivery-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "market-delivery-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-market-delivery-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 86,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            },
+            {
+              "actionId": "rest",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 25,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            }
+          ],
+          "choice": {
+            "draw": 2294778251,
+            "candidates": [
+              {
+                "actionId": "market-delivery",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 5,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 86,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "meal": {
+          "id": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "action": "resident-meal",
+          "status": "completed",
+          "quantity": 1,
+          "reason": null,
+          "transactionId": "tx.1.52",
+          "fatigue": {
+            "before": 58,
+            "after": 58
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 77,
+            "fundingShortfall": 0,
+            "supplyShortfall": 0
+          }
+        },
+        "unaffordable": {
+          "id": "event.11.155",
+          "turn": 11,
+          "phase": "dusk",
+          "actorId": "citizen.0017",
+          "action": "resident-meal",
+          "status": "blocked-at-execution",
+          "quantity": 0,
+          "reason": "insufficient-funds",
+          "transactionId": null,
+          "fatigue": {
+            "before": 0,
+            "after": 0
+          },
+          "hunger": {
+            "before": 0,
+            "after": 1
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 94,
+            "fundingShortfall": 1,
+            "supplyShortfall": 0
+          }
+        },
+        "knownDeliveryDuty": {
+          "id": "event.1.67",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0023",
+          "action": "market-delivery",
+          "status": "completed",
+          "reason": null,
+          "quantity": 4,
+          "transactionId": "tx.1.37",
+          "fatigue": {
+            "before": 0,
+            "after": 20
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "legalChoice": [
+            {
+              "actionId": "market-delivery",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "market-delivery-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "market-delivery-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-market-delivery-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "market-delivery-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "market-delivery-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-market-delivery-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "noticeEventIds": [
+                "notice.citizen.0023.market-delivery-must.1"
+              ],
+              "pressure": 60,
+              "weight": 153,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": "completed"
+            },
+            {
+              "actionId": "rest",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 25,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            }
+          ],
+          "choice": {
+            "draw": 486174943,
+            "candidates": [
+              {
+                "actionId": "market-delivery",
+                "base": 75,
+                "disposition": 3,
+                "pressure": 60,
+                "utility": {
+                  "need": 0,
+                  "income": 5,
+                  "fatigue": 0,
+                  "trust": 10,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 153,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        }
+      },
+      "transactions": [
+        {
+          "id": "tx.1.1",
+          "eventId": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "reason": "harvest-food",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.field.food",
+                "before": 450,
+                "after": 447
+              },
+              "to": {
+                "accountId": "account.citizen.0002.food",
+                "before": 0,
+                "after": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.36",
+          "eventId": "event.1.66",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "reason": "market-delivery",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.citizen.0012.food",
+                "before": 3,
+                "after": 0
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 45,
+                "after": 48
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 200,
+                "after": 197
+              },
+              "to": {
+                "accountId": "account.citizen.0012.coin",
+                "before": 20,
+                "after": 23
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0013.food",
+                "before": 6,
+                "after": 5
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 48,
+                "after": 49
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 197,
+                "after": 196
+              },
+              "to": {
+                "accountId": "account.citizen.0013.coin",
+                "before": 20,
+                "after": 21
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 196,
+                "after": 195
+              },
+              "to": {
+                "accountId": "account.citizen.0031.coin",
+                "before": 20,
+                "after": 21
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.37",
+          "eventId": "event.1.67",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0023",
+          "reason": "market-delivery",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 4,
+              "from": {
+                "accountId": "account.citizen.0013.food",
+                "before": 5,
+                "after": 1
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 49,
+                "after": 53
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 4,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 195,
+                "after": 191
+              },
+              "to": {
+                "accountId": "account.citizen.0013.coin",
+                "before": 21,
+                "after": 25
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 191,
+                "after": 190
+              },
+              "to": {
+                "accountId": "account.citizen.0023.coin",
+                "before": 20,
+                "after": 21
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.52",
+          "eventId": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "reason": "resident-meal",
+          "legs": [
+            {
+              "resource": "coin",
+              "quantity": 2,
+              "from": {
+                "accountId": "account.citizen.0019.coin",
+                "before": 20,
+                "after": 18
+              },
+              "to": {
+                "accountId": "account.market.coin",
+                "before": 160,
+                "after": 162
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.food",
+                "before": 77,
+                "after": 76
+              },
+              "to": {
+                "accountId": "account.citizen.0019.food",
+                "before": 0,
+                "after": 1
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0019.food",
+                "before": 1,
+                "after": 0
+              },
+              "to": null
+            }
+          ]
+        }
+      ],
+      "audit": {
+        "transactions": 888,
+        "movements": 2206,
+        "genesis": {
+          "food": 495,
+          "timber": 120,
+          "coin": 1500
+        },
+        "consumed": {
+          "food": 468,
+          "timber": 0,
+          "coin": 0
+        },
+        "remaining": {
+          "food": 27,
+          "timber": 120,
+          "coin": 1500
+        }
+      }
+    },
+    "harvest-and-delivery-duties": {
+      "commands": [
+        {
+          "operation": "CREATE",
+          "lawId": "harvest-food-must",
+          "commandId": "confirm-harvest-food-must",
+          "ast": {
+            "issuerId": "council.village",
+            "jurisdictionId": "jurisdiction.village",
+            "targetSelector": "farmer",
+            "modality": "MUST",
+            "actionId": "harvest-food"
+          }
+        },
+        {
+          "operation": "CREATE",
+          "lawId": "market-delivery-must",
+          "commandId": "confirm-market-delivery-must",
+          "ast": {
+            "issuerId": "council.village",
+            "jurisdictionId": "jurisdiction.village",
+            "targetSelector": "merchant",
+            "modality": "MUST",
+            "actionId": "market-delivery"
+          }
+        }
+      ],
+      "noticeSample": [
+        {
+          "citizenId": "citizen.0002",
+          "lawId": "harvest-food-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0002.harvest-food-must.1"
+        },
+        {
+          "citizenId": "citizen.0011",
+          "lawId": "harvest-food-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0011.harvest-food-must.1"
+        },
+        {
+          "citizenId": "citizen.0016",
+          "lawId": "harvest-food-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0016.harvest-food-must.1"
+        },
+        {
+          "citizenId": "citizen.0022",
+          "lawId": "harvest-food-must",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0022.harvest-food-must.1"
+        }
+      ],
+      "daily": [
+        {
+          "turn": 1,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 32,
+          "guardsPaid": 8,
+          "marketFood": 37,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 43,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 40,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 9,
+            "infeasibleDuties": 3,
+            "completedDuties": 8,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 1,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 14
+        },
+        {
+          "turn": 2,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 80,
+          "guardsPaid": 8,
+          "marketFood": 77,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 32,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 26,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 25,
+            "infeasibleDuties": 1,
+            "completedDuties": 21,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 4,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 20
+        },
+        {
+          "turn": 3,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 56,
+          "guardsPaid": 8,
+          "marketFood": 93,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 48,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 24,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 27,
+            "infeasibleDuties": 1,
+            "completedDuties": 23,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 4,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 11
+        },
+        {
+          "turn": 4,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 64,
+          "guardsPaid": 8,
+          "marketFood": 117,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 44,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 20,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 28,
+            "infeasibleDuties": 4,
+            "completedDuties": 23,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 5,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 12
+        },
+        {
+          "turn": 5,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 52,
+          "guardsPaid": 8,
+          "marketFood": 129,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 73,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 10,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 37,
+            "infeasibleDuties": 5,
+            "completedDuties": 33,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 4,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 11
+        },
+        {
+          "turn": 6,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 56,
+          "guardsPaid": 8,
+          "marketFood": 145,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 74,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 6,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 39,
+            "infeasibleDuties": 7,
+            "completedDuties": 28,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 11,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 6
+        },
+        {
+          "turn": 7,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 64,
+          "guardsPaid": 8,
+          "marketFood": 169,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 46,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 4,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 31,
+            "infeasibleDuties": 17,
+            "completedDuties": 25,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 6,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 2
+        },
+        {
+          "turn": 8,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 46,
+          "guardsPaid": 8,
+          "marketFood": 175,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 4,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 20,
+            "infeasibleDuties": 30,
+            "completedDuties": 11,
+            "blockedDuties": 4,
+            "partialDuties": 1,
+            "unchosenDuties": 4,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 2
+        },
+        {
+          "turn": 9,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 135,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 50,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 10,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 95,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 50,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 11,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 61,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 50,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 0
+        },
+        {
+          "turn": 12,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 0,
+          "guardsPaid": 8,
+          "marketFood": 27,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 52,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 0
+          },
+          "notices": 1
+        }
+      ],
+      "sample": {
+        "harvest": {
+          "id": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "action": "harvest-food",
+          "status": "completed",
+          "reason": null,
+          "quantity": 3,
+          "transactionId": "tx.1.1",
+          "fatigue": {
+            "before": 32,
+            "after": 57
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "legalChoice": [
+            {
+              "actionId": "harvest-food",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "harvest-food-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "harvest-food-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-harvest-food-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "harvest-food-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "harvest-food-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-harvest-food-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "noticeEventIds": [
+                "notice.citizen.0002.harvest-food-must.1"
+              ],
+              "pressure": 60,
+              "weight": 146,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": "completed"
+            },
+            {
+              "actionId": "rest",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 25,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            }
+          ],
+          "choice": {
+            "draw": 995608940,
+            "candidates": [
+              {
+                "actionId": "harvest-food",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 60,
+                "utility": {
+                  "need": 0,
+                  "income": 15,
+                  "fatigue": -16,
+                  "trust": 6,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 146,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "delivery": {
+          "id": "event.1.67",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "action": "market-delivery",
+          "status": "completed",
+          "reason": null,
+          "quantity": 4,
+          "transactionId": "tx.1.37",
+          "fatigue": {
+            "before": 0,
+            "after": 20
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "legalChoice": [
+            {
+              "actionId": "market-delivery",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "market-delivery-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "market-delivery-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-market-delivery-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 86,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            },
+            {
+              "actionId": "rest",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 25,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            }
+          ],
+          "choice": {
+            "draw": 2294778251,
+            "candidates": [
+              {
+                "actionId": "market-delivery",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 5,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 86,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "meal": {
+          "id": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "action": "resident-meal",
+          "status": "completed",
+          "quantity": 1,
+          "reason": null,
+          "transactionId": "tx.1.53",
+          "fatigue": {
+            "before": 58,
+            "after": 58
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 77,
+            "fundingShortfall": 0,
+            "supplyShortfall": 0
+          }
+        },
+        "unaffordable": {
+          "id": "event.11.155",
+          "turn": 11,
+          "phase": "dusk",
+          "actorId": "citizen.0017",
+          "action": "resident-meal",
+          "status": "blocked-at-execution",
+          "quantity": 0,
+          "reason": "insufficient-funds",
+          "transactionId": null,
+          "fatigue": {
+            "before": 0,
+            "after": 0
+          },
+          "hunger": {
+            "before": 0,
+            "after": 1
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 94,
+            "fundingShortfall": 1,
+            "supplyShortfall": 0
+          }
+        },
+        "knownDeliveryDuty": {
+          "id": "event.1.68",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0023",
+          "action": "market-delivery",
+          "status": "completed",
+          "reason": null,
+          "quantity": 4,
+          "transactionId": "tx.1.38",
+          "fatigue": {
+            "before": 0,
+            "after": 20
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "legalChoice": [
+            {
+              "actionId": "market-delivery",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "market-delivery-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "market-delivery-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-market-delivery-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "required",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "market-delivery-must",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "market-delivery-must",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-market-delivery-must",
+                    "modality": "MUST",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "noticeEventIds": [
+                "notice.citizen.0023.market-delivery-must.1"
+              ],
+              "pressure": 60,
+              "weight": 153,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": "completed"
+            },
+            {
+              "actionId": "rest",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 25,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            }
+          ],
+          "choice": {
+            "draw": 486174943,
+            "candidates": [
+              {
+                "actionId": "market-delivery",
+                "base": 75,
+                "disposition": 3,
+                "pressure": 60,
+                "utility": {
+                  "need": 0,
+                  "income": 5,
+                  "fatigue": 0,
+                  "trust": 10,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 153,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        }
+      },
+      "transactions": [
+        {
+          "id": "tx.1.1",
+          "eventId": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "reason": "harvest-food",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.field.food",
+                "before": 450,
+                "after": 447
+              },
+              "to": {
+                "accountId": "account.citizen.0002.food",
+                "before": 0,
+                "after": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.37",
+          "eventId": "event.1.67",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "reason": "market-delivery",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.citizen.0012.food",
+                "before": 3,
+                "after": 0
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 45,
+                "after": 48
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 200,
+                "after": 197
+              },
+              "to": {
+                "accountId": "account.citizen.0012.coin",
+                "before": 20,
+                "after": 23
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0013.food",
+                "before": 6,
+                "after": 5
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 48,
+                "after": 49
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 197,
+                "after": 196
+              },
+              "to": {
+                "accountId": "account.citizen.0013.coin",
+                "before": 20,
+                "after": 21
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 196,
+                "after": 195
+              },
+              "to": {
+                "accountId": "account.citizen.0031.coin",
+                "before": 20,
+                "after": 21
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.38",
+          "eventId": "event.1.68",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0023",
+          "reason": "market-delivery",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 4,
+              "from": {
+                "accountId": "account.citizen.0013.food",
+                "before": 5,
+                "after": 1
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 49,
+                "after": 53
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 4,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 195,
+                "after": 191
+              },
+              "to": {
+                "accountId": "account.citizen.0013.coin",
+                "before": 21,
+                "after": 25
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 191,
+                "after": 190
+              },
+              "to": {
+                "accountId": "account.citizen.0023.coin",
+                "before": 20,
+                "after": 21
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.53",
+          "eventId": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "reason": "resident-meal",
+          "legs": [
+            {
+              "resource": "coin",
+              "quantity": 2,
+              "from": {
+                "accountId": "account.citizen.0019.coin",
+                "before": 20,
+                "after": 18
+              },
+              "to": {
+                "accountId": "account.market.coin",
+                "before": 160,
+                "after": 162
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.food",
+                "before": 77,
+                "after": 76
+              },
+              "to": {
+                "accountId": "account.citizen.0019.food",
+                "before": 0,
+                "after": 1
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0019.food",
+                "before": 1,
+                "after": 0
+              },
+              "to": null
+            }
+          ]
+        }
+      ],
+      "audit": {
+        "transactions": 888,
+        "movements": 2196,
+        "genesis": {
+          "food": 495,
+          "timber": 120,
+          "coin": 1500
+        },
+        "consumed": {
+          "food": 468,
+          "timber": 0,
+          "coin": 0
+        },
+        "remaining": {
+          "food": 27,
+          "timber": 120,
+          "coin": 1500
+        }
+      }
+    },
+    "harvest-ban": {
+      "commands": [
+        {
+          "operation": "CREATE",
+          "lawId": "harvest-food-must_not",
+          "commandId": "confirm-harvest-food-must_not",
+          "ast": {
+            "issuerId": "council.village",
+            "jurisdictionId": "jurisdiction.village",
+            "targetSelector": "farmer",
+            "modality": "MUST_NOT",
+            "actionId": "harvest-food"
+          }
+        }
+      ],
+      "noticeSample": [
+        {
+          "citizenId": "citizen.0005",
+          "lawId": "harvest-food-must_not",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0005.harvest-food-must_not.1"
+        },
+        {
+          "citizenId": "citizen.0013",
+          "lawId": "harvest-food-must_not",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0013.harvest-food-must_not.1"
+        },
+        {
+          "citizenId": "citizen.0015",
+          "lawId": "harvest-food-must_not",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0015.harvest-food-must_not.1"
+        },
+        {
+          "citizenId": "citizen.0029",
+          "lawId": "harvest-food-must_not",
+          "version": 1,
+          "learnedAtTurn": 1,
+          "learnedAtPhase": "dawn",
+          "eventId": "notice.citizen.0029.harvest-food-must_not.1"
+        }
+      ],
+      "daily": [
+        {
+          "turn": 1,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 32,
+          "guardsPaid": 8,
+          "marketFood": 37,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 34,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 26,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 22
+          },
+          "notices": 5
+        },
+        {
+          "turn": 2,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 76,
+          "guardsPaid": 8,
+          "marketFood": 73,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 12,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 16,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 18
+          },
+          "notices": 9
+        },
+        {
+          "turn": 3,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 48,
+          "guardsPaid": 8,
+          "marketFood": 81,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 15,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 4,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 17
+          },
+          "notices": 9
+        },
+        {
+          "turn": 4,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 51,
+          "guardsPaid": 8,
+          "marketFood": 92,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 2,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 12
+          },
+          "notices": 4
+        },
+        {
+          "turn": 5,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 32,
+          "guardsPaid": 8,
+          "marketFood": 84,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 4,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 0,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 2,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 12
+          },
+          "notices": 1
+        },
+        {
+          "turn": 6,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 19,
+          "guardsPaid": 8,
+          "marketFood": 63,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 18,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 2,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 11
+          },
+          "notices": 3
+        },
+        {
+          "turn": 7,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 27,
+          "guardsPaid": 8,
+          "marketFood": 50,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 18,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 1,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 9
+          },
+          "notices": 1
+        },
+        {
+          "turn": 8,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 42,
+          "guardsPaid": 8,
+          "marketFood": 52,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 5,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 8
+          },
+          "notices": 0
+        },
+        {
+          "turn": 9,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 27,
+          "guardsPaid": 8,
+          "marketFood": 39,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 2,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 9
+          },
+          "notices": 0
+        },
+        {
+          "turn": 10,
+          "residentsFed": 40,
+          "residentsUnmet": 0,
+          "foodConsumed": 40,
+          "foodDelivered": 27,
+          "guardsPaid": 8,
+          "marketFood": 26,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 0,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 1,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 9
+          },
+          "notices": 0
+        },
+        {
+          "turn": 11,
+          "residentsFed": 34,
+          "residentsUnmet": 6,
+          "foodConsumed": 34,
+          "foodDelivered": 15,
+          "guardsPaid": 8,
+          "marketFood": 7,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 0,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 6,
+            "shortDeliveryAttempts": 1
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 5
+          },
+          "notices": 0
+        },
+        {
+          "turn": 12,
+          "residentsFed": 31,
+          "residentsUnmet": 9,
+          "foodConsumed": 31,
+          "foodDelivered": 24,
+          "guardsPaid": 8,
+          "marketFood": 0,
+          "foodAccess": {
+            "demand": 40,
+            "unableToAffordUnits": 6,
+            "unavailableMarketUnits": 3,
+            "undeliveredProducerUnits": 0,
+            "deliveryAllocationShortfallUnits": 0,
+            "blockedDeliveryAttempts": 2,
+            "shortDeliveryAttempts": 0
+          },
+          "compliance": {
+            "unaware": 0,
+            "knownInapplicable": 0,
+            "knownFeasibleDuties": 0,
+            "infeasibleDuties": 0,
+            "completedDuties": 0,
+            "blockedDuties": 0,
+            "partialDuties": 0,
+            "unchosenDuties": 0,
+            "competingDutySlots": 0,
+            "performedProhibitions": 8
+          },
+          "notices": 1
+        }
+      ],
+      "sample": {
+        "harvest": {
+          "id": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "action": "harvest-food",
+          "status": "completed",
+          "reason": null,
+          "quantity": 3,
+          "transactionId": "tx.1.1",
+          "fatigue": {
+            "before": 32,
+            "after": 57
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "legalChoice": [
+            {
+              "actionId": "harvest-food",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "prohibited",
+                "unlicensedDuty": false,
+                "winner": {
+                  "lawId": "harvest-food-must_not",
+                  "version": 1
+                },
+                "overridden": [],
+                "considered": [
+                  {
+                    "ref": {
+                      "lawId": "harvest-food-must_not",
+                      "version": 1
+                    },
+                    "eventId": "law-event.confirm-harvest-food-must_not",
+                    "modality": "MUST_NOT",
+                    "when": null,
+                    "unless": null,
+                    "applicable": true
+                  }
+                ]
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 80,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            },
+            {
+              "actionId": "rest",
+              "actual": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "perceived": {
+                "licence": "not-required",
+                "licenceRef": null,
+                "status": "optional",
+                "unlicensedDuty": false,
+                "winner": null,
+                "overridden": [],
+                "considered": []
+              },
+              "noticeEventIds": [],
+              "pressure": 0,
+              "weight": 25,
+              "selectionBarrier": null,
+              "perceivedDutyOutcome": null
+            }
+          ],
+          "choice": {
+            "draw": 995608940,
+            "candidates": [
+              {
+                "actionId": "harvest-food",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 15,
+                  "fatigue": -16,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 80,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "delivery": {
+          "id": "event.1.65",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "action": "market-delivery",
+          "status": "completed",
+          "reason": null,
+          "quantity": 4,
+          "transactionId": "tx.1.34",
+          "fatigue": {
+            "before": 0,
+            "after": 20
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "choice": {
+            "draw": 2294778251,
+            "candidates": [
+              {
+                "actionId": "market-delivery",
+                "base": 75,
+                "disposition": 6,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 5,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 86,
+                "selectionBarrier": null
+              },
+              {
+                "actionId": "rest",
+                "base": 25,
+                "disposition": 0,
+                "pressure": 0,
+                "utility": {
+                  "need": 0,
+                  "income": 0,
+                  "fatigue": 0,
+                  "trust": 0,
+                  "acceptance": 0,
+                  "risk": 0,
+                  "riskEventIds": []
+                },
+                "weight": 25,
+                "selectionBarrier": null
+              }
+            ]
+          }
+        },
+        "meal": {
+          "id": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "action": "resident-meal",
+          "status": "completed",
+          "quantity": 1,
+          "reason": null,
+          "transactionId": "tx.1.50",
+          "fatigue": {
+            "before": 58,
+            "after": 58
+          },
+          "hunger": {
+            "before": 0,
+            "after": 0
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 77,
+            "fundingShortfall": 0,
+            "supplyShortfall": 0
+          }
+        },
+        "unaffordable": {
+          "id": "event.11.113",
+          "turn": 11,
+          "phase": "dusk",
+          "actorId": "citizen.0017",
+          "action": "resident-meal",
+          "status": "blocked-at-execution",
+          "quantity": 0,
+          "reason": "insufficient-funds",
+          "transactionId": null,
+          "fatigue": {
+            "before": 0,
+            "after": 0
+          },
+          "hunger": {
+            "before": 0,
+            "after": 1
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 40,
+            "fundingShortfall": 1,
+            "supplyShortfall": 0
+          }
+        },
+        "stockout": {
+          "id": "event.12.185",
+          "turn": 12,
+          "phase": "dusk",
+          "actorId": "citizen.0011",
+          "action": "resident-meal",
+          "status": "blocked-at-execution",
+          "quantity": 0,
+          "reason": "no-stock",
+          "transactionId": null,
+          "fatigue": {
+            "before": 50,
+            "after": 50
+          },
+          "hunger": {
+            "before": 0,
+            "after": 1
+          },
+          "foodAccess": {
+            "marketAvailableBefore": 0,
+            "fundingShortfall": 0,
+            "supplyShortfall": 1
+          }
+        }
+      },
+      "transactions": [
+        {
+          "id": "tx.1.1",
+          "eventId": "event.1.11",
+          "turn": 1,
+          "phase": "morning",
+          "actorId": "citizen.0002",
+          "reason": "harvest-food",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.field.food",
+                "before": 450,
+                "after": 447
+              },
+              "to": {
+                "accountId": "account.citizen.0002.food",
+                "before": 0,
+                "after": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.34",
+          "eventId": "event.1.65",
+          "turn": 1,
+          "phase": "afternoon",
+          "actorId": "citizen.0031",
+          "reason": "market-delivery",
+          "legs": [
+            {
+              "resource": "food",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.citizen.0012.food",
+                "before": 3,
+                "after": 0
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 45,
+                "after": 48
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 3,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 200,
+                "after": 197
+              },
+              "to": {
+                "accountId": "account.citizen.0012.coin",
+                "before": 20,
+                "after": 23
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0010.food",
+                "before": 6,
+                "after": 5
+              },
+              "to": {
+                "accountId": "account.market.food",
+                "before": 48,
+                "after": 49
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 197,
+                "after": 196
+              },
+              "to": {
+                "accountId": "account.citizen.0010.coin",
+                "before": 20,
+                "after": 21
+              }
+            },
+            {
+              "resource": "coin",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.coin",
+                "before": 196,
+                "after": 195
+              },
+              "to": {
+                "accountId": "account.citizen.0031.coin",
+                "before": 20,
+                "after": 21
+              }
+            }
+          ]
+        },
+        {
+          "id": "tx.1.50",
+          "eventId": "event.1.99",
+          "turn": 1,
+          "phase": "dusk",
+          "actorId": "citizen.0019",
+          "reason": "resident-meal",
+          "legs": [
+            {
+              "resource": "coin",
+              "quantity": 2,
+              "from": {
+                "accountId": "account.citizen.0019.coin",
+                "before": 20,
+                "after": 18
+              },
+              "to": {
+                "accountId": "account.market.coin",
+                "before": 160,
+                "after": 162
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.market.food",
+                "before": 77,
+                "after": 76
+              },
+              "to": {
+                "accountId": "account.citizen.0019.food",
+                "before": 0,
+                "after": 1
+              }
+            },
+            {
+              "resource": "food",
+              "quantity": 1,
+              "from": {
+                "accountId": "account.citizen.0019.food",
+                "before": 1,
+                "after": 0
+              },
+              "to": null
+            }
+          ]
+        }
+      ],
+      "audit": {
+        "transactions": 869,
+        "movements": 2211,
+        "genesis": {
+          "food": 495,
+          "timber": 120,
+          "coin": 1500
+        },
+        "consumed": {
+          "food": 465,
+          "timber": 0,
+          "coin": 0
+        },
+        "remaining": {
+          "food": 30,
+          "timber": 120,
+          "coin": 1500
+        }
+      }
+    }
+  }
+}

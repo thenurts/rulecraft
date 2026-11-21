@@ -1,0 +1,130 @@
+{
+  "awareness": {
+    "pairs": 256,
+    "control": {
+      "total": 3469,
+      "opportunities": 10240
+    },
+    "treatment": {
+      "total": 8492,
+      "opportunities": 10240
+    },
+    "changePp": 49.05,
+    "confidence95Pp": [
+      47.77,
+      50.34
+    ]
+  },
+  "patrol-capacity": {
+    "pairs": 256,
+    "control": {
+      "total": 236,
+      "opportunities": 3270
+    },
+    "treatment": {
+      "total": 749,
+      "opportunities": 3270
+    },
+    "changePp": 15.83,
+    "confidence95Pp": [
+      14.79,
+      16.88
+    ]
+  },
+  "formal-warning-risk": {
+    "pairs": 247,
+    "control": {
+      "total": 173,
+      "opportunities": 391
+    },
+    "treatment": {
+      "total": 365,
+      "opportunities": 391
+    },
+    "changePp": 48.99,
+    "confidence95Pp": [
+      43.76,
+      54.22
+    ]
+  },
+  "hunger": {
+    "pairs": 256,
+    "control": {
+      "total": 196,
+      "opportunities": 256
+    },
+    "treatment": {
+      "total": 203,
+      "opportunities": 256
+    },
+    "changePp": 2.73,
+    "confidence95Pp": [
+      0.73,
+      4.74
+    ]
+  },
+  "income-opportunity": {
+    "pairs": 256,
+    "control": {
+      "total": 187,
+      "opportunities": 256
+    },
+    "treatment": {
+      "total": 196,
+      "opportunities": 256
+    },
+    "changePp": 3.52,
+    "confidence95Pp": [
+      1.26,
+      5.78
+    ]
+  },
+  "fatigue": {
+    "pairs": 256,
+    "control": {
+      "total": 58,
+      "opportunities": 256
+    },
+    "treatment": {
+      "total": 79,
+      "opportunities": 256
+    },
+    "changePp": 8.2,
+    "confidence95Pp": [
+      4.83,
+      11.57
+    ]
+  },
+  "field-lottery-early-id": {
+    "pairs": 255,
+    "control": {
+      "total": 127.5,
+      "opportunities": 255
+    },
+    "treatment": {
+      "total": 129,
+      "opportunities": 255
+    },
+    "changePp": 0.59,
+    "confidence95Pp": [
+      -5.56,
+      6.74
+    ]
+  },
+  "meal-lottery-early-id": {
+    "pairs": 256,
+    "control": {
+      "total": 128,
+      "opportunities": 256
+    },
+    "treatment": {
+      "total": 128,
+      "opportunities": 256
+    },
+    "changePp": 0,
+    "confidence95Pp": [
+      -6.14,
+      6.14
+    ]
+  }
+}
