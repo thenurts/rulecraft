@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { advanceSociety, confirmLaw, type LawCommand, type LawVersion } from '@rulecraft/simulation';
 import { Book, Composer, newDraft, usableDraft } from './decrees.tsx';
 import { deviceDraftStore, type DecreeDraft } from './draft-store.ts';
 import { AdvancePanel, DayResults, Gazette, Inquiry, TrialSummary } from './results.tsx';
+import { Chronicle, ShareView, StoryCard } from './narrative/StoryViews.tsx';
+import { projectNarrative, type Incident } from './narrative/projection.ts';
 import { workerCodec } from './save-codec.ts';
 import { BrowserDatabase, deviceSaveStore, emptySave, SaveConflict, type LoadedSave } from './save-store.ts';
 import { createRoot } from 'react-dom/client';
@@ -145,6 +147,21 @@ function App() {
   const draftQueue = useRef(Promise.resolve());
   const screen = history[history.length - 1];
   const session = saved.session;
+  const narrative = useMemo(() => {
+    if (!session) return { incidents: [], diagnostics: [] };
+    try {
+      const start = performance.now();
+      const projection = projectNarrative(session.game, session.mode);
+      performance.measure('rulecraft.narrative', { start, detail: { day: session.game.state.turn } });
+      return projection;
+    } catch {
+      return { incidents: [], diagnostics: ['projection-failed'] };
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (narrative.diagnostics.length) console.warn('Rulecraft narrative diagnostics', narrative.diagnostics);
+  }, [narrative]);
   const go = (destination: Screen) => setHistory((before) => visit(before, destination));
 
   useEffect(() => {
@@ -278,6 +295,11 @@ function App() {
   }
 
   const inspect = (id: string) => go({ name: 'inquiry', id });
+  const share = (id: string) => go({ name: 'share', id });
+  const today = narrative.incidents.filter(({ turn }) => turn === Number(screen.id));
+  function story(incident: Incident, compact = false) {
+    return session && <StoryCard key={incident.id} incident={incident} game={session.game} compact={compact} inspect={inspect} share={share} />;
+  }
   const openGazette = (day = session?.game.state.turn ?? 0) => go({ name: 'gazette', id: String(day) });
   const blocked = busy || stale || !storageReady;
   return <>
@@ -299,6 +321,8 @@ function App() {
         <button disabled={busy} aria-current={screen.name === 'village' ? 'page' : undefined} onClick={() => go(villageScreen)}>Village</button>
         <button disabled={busy} aria-current={screen.name === 'book' || screen.name === 'composer' ? 'page' : undefined} onClick={() => go(bookScreen)}>Decree Book</button>
         <button disabled={busy} aria-current={screen.name === 'gazette' ? 'page' : undefined} onClick={() => openGazette()}>Gazette</button>
+        <button disabled={busy} aria-current={screen.name === 'chronicle' ? 'page' : undefined}
+          onClick={() => go({ name: 'chronicle' })}>Chronicle</button>
       </nav>}
       {screen.name === 'village' && session && <Village session={session}>
         <AdvancePanel day={session.game.state.turn} limit={session.game.fixture.days} busy={blocked} onAdvance={advance} />
@@ -306,9 +330,14 @@ function App() {
         <TrialSummary session={session} />
       </Village>}
       {screen.name === 'results' && session && <DayResults session={session} day={Number(screen.id)}
-        inspect={inspect} openGazette={() => openGazette(Number(screen.id))} />}
+        inspect={inspect} openGazette={() => openGazette(Number(screen.id))} story={today[0] ? story(today[0], true) : null} />}
       {screen.name === 'gazette' && session && <Gazette game={session.game} day={Number(screen.id)}
-        onDay={(day) => setHistory((previous) => [...previous.slice(0, -1), { name: 'gazette', id: String(day) }])} inspect={inspect} />}
+        onDay={(day) => setHistory((previous) => [...previous.slice(0, -1), { name: 'gazette', id: String(day) }])} inspect={inspect}
+        stories={today.length ? today.map((incident) => story(incident))
+          : <section className="panel"><h2>A quieter day in the village</h2><p>Browse the factual records below.</p></section>} />}
+      {screen.name === 'chronicle' && session && <Chronicle game={session.game} incidents={narrative.incidents} inspect={inspect} share={share} />}
+      {screen.name === 'share' && session && screen.id &&
+        <ShareView key={screen.id} game={session.game} mode={session.mode} id={screen.id} />}
       {screen.name === 'inquiry' && session && screen.id && <Inquiry game={session.game} id={screen.id} inspect={inspect} />}
       {screen.name === 'book' && session &&
         <Book game={session.game} draft={draft} busy={blocked} onCompose={openComposer} onCommit={enact} />}

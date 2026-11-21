@@ -9,7 +9,7 @@ export interface GameSession extends Selection { id: string; game: SocietyGame }
 export const modeLabel = { junior: 'Junior', full: 'Full' };
 export const trackLabel = { campaign: 'Campaign preview', sandbox: '12-day Sandbox trial' };
 export const occupations = { farmer: 'Farmers', forester: 'Foresters', merchant: 'Merchants', guard: 'Guards' };
-export type Screen = { name: 'home' | 'village' | 'book' | 'composer' | 'results' | 'gazette' | 'inquiry'; id?: string };
+export type Screen = { name: 'home' | 'village' | 'book' | 'composer' | 'results' | 'gazette' | 'inquiry' | 'chronicle' | 'share'; id?: string };
 export const homeScreen: Screen = { name: 'home' };
 export const villageScreen: Screen = { name: 'village' };
 
@@ -32,6 +32,12 @@ export function browserId(): string {
 
 export function newSession(selection: Selection, id: string, seed = 42): GameSession {
   return { ...selection, id, game: startSociety(fixture, seed) };
+}
+
+export function lawRefLabel(game: SocietyGame, lawId: string, version?: number): string {
+  const list = game.book.versions;
+  const number = [...new Set(list.map((law) => law.lawId))].indexOf(lawId) + 1;
+  return `${number > 0 ? `Decree ${number}` : lawId}${version === undefined ? '' : ` · Version ${version}`}`;
 }
 
 export function citizenLabel(id: string): string {

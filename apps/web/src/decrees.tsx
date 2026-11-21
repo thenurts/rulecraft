@@ -5,7 +5,7 @@ import {
   type SocietyGame,
 } from '@rulecraft/simulation';
 import type { DecreeDraft } from './draft-store.ts';
-import { browserId, occupations, type Mode } from './world.ts';
+import { browserId, lawRefLabel, occupations, type Mode } from './world.ts';
 
 const subjects = { ...occupations, 'all-citizens': 'All citizens' };
 const modalities = { MUST: 'Must', MUST_NOT: 'Must not', MAY: 'May' };
@@ -61,12 +61,6 @@ export function authoredCommand(draft: DecreeDraft, ast: LawAst, game: SocietyGa
     commandId: draft.commandId, lawId: draft.lawId ?? `law-${number}`,
     operation: draft.lawId ? 'AMEND' : 'CREATE', ast,
   };
-}
-
-export function lawRefLabel(game: SocietyGame, lawId: string, version?: number): string {
-  const list = game.book.versions;
-  const number = [...new Set(list.map((law) => law.lawId))].indexOf(lawId) + 1;
-  return `${number > 0 ? `Decree ${number}` : lawId}${version === undefined ? '' : ` · Version ${version}`}`;
 }
 
 function Issues({ issues, game }: { issues: readonly LawIssue[]; game: SocietyGame }) {

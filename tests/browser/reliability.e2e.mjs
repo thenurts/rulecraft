@@ -153,6 +153,13 @@ test('a full 12-day village saves, replays and records actual browser timings', 
   expect(audited.state.turn).toBe(12);
   expect(auditSnapshot(audited).remaining.coin).toBe(1500);
   expect(head.current.payload.length).toBeGreaterThan(1_000_000);
+  const narrativeTimings = await page.evaluate(() => performance.getEntriesByName('rulecraft.narrative')
+    .filter((entry) => entry.detail?.day > 0).map(({ duration }) => duration));
+  const catalogue = () => page.locator('[data-incident-id]').evaluateAll((cards) => cards.map((card) =>
+    ({ id: card.dataset.incidentId, version: card.dataset.narrativeVersion, text: card.innerText })));
+  await page.getByRole('button', { name: 'Chronicle', exact: true }).click();
+  const originalChronicle = await catalogue();
+  expect(originalChronicle.length).toBeGreaterThan(0);
   await page.reload();
   await page.getByRole('button', { name: 'Resume village' }).click();
   await expect(page.getByText('Day 12 of 12')).toBeVisible();
@@ -172,6 +179,15 @@ test('a full 12-day village saves, replays and records actual browser timings', 
     day12PayloadBytes: head.current.payload.length,
     twoGenerationBytes: JSON.stringify(head).length, reload,
   };
+  await page.getByRole('button', { name: 'Chronicle', exact: true }).click();
+  expect(await catalogue()).toEqual(originalChronicle);
+  expect(await mutateHead(page, 'read')).toEqual(head);
+  const lastProjection = await page.evaluate(() => performance.getEntriesByName('rulecraft.narrative').at(-1)?.duration);
+  expect(narrativeTimings.length).toBe(12);
+  console.log('Measured browser narrative', JSON.stringify({
+    samples: narrativeTimings.length, medianProjectionMs: median(narrativeTimings),
+    day12ReloadProjectionMs: lastProjection, chronicleCards: originalChronicle.length,
+  }));
   expect(summary.samples).toBe(12);
   console.log('Measured browser persistence', JSON.stringify(summary));
 });

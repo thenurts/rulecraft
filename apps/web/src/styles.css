@@ -89,3 +89,26 @@ article.panel > details { margin-top: .65rem; }
 .record span, .record code { font-weight: 400; color: var(--muted); }
 .reference code { font-size: .8em; }
 .ruling { margin-block: .55rem 1rem; border-inline-start: 2px solid var(--rule); padding-inline-start: .65rem; }
+@media (max-width: 380px) {
+  .chronicle-filters, .share-preview, .share-export { padding-inline: min(1rem, 2vw); }
+  .chronicle-filters select { padding-inline: .2em; }
+  .share-preview :is(figcaption, section) { padding-inline: .35em; }
+}
+.story-card { border-color: #b1986e; }
+.story-card h2, .share-preview h2, .narrative-heading h1 {
+  text-wrap: pretty;
+}
+.story-card h2 { overflow-wrap: normal; font-size: clamp(1.25rem, 6vw, 2rem); }
+.narrative-heading h1 { overflow-wrap: normal; font-size: clamp(1.55rem, 9vw, 3.7rem); }
+.story-response { border-inline-start: .18rem solid #864638; padding-inline-start: .7rem; }
+.adviser-name { color: #653029; display: inline-block; margin-inline-end: .25rem; }
+.storybook { color: var(--muted); }
+.storybook strong { display: block; }
+.story-laws { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .75rem 0; }
+.story-links { padding: 0; }
+.story-links li { padding-block: .2rem; }
+.share-preview { margin: 0; display: grid; gap: .8rem; }
+.share-preview figcaption { background: #842e25; color: #fffaf1; font-weight: 750; padding: .8rem; border-radius: .45rem; }
+.share-preview section { background: #f5ebd3; padding: .75rem; border-radius: .45rem; min-width: 0; }
+.share-preview h2 { font: 750 1rem system-ui, sans-serif; color: #653029; }
+textarea { inline-size: 100%; min-inline-size: 0; resize: vertical; font: inherit; padding: .55rem; color: var(--ink); }

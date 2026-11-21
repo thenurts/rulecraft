@@ -5,7 +5,7 @@ export default defineConfig({
   testMatch: '**/*.e2e.mjs',
   timeout: 60_000,
   workers: 1,
-  reporter: 'list',
+  reporter: process.env.GITHUB_ACTIONS ? [['list'], ['github']] : 'list',
   use: {
     baseURL: 'http://127.0.0.1:4175',
     browserName: 'chromium',
