@@ -1,4 +1,5 @@
 import { authoritativeLaws, renderLaw, type SocietyGame } from '@rulecraft/simulation';
+import { lawRefLabel } from '../world.ts';
 import { advisers, type ReadingMode } from './copy.ts';
 import { projectNarrative } from './projection.ts';
 
@@ -7,7 +8,7 @@ export interface ShareCard {
   readonly narrativeVersion: string;
   readonly turn: number;
   readonly heading: string;
-  readonly sections: readonly Readonly<{ label: string; text: string }>[];
+  readonly sections: readonly Readonly<{ label: string; paragraphs: readonly string[] }>[];
   readonly footer: string;
 }
 
@@ -16,37 +17,52 @@ export const cardDimensions = { width: 1080, height: 1350 } as const;
 export function buildShareCard(game: SocietyGame, mode: ReadingMode, incidentId: string): ShareCard | null {
   const incident = projectNarrative(game, mode).incidents.find(({ id }) => id === incidentId);
   if (!incident) return null;
-  const ref = incident.lawVersionRefs[0];
-  const law = ref && game.book.versions.find((entry) => entry.lawId === ref.lawId && entry.version === ref.version);
-  const official = law && authoritativeLaws(game.book, incident.turn).find(({ lawId }) => lawId === law.lawId);
-  const current = law && authoritativeLaws(game.book, game.state.turn).find(({ lawId }) => lawId === law.lawId);
-  const historical = !!law && (current?.version !== law.version || current.status !== 'active');
-  const wording = law
-    ? `${historical ? 'Historic version' : 'Version'} ${law.version}. ${renderLaw(law.ast)} ${official?.version === law.version
-      ? `Status on day ${incident.turn} was ${official.status}.`
-      : `This was a perceived version. The official status on day ${incident.turn} was ${official?.status ?? 'no operative version'}.`}`
-    : 'No decree directly linked.';
+  const official = authoritativeLaws(game.book, incident.turn);
+  const current = authoritativeLaws(game.book, game.state.turn);
+  const multiple = incident.lawVersionRefs.length > 1;
+  const decrees: string[] = [];
+  for (const ref of incident.lawVersionRefs) {
+    const law = game.book.versions.find((entry) => entry.lawId === ref.lawId && entry.version === ref.version);
+    if (!law) return null;
+    const atIncident = official.find(({ lawId }) => lawId === law.lawId);
+    const atPresent = current.find(({ lawId }) => lawId === law.lawId);
+    const historical = atPresent?.version !== law.version || atPresent.status !== 'active';
+    const version = multiple
+      ? `${lawRefLabel(game, law.lawId, law.version)} (${historical ? 'historic' : 'operative'})`
+      : `${historical ? 'Historic version' : 'Version'} ${law.version}`;
+    const status = atIncident?.version === law.version
+      ? `Status on day ${incident.turn} was ${atIncident.status}.`
+      : `Perceived as ${law.status} on day ${incident.turn}. ${atIncident
+        ? `Official version ${atIncident.version} was ${atIncident.status}.`
+        : 'There was no official version on that day.'}`;
+    decrees.push(`${version}. ${renderLaw(law.ast)} ${status}`);
+  }
   return {
     incidentId, narrativeVersion: incident.narrativeVersion, turn: incident.turn,
     heading: 'RULECRAFT — THE VILLAGE RECORD',
     sections: [
-      { label: law ? 'MY DECREE' : 'VILLAGE REPORT', text: wording },
-      { label: 'WHAT HAPPENED', text: `Day ${incident.turn}. ${incident.summary}` },
-      { label: 'ADVISER VERDICT', text: `${advisers[incident.adviserId]}. ${incident.response}` },
+      {
+        label: multiple ? 'LINKED DECREES' : decrees.length ? 'MY DECREE' : 'VILLAGE REPORT',
+        paragraphs: decrees.length ? decrees : ['No decree directly linked.'],
+      },
+      { label: 'WHAT HAPPENED', paragraphs: [`Day ${incident.turn}. ${incident.summary}`] },
+      { label: 'ADVISER VERDICT', paragraphs: [`${advisers[incident.adviserId]}. ${incident.response}`] },
     ],
     footer: 'Simulated village trial · Rulecraft',
   };
 }
 
 export function cardAsText(card: ShareCard): string {
-  return [card.heading, ...card.sections.flatMap(({ label, text }) => [label, text]), card.footer].join('\n');
+  return [card.heading, ...card.sections.flatMap(({ label, paragraphs }) => [label, ...paragraphs]), card.footer].join('\n');
 }
+
+export class ShareCardOverflow extends Error {}
 
 function wrap(context: CanvasRenderingContext2D, value: string, maxWidth: number): string[] {
   const lines: string[] = [];
   let row = '';
   for (const word of value.split(/\s+/)) {
-    if (context.measureText(word).width > maxWidth) throw new Error('The card text does not fit.');
+    if (context.measureText(word).width > maxWidth) throw new ShareCardOverflow('The card text does not fit.');
     const next = row ? `${row} ${word}` : word;
     if (row && context.measureText(next).width > maxWidth) {
       lines.push(row);
@@ -68,18 +84,25 @@ export async function renderSharePng(canvas: HTMLCanvasElement, card: ShareCard)
   const footer = canvas.height - 100;
   context.textBaseline = 'top';
 
+  const paragraphGap = 12;
   const sizes = [44, 40, 36, 32];
   const layout = sizes.flatMap((size) => {
     context.font = `${size}px Georgia, serif`;
     try {
-      const blocks = card.sections.map((section) => ({ ...section, lines: wrap(context, section.text, width - 64) }));
       const lineHeight = Math.ceil(size * 1.26);
-      return [{ size, blocks, lineHeight, height: blocks.reduce((total, block) => total + 108 + lineHeight * block.lines.length, 0) }];
-    } catch {
-      return [];
+      const blocks = card.sections.map(({ label, paragraphs }) => {
+        const lines = paragraphs.map((paragraph) => wrap(context, paragraph, width - 64));
+        const height = 88 + lines.reduce((total, rows) => total + lineHeight * rows.length, 0)
+          + paragraphGap * (lines.length - 1);
+        return { label, lines, height };
+      });
+      return [{ size, blocks, lineHeight, height: blocks.reduce((total, block) => total + block.height + 20, 0) }];
+    } catch (error) {
+      if (error instanceof ShareCardOverflow) return [];
+      throw error;
     }
   }).find(({ height }) => height <= footer - header);
-  if (!layout) throw new Error('There is too much text for this PNG.');
+  if (!layout) throw new ShareCardOverflow('There is too much text for this PNG.');
 
   context.fillStyle = '#f6efdf';
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -91,8 +114,7 @@ export async function renderSharePng(canvas: HTMLCanvasElement, card: ShareCard)
   title.forEach((line, index) => context.fillText(line, margin, 48 + index * 60));
 
   let y = header;
-  for (const { label, lines } of layout.blocks) {
-    const height = 88 + layout.lineHeight * lines.length;
+  for (const { label, lines, height } of layout.blocks) {
     context.fillStyle = '#fffaf0';
     context.fillRect(margin, y, width, height);
     context.fillStyle = '#842e25';
@@ -100,7 +122,14 @@ export async function renderSharePng(canvas: HTMLCanvasElement, card: ShareCard)
     context.fillText(label, margin + 32, y + 24);
     context.fillStyle = '#302a20';
     context.font = `${layout.size}px Georgia, serif`;
-    lines.forEach((line, index) => context.fillText(line, margin + 32, y + 65 + index * layout.lineHeight));
+    let rowY = y + 65;
+    for (const paragraph of lines) {
+      for (const row of paragraph) {
+        context.fillText(row, margin + 32, rowY);
+        rowY += layout.lineHeight;
+      }
+      rowY += paragraphGap;
+    }
     y += height + 20;
   }
   context.fillStyle = '#493e30';

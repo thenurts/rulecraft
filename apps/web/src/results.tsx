@@ -1,8 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { predicateRegistry, renderLaw, type LegalDecision, type SocietyGame, type VillageEvent } from '@rulecraft/simulation';
-import { lawRefLabel } from './decrees.tsx';
 import { actionLabel, dayDigest, dispositionLabel, eventLabel, inquiryEvidence, outcomeLabel, reasonLabel } from './evidence.ts';
-import { citizenLabel, villageReadModel, type GameSession } from './world.ts';
+import { citizenLabel, lawRefLabel, villageReadModel, type GameSession } from './world.ts';
 
 type OpenEvidence = (id: string) => void;
 const signed = (value: number) => value > 0 ? `+${value}` : String(value);

@@ -1,10 +1,10 @@
 import { useMemo, useRef, useState } from 'react';
 import { authoritativeLaws, type SocietyGame } from '@rulecraft/simulation';
-import { lawRefLabel } from '../decrees.tsx';
+import { lawRefLabel } from '../world.ts';
 import { advisers, type Adviser, type ReadingMode } from './copy.ts';
 import { families, type Family } from './facts.ts';
 import type { Incident } from './projection.ts';
-import { buildShareCard, cardAsText, renderSharePng } from './share.ts';
+import { buildShareCard, cardAsText, renderSharePng, ShareCardOverflow } from './share.ts';
 
 type Open = (id: string) => void;
 interface StoryLinks { game: SocietyGame; inspect: Open; share: Open }
@@ -87,6 +87,7 @@ export function ShareView({ game, mode, id }: { game: SocietyGame; mode: Reading
   const [status, setStatus] = useState('');
   const [busy, setBusy] = useState(false);
   const lock = useRef(false);
+  const textDetails = useRef<HTMLDetailsElement>(null);
   const card = useMemo(() => {
     try { return buildShareCard(game, mode, id); } catch { return null; }
   }, [game, mode, id]);
@@ -115,8 +116,13 @@ export function ShareView({ game, mode, id }: { game: SocietyGame; mode: Reading
         // Let the browser read the blob after the download event.
         setTimeout(() => URL.revokeObjectURL(url), 15_000);
       }
-    } catch {
-      setStatus('The PNG could not be prepared. The card text is available below.');
+    } catch (error) {
+      if (error instanceof ShareCardOverflow) {
+        setStatus('This card is too long for a single PNG. The complete card text is below.');
+        if (textDetails.current) textDetails.current.open = true;
+      } else {
+        setStatus('The PNG could not be prepared. The card text is available below.');
+      }
     } finally {
       lock.current = false;
       setBusy(false);
@@ -128,13 +134,16 @@ export function ShareView({ game, mode, id }: { game: SocietyGame; mode: Reading
     {!card ? <section className="panel"><p>This incident has no verified card.</p></section> : <>
       <figure className="panel share-preview" aria-label="Share card text preview">
         <figcaption>{card.heading}</figcaption>
-        {card.sections.map(({ label, text }) => <section key={label}><h2>{label}</h2><p>{text}</p></section>)}
+        {card.sections.map(({ label, paragraphs }) => <section key={label}>
+          <h2>{label}</h2>
+          {paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+        </section>)}
         <p className="muted">{card.footer}</p>
       </figure>
       <section className="panel share-export">
         <button className="primary" disabled={busy} onClick={() => void download()}>{busy ? 'Preparing PNG…' : 'Download PNG'}</button>
         {status && <p className="notice" role="status">{status}</p>}
-        <details><summary>Selectable card text</summary>
+        <details ref={textDetails}><summary>Selectable card text</summary>
           <textarea aria-label="Card text" readOnly value={cardAsText(card)} rows={8} />
         </details>
       </section>

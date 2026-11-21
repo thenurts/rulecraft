@@ -1,9 +1,10 @@
 import { expect, test } from 'vitest';
 import {
-  advanceSociety, auditSnapshot, confirmLaw, encodeSociety, loadSociety, societyDefaults,
+  advanceSociety, auditSnapshot, confirmLaw, encodeSociety, loadSociety,
   societyHashes, startSociety, startSocietyV3, villageScope, type SocietyGame,
 } from '@rulecraft/simulation';
 import fixture from '../../../../fixtures/task-01-village.json';
+import { completedCompetingDutiesDay } from '../../../../tests/fixtures/task-05-competing-duties.ts';
 import { extractCandidates } from './facts.ts';
 
 function days(game: SocietyGame, turn: number) {
@@ -102,14 +103,7 @@ test('fatigue requires a work-related feasibility record and competing duties re
   expect(causes(tired)).toContain('FATIGUE_BLOCKED_WORK');
   expect(causes({ ...tired, events: tired.events.filter(({ reason }) => reason !== 'fatigue-limit') }))
     .not.toContain('FATIGUE_BLOCKED_WORK');
-  let game = startSociety(fixture, 42, { ...societyDefaults, bulletinBp: 10_000 });
-  for (const actionId of ['harvest-food', 'rest']) {
-    game = confirmLaw(game, {
-      operation: 'CREATE', lawId: actionId, commandId: `confirm-${actionId}`,
-      ast: { ...villageScope, targetSelector: 'farmer', modality: 'MUST', actionId },
-    }).game;
-  }
-  game = days(game, 1);
+  const game = completedCompetingDutiesDay();
   expect(causes(game)).toContain('COMPETING_KNOWN_DUTIES');
   expect(causes({ ...game, book: { ...game.book, notices: [] } })).not.toContain('COMPETING_KNOWN_DUTIES');
   const ineligible = { ...game, events: game.events.map((event) => !event.legalChoice ? event : {

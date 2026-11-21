@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { advanceSociety, confirmLaw, encodeSociety } from '@rulecraft/simulation';
+import { completedCompetingDutiesDay } from '../fixtures/task-05-competing-duties.ts';
 import { startVillage } from './helpers.mjs';
 
 test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: 'reduce' });
@@ -182,4 +184,80 @@ test('local share PNG matches the selectable evidence text and handles unavailab
   await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
   expect((await button(page, 'Download PNG').boundingBox()).height).toBeGreaterThanOrEqual(44);
+});
+
+test('a competing-duties card downloads with both evidenced decrees and exposes all text when PNG overflows', async ({ page }) => {
+  const dayOne = completedCompetingDutiesDay();
+  const game = advanceSociety(confirmLaw(dayOne, {
+    operation: 'ABOLISH', lawId: 'harvest-food', commandId: 'abolish-harvest',
+  }).game);
+  await page.addInitScript(() => {
+    window.pngRows = [];
+    const fill = CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText = function (text, x, y) {
+      const bounds = this.measureText(text);
+      window.pngRows.push({
+        text, left: x - bounds.actualBoundingBoxLeft, right: x + bounds.actualBoundingBoxRight,
+        top: y - bounds.actualBoundingBoxAscent, bottom: y + bounds.actualBoundingBoxDescent,
+      });
+      return fill.call(this, text, x, y);
+    };
+  });
+  await startVillage(page, 'full', 'sandbox');
+  await page.evaluate((payload) => new Promise((resolve, reject) => {
+    const open = indexedDB.open('rulecraft-village', 1);
+    open.onerror = () => reject(open.error);
+    open.onsuccess = () => {
+      const db = open.result;
+      const tx = db.transaction('world', 'readwrite');
+      tx.objectStore('world').put({
+        revision: 1, previous: null, current: { id: 'test-village', at: 1, mode: 'full', track: 'sandbox', payload },
+      }, 'village');
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onabort = () => { db.close(); reject(tx.error); };
+    };
+  }), encodeSociety(game));
+  await page.reload();
+  await button(page, 'Resume village').tap();
+  await button(page, 'Chronicle').tap();
+  await page.getByRole('combobox', { name: 'Chronicle day' }).selectOption('1');
+  await page.getByRole('combobox', { name: 'Topic' }).selectOption('COMPETING_KNOWN_DUTIES');
+  await button(story(page), 'Open share card').tap();
+
+  const panel = heading(page, 'LINKED DECREES').locator('..');
+  const decrees = [
+    'Decree 1 · Version 1 (historic). Farmers must harvest food. Status on day 1 was active.',
+    'Decree 2 · Version 1 (operative). Farmers must rest. Status on day 1 was active.',
+  ];
+  await expect(panel.locator('p')).toHaveText(decrees);
+  await page.getByText('Selectable card text').tap();
+  const fallback = page.getByRole('textbox', { name: 'Card text' });
+  const text = await fallback.inputValue();
+  expect(text.split('\n').slice(1, 4)).toEqual(['LINKED DECREES', ...decrees]);
+
+  const downloading = page.waitForEvent('download');
+  await button(page, 'Download PNG').tap();
+  const download = await downloading;
+  expect(await download.failure()).toBeNull();
+  const bytes = await readFile(await download.path());
+  expect([...bytes.subarray(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
+  expect([bytes.readUInt32BE(16), bytes.readUInt32BE(20)]).toEqual([1080, 1350]);
+  const rows = await page.evaluate(() => window.pngRows);
+  expect(rows.map(({ text }) => text).join(' ')).toBe(text.replace(/\s+/g, ' '));
+  expect(rows.every(({ left, right, top, bottom }) => left >= 0 && right <= 1080 && top >= 0 && bottom <= 1350)).toBe(true);
+  if (screenshots) {
+    await mkdir(screenshots, { recursive: true });
+    await download.saveAs(join(screenshots, 'example-competing-duties.png'));
+  }
+
+  await page.getByText('Selectable card text').tap();
+  await expect(fallback).toBeHidden();
+  await page.evaluate(() => {
+    CanvasRenderingContext2D.prototype.measureText = () => ({ width: 2000 });
+  });
+  await button(page, 'Download PNG').tap();
+  await expect(page.getByRole('status')).toHaveText('This card is too long for a single PNG. The complete card text is below.');
+  await expect(fallback).toBeVisible();
+  await expect(fallback).toHaveValue(text);
+  expect(await page.evaluate(() => window.pngRows)).toEqual(rows);
 });

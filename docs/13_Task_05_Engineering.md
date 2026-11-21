@@ -26,7 +26,7 @@ The following negative cases were exercised alongside real positive witnesses.
 | Competing duties | Removing knowledge notices or making the second action infeasible suppresses the story. |
 | Meals served | A daily total without the matching meal records cannot produce the story. |
 
-The pinned `village-record-1` registry uses one projection for Junior and Full. Reading mode changes adviser language only, with identical evidence, counts and template IDs. The Chronicle derives its list in day order from the saved simulation. Later laws and future days leave earlier incident identities and wording stable. Chronicle and card annotations show current or historic decree status as applicable. On a 12-day browser reload, all 36 selected entries matched in order and visible text, and both IndexedDB world generations matched byte for byte. Opening and exporting a share card also preserved the stored generation.
+The global `village-record-1` registry uses one projection for Junior and Full. Reading mode changes adviser language only, with identical evidence, counts and template IDs. The Chronicle derives its list in day order from the saved simulation. Later laws and future days leave earlier incident identities and wording stable. Chronicle and card annotations show current or historic decree status as applicable. On a 12-day browser reload, all 36 selected entries matched in order and visible text, and both IndexedDB world generations matched byte for byte. Opening and exporting a share card also preserved the stored generation.
 
 ## Narrative coverage
 
@@ -88,6 +88,14 @@ Playwright used actual touch interactions to advance a village, investigate an i
 GitHub’s bundled Chromium exposed a font-width difference in the enlarged-text Chronicle filter. The `Meals served` label was shortened to `Meals`; the browser test still checks the width of every option. GitHub Actions now surfaces browser test failures directly in the PR checks.
 
 The real browser download produced a **1080 × 1350 PNG**. The test checked the PNG signature, header dimensions, two decoded pixels and the exact text sent to Canvas against the selectable card text. The test exercised both an unavailable PNG encoder and an unavailable download API. The verified fallback remained selectable and the status described the failure. The flow observed no remote requests and no save identifier in the card text or PNG data. The historic decree test confirmed the exact source version and its status on the incident day.
+
+### PR #19 review correction
+
+The share preview, selectable text and PNG now list every linked decree version under **Linked decrees**. Each entry gives the Decree Book number, exact version and wording, and its status on the incident day. Historic and operative labels describe the version as of the loaded save. If the incident references an older perceived version while a different version was official, the card identifies both statuses. Single-decree and village-report headings are retained. The correction uses the existing narrative references and does not change the simulation, story detectors or adviser text. [Product-owner review](https://github.com/thenurts/rulecraft/pull/19#pullrequestreview-6004772440)
+
+The shared competing-duties fixture produces two known, feasible duties for the same slot. Regression tests verify that both version 1 decrees appear exactly once, preserve their incident-day status after a later abolition, and distinguish perceived version 1 from official suspended version 2 in a separate day-2 case. The Chromium test downloads and inspects a 1080 × 1350 PNG, compares the full rendered text to the selectable version, and checks every line’s bounds. Font-width stress tests exercise wrapping and smaller type. When the complete card cannot fit, export stops before painting or encoding, and the web view opens the full text with an explanation. [Downloaded competing-duties PNG](screenshots/task-05/example-competing-duties.png)
+
+The correction passed `npm test` (151 tests across 19 files), `npm run typecheck`, `npm run build`, `RULECRAFT_CHROMIUM=/usr/bin/chromium npm run test:browser` (19 tests) and `git diff --check`. The save/reload evidence applies to the current global catalogue. Per-save catalogue selection remains a future compatibility decision before new narrative copy is shipped.
 
 ### Local measurements
 

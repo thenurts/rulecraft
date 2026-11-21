@@ -34,6 +34,12 @@ export function newSession(selection: Selection, id: string, seed = 42): GameSes
   return { ...selection, id, game: startSociety(fixture, seed) };
 }
 
+export function lawRefLabel(game: SocietyGame, lawId: string, version?: number): string {
+  const list = game.book.versions;
+  const number = [...new Set(list.map((law) => law.lawId))].indexOf(lawId) + 1;
+  return `${number > 0 ? `Decree ${number}` : lawId}${version === undefined ? '' : ` · Version ${version}`}`;
+}
+
 export function citizenLabel(id: string): string {
   return id.startsWith('citizen.') ? `Citizen ${Number(id.slice(8))}` : id;
 }
