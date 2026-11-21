@@ -47,8 +47,8 @@ export function TrialSummary({ session }: { session: GameSession }) {
   </section>;
 }
 
-export function DayResults({ session, day, inspect, openGazette, story }: {
-  session: GameSession; day: number; inspect: OpenEvidence; openGazette: () => void; story?: ReactNode;
+export function DayResults({ session, day, inspect, openGazette, story, review, next }: {
+  session: GameSession; day: number; inspect: OpenEvidence; openGazette: () => void; story?: ReactNode; review?: ReactNode; next?: ReactNode;
 }) {
   const digest = dayDigest(session.game, day);
   if (!digest) return <section className="panel"><Heading>Day results</Heading><p>No completed day to show.</p></section>;
@@ -59,6 +59,7 @@ export function DayResults({ session, day, inspect, openGazette, story }: {
       <p className="eyebrow">Completed day</p><Heading>Day {day} results</Heading>
       <p>{metrics.residentsFed}/{metrics.residentsFed + metrics.residentsUnmet} residents fully fed.</p>
     </header>
+    {review}
     {story}
     <section className="panel">
       <h2>Food and work</h2>
@@ -80,7 +81,8 @@ export function DayResults({ session, day, inspect, openGazette, story }: {
         : <p>No featured events for this day.</p>}
       <button onClick={openGazette}>Open Gazette</button>
     </section>
-    <TrialSummary session={session} />
+    {next}
+    {!session.setup && <TrialSummary session={session} />}
   </>;
 }
 

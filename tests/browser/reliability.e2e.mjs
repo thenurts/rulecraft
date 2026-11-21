@@ -145,7 +145,7 @@ test('a full 12-day village saves, replays and records actual browser timings', 
     await (await openAdvance(page, day)).click();
     await expect(page.getByRole('heading', { name: `Day ${day} results`, exact: true })).toBeVisible();
   }
-  await expect(page.getByRole('heading', { name: 'Trial summary' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Day-12 debrief' })).toBeVisible();
   const timings = await page.evaluate(() => [...performance.getEntriesByName('rulecraft.turn'), ...performance.getEntriesByName('rulecraft.save')]
     .filter((entry) => entry.detail?.day > 0).map(({ name, duration, detail }) => ({ name, ms: duration, ...detail })));
   const head = await mutateHead(page, 'read');
