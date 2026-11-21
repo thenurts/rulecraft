@@ -6,12 +6,12 @@ import {
 import fixture from '../../../../fixtures/task-01-village.json';
 import { extractCandidates } from './facts.ts';
 
-export function days(game: SocietyGame, turn: number) {
+function days(game: SocietyGame, turn: number) {
   while (game.state.turn < turn) game = advanceSociety(game);
   return game;
 }
 
-export function example(game = startSociety(fixture, 42)) {
+function example(game = startSociety(fixture, 42)) {
   const one = confirmLaw(game, {
     operation: 'CREATE', lawId: 'morning-harvest-ban', commandId: 'create-harvest-ban',
     ast: { ...villageScope, targetSelector: 'farmer', actionId: 'harvest-food', modality: 'MUST_NOT',
