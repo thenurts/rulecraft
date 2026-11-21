@@ -1,0 +1,55 @@
+{
+  "browser": "156.0.8078.79",
+  "faults": {
+    "checked": [
+      "legacy bytes",
+      "quota abort",
+      "explicit abort",
+      "independent draft",
+      "mixed generations",
+      "truncated gzip",
+      "outer checksum",
+      "inner checksum",
+      "version and algorithm",
+      "expanded length",
+      "missing streams",
+      "partial conversion",
+      "repair",
+      "stale generation"
+    ]
+  },
+  "historical": {
+    "versions": [
+      {
+        "version": 3,
+        "hashes": {
+          "state": "375123c46edf3305",
+          "events": "75b6f979dc9dd357"
+        },
+        "incidents": 29,
+        "links": 444
+      },
+      {
+        "version": 4,
+        "hashes": {
+          "state": "f4c46dbfd1b05523",
+          "events": "076d885f324114cf"
+        },
+        "incidents": 30,
+        "links": 383
+      }
+    ],
+    "pngBytes": 186058,
+    "shareText": "RULECRAFT — THE VILLAGE RECORD\nLINKED DECREES\nDecree 1 · Version 1 (historic). Farmers must harvest food. Status on day 1 was active.\nDecree 2 · Version 1 (operative). Farmers must rest. Status on day 1 was active.\nWHAT HAPPENED\nDay 1. One resident had 2 known feasible duties for different actions in the same slot.\nADVISER VERDICT\nMia. Two musts walked into one slot. Only one could leave as an action.\nSimulated village trial · Rulecraft"
+  },
+  "race": [
+    {
+      "committed": true,
+      "revision": 2
+    },
+    {
+      "committed": false,
+      "error": "The saved village changed in another tab. Reload the saved village to continue."
+    }
+  ]
+}

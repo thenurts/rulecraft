@@ -1,0 +1,1022 @@
+{
+  "browser": "156.0.8078.79",
+  "platform": "linux",
+  "samples": 5,
+  "trials": [
+    {
+      "horizon": 12,
+      "citizens": 40,
+      "laws": 25,
+      "canonicalCurrentBytes": 9408450,
+      "arms": [
+        {
+          "gzip": false,
+          "samples": {
+            "save": [
+              {
+                "encodeMs": 355.69999999925494,
+                "compressMs": 0,
+                "roundTripMs": 471.80000000074506,
+                "postMs": 51.59999999962747,
+                "workerTransportAndSchedulingMs": 116.00000000186265,
+                "idbMs": 116,
+                "readBeforeWriteMs": 19.5,
+                "commitAfterReadMs": 96.5,
+                "totalMs": 587.9000000003725,
+                "bytes": 9408450
+              },
+              {
+                "encodeMs": 1658.300000000745,
+                "compressMs": 0,
+                "roundTripMs": 2006.300000000745,
+                "postMs": 38.5,
+                "workerTransportAndSchedulingMs": 347.80000000074506,
+                "idbMs": 119.60000000149012,
+                "readBeforeWriteMs": 37.90000000037253,
+                "commitAfterReadMs": 81.70000000111759,
+                "totalMs": 2126.7000000011176,
+                "bytes": 9408450
+              },
+              {
+                "encodeMs": 549.2999999988824,
+                "compressMs": 0,
+                "roundTripMs": 744.2000000011176,
+                "postMs": 40.100000001490116,
+                "workerTransportAndSchedulingMs": 194.80000000074506,
+                "idbMs": 110.69999999925494,
+                "readBeforeWriteMs": 15.699999999254942,
+                "commitAfterReadMs": 95,
+                "totalMs": 855,
+                "bytes": 9408450
+              },
+              {
+                "encodeMs": 383.2000000011176,
+                "compressMs": 0,
+                "roundTripMs": 598.6999999992549,
+                "postMs": 132.19999999925494,
+                "workerTransportAndSchedulingMs": 215.39999999850988,
+                "idbMs": 98,
+                "readBeforeWriteMs": 16.5,
+                "commitAfterReadMs": 81.5,
+                "totalMs": 696.7999999988824,
+                "bytes": 9408450
+              },
+              {
+                "encodeMs": 269.59999999962747,
+                "compressMs": 0,
+                "roundTripMs": 365.40000000037253,
+                "postMs": 45.19999999925494,
+                "workerTransportAndSchedulingMs": 95.70000000111759,
+                "idbMs": 151,
+                "readBeforeWriteMs": 15.799999998882413,
+                "commitAfterReadMs": 135.2000000011176,
+                "totalMs": 516.5,
+                "bytes": 9408450
+              }
+            ],
+            "load": [
+              {
+                "readMs": 41.5,
+                "decompressMs": 0,
+                "verifyMs": 779,
+                "roundTripMs": 921.4000000003725,
+                "postMs": 4,
+                "workerTransportAndSchedulingMs": 142.40000000037253,
+                "totalMs": 963
+              },
+              {
+                "readMs": 64,
+                "decompressMs": 0,
+                "verifyMs": 637.2000000011176,
+                "roundTripMs": 740.1999999992549,
+                "postMs": 6.299999998882413,
+                "workerTransportAndSchedulingMs": 102.99999999813735,
+                "totalMs": 804.1999999992549
+              },
+              {
+                "readMs": 52.5,
+                "decompressMs": 0,
+                "verifyMs": 665.7999999988824,
+                "roundTripMs": 766.6999999992549,
+                "postMs": 4.599999999627471,
+                "workerTransportAndSchedulingMs": 100.80000000074506,
+                "totalMs": 819.4000000003725
+              },
+              {
+                "readMs": 50.09999999962747,
+                "decompressMs": 0,
+                "verifyMs": 995.8000000007451,
+                "roundTripMs": 1110.2000000011176,
+                "postMs": 4.400000000372529,
+                "workerTransportAndSchedulingMs": 114.20000000111759,
+                "totalMs": 1160.300000000745
+              },
+              {
+                "readMs": 97.19999999925494,
+                "decompressMs": 0,
+                "verifyMs": 1451.800000000745,
+                "roundTripMs": 1603.800000000745,
+                "postMs": 4.800000000745058,
+                "workerTransportAndSchedulingMs": 151.80000000074506,
+                "totalMs": 1701.199999999255
+              }
+            ]
+          },
+          "longTasksMs": [
+            51,
+            67,
+            921,
+            194,
+            54,
+            1187,
+            64,
+            1342,
+            134,
+            576,
+            104,
+            75,
+            612
+          ],
+          "heapBytes": [
+            132052719,
+            107562584,
+            85832772,
+            69273167,
+            163559916
+          ],
+          "rawPayloadPairBytes": 18165423,
+          "serializedPlainHeadBytes": 20746114,
+          "timingMs": {
+            "save": {
+              "encodeMs": {
+                "n": 5,
+                "p50": 383.2000000011176,
+                "p95": 1658.300000000745,
+                "max": 1658.300000000745
+              },
+              "compressMs": {
+                "n": 5,
+                "p50": 0,
+                "p95": 0,
+                "max": 0
+              },
+              "roundTripMs": {
+                "n": 5,
+                "p50": 598.6999999992549,
+                "p95": 2006.300000000745,
+                "max": 2006.300000000745
+              },
+              "postMs": {
+                "n": 5,
+                "p50": 45.19999999925494,
+                "p95": 132.19999999925494,
+                "max": 132.19999999925494
+              },
+              "workerTransportAndSchedulingMs": {
+                "n": 5,
+                "p50": 194.80000000074506,
+                "p95": 347.80000000074506,
+                "max": 347.80000000074506
+              },
+              "idbMs": {
+                "n": 5,
+                "p50": 116,
+                "p95": 151,
+                "max": 151
+              },
+              "readBeforeWriteMs": {
+                "n": 5,
+                "p50": 16.5,
+                "p95": 37.90000000037253,
+                "max": 37.90000000037253
+              },
+              "commitAfterReadMs": {
+                "n": 5,
+                "p50": 95,
+                "p95": 135.2000000011176,
+                "max": 135.2000000011176
+              },
+              "totalMs": {
+                "n": 5,
+                "p50": 696.7999999988824,
+                "p95": 2126.7000000011176,
+                "max": 2126.7000000011176
+              }
+            },
+            "load": {
+              "readMs": {
+                "n": 5,
+                "p50": 52.5,
+                "p95": 97.19999999925494,
+                "max": 97.19999999925494
+              },
+              "decompressMs": {
+                "n": 5,
+                "p50": 0,
+                "p95": 0,
+                "max": 0
+              },
+              "verifyMs": {
+                "n": 5,
+                "p50": 779,
+                "p95": 1451.800000000745,
+                "max": 1451.800000000745
+              },
+              "roundTripMs": {
+                "n": 5,
+                "p50": 921.4000000003725,
+                "p95": 1603.800000000745,
+                "max": 1603.800000000745
+              },
+              "postMs": {
+                "n": 5,
+                "p50": 4.599999999627471,
+                "p95": 6.299999998882413,
+                "max": 6.299999998882413
+              },
+              "workerTransportAndSchedulingMs": {
+                "n": 5,
+                "p50": 114.20000000111759,
+                "p95": 151.80000000074506,
+                "max": 151.80000000074506
+              },
+              "totalMs": {
+                "n": 5,
+                "p50": 963,
+                "p95": 1701.199999999255,
+                "max": 1701.199999999255
+              }
+            }
+          },
+          "longTaskStatsMs": {
+            "n": 13,
+            "p50": 134,
+            "p95": 1342,
+            "max": 1342
+          }
+        },
+        {
+          "gzip": true,
+          "samples": {
+            "save": [
+              {
+                "encodeMs": 448.40000000037253,
+                "compressMs": 168.59999999962747,
+                "roundTripMs": 742,
+                "postMs": 66.40000000037253,
+                "workerTransportAndSchedulingMs": 125,
+                "idbMs": 5.900000000372529,
+                "readBeforeWriteMs": 1.300000000745058,
+                "commitAfterReadMs": 4.599999999627471,
+                "totalMs": 747.9000000003725,
+                "bytes": 310909
+              },
+              {
+                "encodeMs": 269.90000000037253,
+                "compressMs": 213.19999999925494,
+                "roundTripMs": 579.0999999996275,
+                "postMs": 42.09999999962747,
+                "workerTransportAndSchedulingMs": 95.59999999962747,
+                "idbMs": 152.90000000037253,
+                "readBeforeWriteMs": 41.40000000037253,
+                "commitAfterReadMs": 111.5,
+                "totalMs": 732.4000000003725,
+                "bytes": 310909
+              },
+              {
+                "encodeMs": 560.3000000007451,
+                "compressMs": 145.19999999925494,
+                "roundTripMs": 894.5,
+                "postMs": 89.19999999925494,
+                "workerTransportAndSchedulingMs": 189,
+                "idbMs": 4.299999998882413,
+                "readBeforeWriteMs": 1.199999999254942,
+                "commitAfterReadMs": 3.099999999627471,
+                "totalMs": 898.7999999988824,
+                "bytes": 310909
+              },
+              {
+                "encodeMs": 255,
+                "compressMs": 145.60000000149012,
+                "roundTripMs": 490.69999999925494,
+                "postMs": 46.40000000037253,
+                "workerTransportAndSchedulingMs": 89.89999999850988,
+                "idbMs": 4.400000000372529,
+                "readBeforeWriteMs": 1.099999999627471,
+                "commitAfterReadMs": 3.300000000745058,
+                "totalMs": 495.09999999962747,
+                "bytes": 310909
+              },
+              {
+                "encodeMs": 278,
+                "compressMs": 138.80000000074506,
+                "roundTripMs": 564.7000000011176,
+                "postMs": 103.30000000074506,
+                "workerTransportAndSchedulingMs": 147.90000000037253,
+                "idbMs": 8.099999999627471,
+                "readBeforeWriteMs": 3.299999998882413,
+                "commitAfterReadMs": 4.800000000745058,
+                "totalMs": 572.8000000007451,
+                "bytes": 310909
+              }
+            ],
+            "load": [
+              {
+                "readMs": 2.599999999627471,
+                "decompressMs": 41.09999999962747,
+                "verifyMs": 1983.199999999255,
+                "roundTripMs": 2220.699999999255,
+                "postMs": 0.09999999962747097,
+                "workerTransportAndSchedulingMs": 196.30000000074506,
+                "totalMs": 2223.4000000003725
+              },
+              {
+                "readMs": 11.699999999254942,
+                "decompressMs": 34.5,
+                "verifyMs": 1400.199999999255,
+                "roundTripMs": 1530,
+                "postMs": 0.09999999962747097,
+                "workerTransportAndSchedulingMs": 95.20000000111759,
+                "totalMs": 1541.800000000745
+              },
+              {
+                "readMs": 2.5,
+                "decompressMs": 41.29999999888241,
+                "verifyMs": 717.9000000003725,
+                "roundTripMs": 865.5,
+                "postMs": 0.09999999962747097,
+                "workerTransportAndSchedulingMs": 106.20000000111759,
+                "totalMs": 868
+              },
+              {
+                "readMs": 2,
+                "decompressMs": 26.59999999962747,
+                "verifyMs": 752.6999999992549,
+                "roundTripMs": 868.3000000007451,
+                "postMs": 0.2000000011175871,
+                "workerTransportAndSchedulingMs": 89.00000000186265,
+                "totalMs": 870.3000000007451
+              },
+              {
+                "readMs": 2.599999999627471,
+                "decompressMs": 67.30000000074506,
+                "verifyMs": 639.5,
+                "roundTripMs": 848.0999999996275,
+                "postMs": 0.09999999962747097,
+                "workerTransportAndSchedulingMs": 141.2999999988824,
+                "totalMs": 850.6999999992549
+              }
+            ]
+          },
+          "longTasksMs": [
+            66,
+            1061,
+            120,
+            764,
+            89,
+            629,
+            619,
+            103,
+            654
+          ],
+          "heapBytes": [
+            123952481,
+            177273218,
+            55399685,
+            138130590,
+            64538121
+          ],
+          "rawPayloadPairBytes": 605175,
+          "serializedPlainHeadBytes": null,
+          "timingMs": {
+            "save": {
+              "encodeMs": {
+                "n": 5,
+                "p50": 278,
+                "p95": 560.3000000007451,
+                "max": 560.3000000007451
+              },
+              "compressMs": {
+                "n": 5,
+                "p50": 145.60000000149012,
+                "p95": 213.19999999925494,
+                "max": 213.19999999925494
+              },
+              "roundTripMs": {
+                "n": 5,
+                "p50": 579.0999999996275,
+                "p95": 894.5,
+                "max": 894.5
+              },
+              "postMs": {
+                "n": 5,
+                "p50": 66.40000000037253,
+                "p95": 103.30000000074506,
+                "max": 103.30000000074506
+              },
+              "workerTransportAndSchedulingMs": {
+                "n": 5,
+                "p50": 125,
+                "p95": 189,
+                "max": 189
+              },
+              "idbMs": {
+                "n": 5,
+                "p50": 5.900000000372529,
+                "p95": 152.90000000037253,
+                "max": 152.90000000037253
+              },
+              "readBeforeWriteMs": {
+                "n": 5,
+                "p50": 1.300000000745058,
+                "p95": 41.40000000037253,
+                "max": 41.40000000037253
+              },
+              "commitAfterReadMs": {
+                "n": 5,
+                "p50": 4.599999999627471,
+                "p95": 111.5,
+                "max": 111.5
+              },
+              "totalMs": {
+                "n": 5,
+                "p50": 732.4000000003725,
+                "p95": 898.7999999988824,
+                "max": 898.7999999988824
+              }
+            },
+            "load": {
+              "readMs": {
+                "n": 5,
+                "p50": 2.599999999627471,
+                "p95": 11.699999999254942,
+                "max": 11.699999999254942
+              },
+              "decompressMs": {
+                "n": 5,
+                "p50": 41.09999999962747,
+                "p95": 67.30000000074506,
+                "max": 67.30000000074506
+              },
+              "verifyMs": {
+                "n": 5,
+                "p50": 752.6999999992549,
+                "p95": 1983.199999999255,
+                "max": 1983.199999999255
+              },
+              "roundTripMs": {
+                "n": 5,
+                "p50": 868.3000000007451,
+                "p95": 2220.699999999255,
+                "max": 2220.699999999255
+              },
+              "postMs": {
+                "n": 5,
+                "p50": 0.09999999962747097,
+                "p95": 0.2000000011175871,
+                "max": 0.2000000011175871
+              },
+              "workerTransportAndSchedulingMs": {
+                "n": 5,
+                "p50": 106.20000000111759,
+                "p95": 196.30000000074506,
+                "max": 196.30000000074506
+              },
+              "totalMs": {
+                "n": 5,
+                "p50": 870.3000000007451,
+                "p95": 2223.4000000003725,
+                "max": 2223.4000000003725
+              }
+            }
+          },
+          "longTaskStatsMs": {
+            "n": 9,
+            "p50": 619,
+            "p95": 1061,
+            "max": 1061
+          }
+        }
+      ],
+      "storageEstimate": {
+        "quota": 10739187712,
+        "usage": 1769472,
+        "usageDetails": {
+          "indexedDB": 1769472
+        }
+      }
+    },
+    {
+      "horizon": 30,
+      "citizens": 40,
+      "laws": 25,
+      "canonicalCurrentBytes": 20777358,
+      "arms": [
+        {
+          "gzip": false,
+          "samples": {
+            "save": [
+              {
+                "encodeMs": 1963,
+                "compressMs": 0,
+                "roundTripMs": 2188.800000000745,
+                "postMs": 87,
+                "workerTransportAndSchedulingMs": 225.60000000149012,
+                "idbMs": 246.69999999925494,
+                "readBeforeWriteMs": 29.699999999254942,
+                "commitAfterReadMs": 217,
+                "totalMs": 2435.5,
+                "bytes": 20777358
+              },
+              {
+                "encodeMs": 658.8000000007451,
+                "compressMs": 0,
+                "roundTripMs": 902.1999999992549,
+                "postMs": 101.69999999925494,
+                "workerTransportAndSchedulingMs": 243.2999999988824,
+                "idbMs": 566.3000000007451,
+                "readBeforeWriteMs": 88.80000000074506,
+                "commitAfterReadMs": 477.5,
+                "totalMs": 1468.5999999996275,
+                "bytes": 20777358
+              },
+              {
+                "encodeMs": 550.5999999996275,
+                "compressMs": 0,
+                "roundTripMs": 880.8000000007451,
+                "postMs": 83,
+                "workerTransportAndSchedulingMs": 330,
+                "idbMs": 327.69999999925494,
+                "readBeforeWriteMs": 30.09999999962747,
+                "commitAfterReadMs": 297.59999999962747,
+                "totalMs": 1208.5,
+                "bytes": 20777358
+              },
+              {
+                "encodeMs": 570.5999999996275,
+                "compressMs": 0,
+                "roundTripMs": 850.1000000014901,
+                "postMs": 97.5,
+                "workerTransportAndSchedulingMs": 279.4000000022352,
+                "idbMs": 295.7999999988824,
+                "readBeforeWriteMs": 99.40000000037253,
+                "commitAfterReadMs": 196.39999999850988,
+                "totalMs": 1146,
+                "bytes": 20777358
+              },
+              {
+                "encodeMs": 787.3999999985099,
+                "compressMs": 0,
+                "roundTripMs": 1031.8999999985099,
+                "postMs": 100.59999999962747,
+                "workerTransportAndSchedulingMs": 244.2999999988824,
+                "idbMs": 443.09999999962747,
+                "readBeforeWriteMs": 49.399999998509884,
+                "commitAfterReadMs": 393.7000000011176,
+                "totalMs": 1475.0999999996275,
+                "bytes": 20777358
+              }
+            ],
+            "load": [
+              {
+                "readMs": 147.80000000074506,
+                "decompressMs": 0,
+                "verifyMs": 1324.8999999985099,
+                "roundTripMs": 1579,
+                "postMs": 15.099999999627471,
+                "workerTransportAndSchedulingMs": 254.10000000149012,
+                "totalMs": 1726.9000000003725
+              },
+              {
+                "readMs": 162.30000000074506,
+                "decompressMs": 0,
+                "verifyMs": 1267.5999999996275,
+                "roundTripMs": 1473,
+                "postMs": 11.199999999254942,
+                "workerTransportAndSchedulingMs": 205.40000000037253,
+                "totalMs": 1635.300000000745
+              },
+              {
+                "readMs": 155,
+                "decompressMs": 0,
+                "verifyMs": 1296.199999999255,
+                "roundTripMs": 1510,
+                "postMs": 15.200000001117587,
+                "workerTransportAndSchedulingMs": 213.80000000074506,
+                "totalMs": 1665.2000000011176
+              },
+              {
+                "readMs": 320,
+                "decompressMs": 0,
+                "verifyMs": 1362.3999999985099,
+                "roundTripMs": 1583.9000000003725,
+                "postMs": 16.800000000745058,
+                "workerTransportAndSchedulingMs": 221.50000000186265,
+                "totalMs": 1903.9000000003725
+              },
+              {
+                "readMs": 253.2999999988824,
+                "decompressMs": 0,
+                "verifyMs": 1983.0999999996275,
+                "roundTripMs": 2518.60000000149,
+                "postMs": 13.800000000745058,
+                "workerTransportAndSchedulingMs": 535.4000000022352,
+                "totalMs": 2771.9000000003725
+              }
+            ]
+          },
+          "longTasksMs": [
+            87,
+            99,
+            91,
+            1618,
+            101,
+            245,
+            61,
+            1302,
+            83,
+            189,
+            58,
+            1321,
+            97,
+            145,
+            135,
+            165,
+            1487,
+            101,
+            219,
+            202,
+            1717
+          ],
+          "heapBytes": [
+            117198067,
+            187833015,
+            146908819,
+            146724327,
+            408237742
+          ],
+          "rawPayloadPairBytes": 40924745,
+          "serializedPlainHeadBytes": 46760390,
+          "timingMs": {
+            "save": {
+              "encodeMs": {
+                "n": 5,
+                "p50": 658.8000000007451,
+                "p95": 1963,
+                "max": 1963
+              },
+              "compressMs": {
+                "n": 5,
+                "p50": 0,
+                "p95": 0,
+                "max": 0
+              },
+              "roundTripMs": {
+                "n": 5,
+                "p50": 902.1999999992549,
+                "p95": 2188.800000000745,
+                "max": 2188.800000000745
+              },
+              "postMs": {
+                "n": 5,
+                "p50": 97.5,
+                "p95": 101.69999999925494,
+                "max": 101.69999999925494
+              },
+              "workerTransportAndSchedulingMs": {
+                "n": 5,
+                "p50": 244.2999999988824,
+                "p95": 330,
+                "max": 330
+              },
+              "idbMs": {
+                "n": 5,
+                "p50": 327.69999999925494,
+                "p95": 566.3000000007451,
+                "max": 566.3000000007451
+              },
+              "readBeforeWriteMs": {
+                "n": 5,
+                "p50": 49.399999998509884,
+                "p95": 99.40000000037253,
+                "max": 99.40000000037253
+              },
+              "commitAfterReadMs": {
+                "n": 5,
+                "p50": 297.59999999962747,
+                "p95": 477.5,
+                "max": 477.5
+              },
+              "totalMs": {
+                "n": 5,
+                "p50": 1468.5999999996275,
+                "p95": 2435.5,
+                "max": 2435.5
+              }
+            },
+            "load": {
+              "readMs": {
+                "n": 5,
+                "p50": 162.30000000074506,
+                "p95": 320,
+                "max": 320
+              },
+              "decompressMs": {
+                "n": 5,
+                "p50": 0,
+                "p95": 0,
+                "max": 0
+              },
+              "verifyMs": {
+                "n": 5,
+                "p50": 1324.8999999985099,
+                "p95": 1983.0999999996275,
+                "max": 1983.0999999996275
+              },
+              "roundTripMs": {
+                "n": 5,
+                "p50": 1579,
+                "p95": 2518.60000000149,
+                "max": 2518.60000000149
+              },
+              "postMs": {
+                "n": 5,
+                "p50": 15.099999999627471,
+                "p95": 16.800000000745058,
+                "max": 16.800000000745058
+              },
+              "workerTransportAndSchedulingMs": {
+                "n": 5,
+                "p50": 221.50000000186265,
+                "p95": 535.4000000022352,
+                "max": 535.4000000022352
+              },
+              "totalMs": {
+                "n": 5,
+                "p50": 1726.9000000003725,
+                "p95": 2771.9000000003725,
+                "max": 2771.9000000003725
+              }
+            }
+          },
+          "longTaskStatsMs": {
+            "n": 21,
+            "p50": 145,
+            "p95": 1618,
+            "max": 1717
+          }
+        },
+        {
+          "gzip": true,
+          "samples": {
+            "save": [
+              {
+                "encodeMs": 1907.300000000745,
+                "compressMs": 417.2999999988824,
+                "roundTripMs": 2515.699999999255,
+                "postMs": 92.30000000074506,
+                "workerTransportAndSchedulingMs": 191.09999999962747,
+                "idbMs": 31.300000000745058,
+                "readBeforeWriteMs": 7.5,
+                "commitAfterReadMs": 23.800000000745058,
+                "totalMs": 2547.0999999996275,
+                "bytes": 581223
+              },
+              {
+                "encodeMs": 576.7999999988824,
+                "compressMs": 362.80000000074506,
+                "roundTripMs": 1148.2000000011176,
+                "postMs": 98.40000000037253,
+                "workerTransportAndSchedulingMs": 208.60000000149012,
+                "idbMs": 9.399999998509884,
+                "readBeforeWriteMs": 1.799999998882413,
+                "commitAfterReadMs": 7.599999999627471,
+                "totalMs": 1157.5999999996275,
+                "bytes": 581223
+              },
+              {
+                "encodeMs": 584.9000000003725,
+                "compressMs": 411.19999999925494,
+                "roundTripMs": 1293.2000000011176,
+                "postMs": 87.10000000149012,
+                "workerTransportAndSchedulingMs": 264.2000000011176,
+                "idbMs": 8.699999999254942,
+                "readBeforeWriteMs": 2.099999999627471,
+                "commitAfterReadMs": 6.599999999627471,
+                "totalMs": 1302,
+                "bytes": 581223
+              },
+              {
+                "encodeMs": 612.5999999996275,
+                "compressMs": 321.90000000037253,
+                "roundTripMs": 1222,
+                "postMs": 186.90000000037253,
+                "workerTransportAndSchedulingMs": 287.5,
+                "idbMs": 11,
+                "readBeforeWriteMs": 3,
+                "commitAfterReadMs": 8,
+                "totalMs": 1233,
+                "bytes": 581223
+              },
+              {
+                "encodeMs": 614.5,
+                "compressMs": 403.40000000037253,
+                "roundTripMs": 1290.0999999996275,
+                "postMs": 96.79999999888241,
+                "workerTransportAndSchedulingMs": 249.30000000074506,
+                "idbMs": 10.400000000372529,
+                "readBeforeWriteMs": 2.400000000372529,
+                "commitAfterReadMs": 8,
+                "totalMs": 1300.5,
+                "bytes": 581223
+              }
+            ],
+            "load": [
+              {
+                "readMs": 8.300000000745058,
+                "decompressMs": 54.5,
+                "verifyMs": 1539.800000000745,
+                "roundTripMs": 1866.2999999988824,
+                "postMs": 0.09999999962747097,
+                "workerTransportAndSchedulingMs": 271.8999999985099,
+                "totalMs": 1874.5999999996275
+              },
+              {
+                "readMs": 3.700000001117587,
+                "decompressMs": 140.30000000074506,
+                "verifyMs": 1532.300000000745,
+                "roundTripMs": 1884.5,
+                "postMs": 0.19999999925494194,
+                "workerTransportAndSchedulingMs": 211.7999999988824,
+                "totalMs": 1888.2000000011176
+              },
+              {
+                "readMs": 3.800000000745058,
+                "decompressMs": 59.5,
+                "verifyMs": 1303.300000000745,
+                "roundTripMs": 1588.9000000003725,
+                "postMs": 0.09999999962747097,
+                "workerTransportAndSchedulingMs": 226.09999999962747,
+                "totalMs": 1592.800000000745
+              },
+              {
+                "readMs": 4.800000000745058,
+                "decompressMs": 59.09999999962747,
+                "verifyMs": 1276.4000000003725,
+                "roundTripMs": 1565,
+                "postMs": 0.09999999962747097,
+                "workerTransportAndSchedulingMs": 229.40000000037253,
+                "totalMs": 1569.800000000745
+              },
+              {
+                "readMs": 4.199999999254942,
+                "decompressMs": 56.90000000037253,
+                "verifyMs": 1593.7000000011176,
+                "roundTripMs": 1931.4000000003725,
+                "postMs": 0,
+                "workerTransportAndSchedulingMs": 280.7999999988824,
+                "totalMs": 1935.699999999255
+              }
+            ]
+          },
+          "longTasksMs": [
+            92,
+            1526,
+            98,
+            1532,
+            87,
+            1274,
+            187,
+            1294,
+            96,
+            1552
+          ],
+          "heapBytes": [
+            306617201,
+            203229533,
+            107517565,
+            284115452,
+            262709565
+          ],
+          "rawPayloadPairBytes": 1148001,
+          "serializedPlainHeadBytes": null,
+          "timingMs": {
+            "save": {
+              "encodeMs": {
+                "n": 5,
+                "p50": 612.5999999996275,
+                "p95": 1907.300000000745,
+                "max": 1907.300000000745
+              },
+              "compressMs": {
+                "n": 5,
+                "p50": 403.40000000037253,
+                "p95": 417.2999999988824,
+                "max": 417.2999999988824
+              },
+              "roundTripMs": {
+                "n": 5,
+                "p50": 1290.0999999996275,
+                "p95": 2515.699999999255,
+                "max": 2515.699999999255
+              },
+              "postMs": {
+                "n": 5,
+                "p50": 96.79999999888241,
+                "p95": 186.90000000037253,
+                "max": 186.90000000037253
+              },
+              "workerTransportAndSchedulingMs": {
+                "n": 5,
+                "p50": 249.30000000074506,
+                "p95": 287.5,
+                "max": 287.5
+              },
+              "idbMs": {
+                "n": 5,
+                "p50": 10.400000000372529,
+                "p95": 31.300000000745058,
+                "max": 31.300000000745058
+              },
+              "readBeforeWriteMs": {
+                "n": 5,
+                "p50": 2.400000000372529,
+                "p95": 7.5,
+                "max": 7.5
+              },
+              "commitAfterReadMs": {
+                "n": 5,
+                "p50": 8,
+                "p95": 23.800000000745058,
+                "max": 23.800000000745058
+              },
+              "totalMs": {
+                "n": 5,
+                "p50": 1300.5,
+                "p95": 2547.0999999996275,
+                "max": 2547.0999999996275
+              }
+            },
+            "load": {
+              "readMs": {
+                "n": 5,
+                "p50": 4.199999999254942,
+                "p95": 8.300000000745058,
+                "max": 8.300000000745058
+              },
+              "decompressMs": {
+                "n": 5,
+                "p50": 59.09999999962747,
+                "p95": 140.30000000074506,
+                "max": 140.30000000074506
+              },
+              "verifyMs": {
+                "n": 5,
+                "p50": 1532.300000000745,
+                "p95": 1593.7000000011176,
+                "max": 1593.7000000011176
+              },
+              "roundTripMs": {
+                "n": 5,
+                "p50": 1866.2999999988824,
+                "p95": 1931.4000000003725,
+                "max": 1931.4000000003725
+              },
+              "postMs": {
+                "n": 5,
+                "p50": 0.09999999962747097,
+                "p95": 0.19999999925494194,
+                "max": 0.19999999925494194
+              },
+              "workerTransportAndSchedulingMs": {
+                "n": 5,
+                "p50": 229.40000000037253,
+                "p95": 280.7999999988824,
+                "max": 280.7999999988824
+              },
+              "totalMs": {
+                "n": 5,
+                "p50": 1874.5999999996275,
+                "p95": 1935.699999999255,
+                "max": 1935.699999999255
+              }
+            }
+          },
+          "longTaskStatsMs": {
+            "n": 10,
+            "p50": 187,
+            "p95": 1552,
+            "max": 1552
+          }
+        }
+      ],
+      "storageEstimate": {
+        "quota": 10742116352,
+        "usage": 4698112,
+        "usageDetails": {
+          "indexedDB": 4698112
+        }
+      }
+    }
+  ]
+}
