@@ -14,11 +14,13 @@
     "typecheck": "tsc -p packages/simulation/tsconfig.json && tsc",
     "test": "vitest run",
     "test:browser": "playwright test",
+    "test:browser:pages": "playwright test --config playwright.pages.config.mjs",
     "simulate": "node tools/task-01-run.mjs",
     "simulate:law": "node tools/task-02-demo.mjs",
     "simulate:society": "node tools/task-03-run.mjs",
     "study:society": "node tools/task-03-study.mjs",
     "build": "npm run typecheck && vite build apps/web --outDir ../../dist --emptyOutDir",
+    "build:pages": "npm run build -- --base=/rulecraft/ && node tools/check-pages-build.mjs",
     "preview": "vite preview apps/web --outDir ../../dist"
   },
   "dependencies": {

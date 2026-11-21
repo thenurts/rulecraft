@@ -3,6 +3,7 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/browser',
   testMatch: '**/*.e2e.mjs',
+  testIgnore: '**/pages.e2e.mjs',
   timeout: 60_000,
   workers: 1,
   reporter: process.env.GITHUB_ACTIONS ? [['list'], ['github']] : 'list',

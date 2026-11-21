@@ -120,7 +120,7 @@ test('Junior learns from the real day-six checkpoint, debrief and confirmed same
 });
 
 test('Sandbox records the preset and seed, stops at twelve days and confirms new experiments', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await page.getByLabel('Complexity').selectOption('full');
   await page.getByLabel('Play option').selectOption('sandbox');
   await page.getByLabel('Starting preset').selectOption('five-merchants-farmers-v1');
@@ -173,7 +173,7 @@ test('Sandbox records the preset and seed, stops at twelve days and confirms new
 
 test('legacy v4 Campaign resumes its original preview and advances with the exact recorded engine', async ({ page }) => {
   const game = advanceSociety(startSociety(fixture, 42));
-  await page.goto('/');
+  await page.goto('./');
   await expect(button(page, 'Start village')).toBeEnabled();
   await page.evaluate((payload) => new Promise((resolve, reject) => {
     const open = indexedDB.open('rulecraft-village', 1);
