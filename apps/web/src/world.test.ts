@@ -61,3 +61,16 @@ test('Junior campaign exposes supported predicates at day six while preserving a
 
 test.each([['0', 0], ['4294967295', 4294967295], ['-1', undefined], ['1e3', undefined], ['', undefined], ['4294967296', undefined]])(
   'validates uint32 seed input %s', (value, expected) => { expect(readSeed(value)).toBe(expected); });
+
+test('Sandbox records legal seeds and permits only its tested twelve-day presets', () => {
+  const [standard, lean] = (['standard-village-v1', 'five-merchants-farmers-v1'] as const).map((preset) =>
+    newSession({ mode: 'full', track: 'sandbox', preset, seed: 0 }, preset));
+  expect(standard.game.fixture.days).toBe(12);
+  expect(lean.game.fixture.days).toBe(12);
+  expect(standard.game.seed).toBe(0);
+  expect(lean.game.fixture.population.merchant).toBe(5);
+  expect(standard.game.fixture.population.merchant).toBe(10);
+  expect(standard.game.fixture.opening).toEqual(lean.game.fixture.opening);
+  expect(() => newSession({ mode: 'junior', track: 'campaign', preset: 'standard-village-v1' }, 'invalid'))
+    .toThrow(/Invalid preset/);
+});

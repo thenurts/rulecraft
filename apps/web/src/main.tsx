@@ -2,13 +2,14 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { advanceSociety, confirmLaw, type LawCommand, type LawVersion } from '@rulecraft/simulation';
 import { isMission, MissionOverview, MissionReview } from './Mission.tsx';
 import { checkpointDay } from './mission.ts';
+import { ExperimentReport, isExperiment } from './Sandbox.tsx';
 import { RetryPanel } from './Retry.tsx';
 import { Book, Composer, newDraft, usableDraft } from './decrees.tsx';
 import { deviceDraftStore, type DecreeDraft } from './draft-store.ts';
 import { AdvancePanel, DayResults, Gazette, Inquiry, TrialSummary } from './results.tsx';
 import { Chronicle, ShareView, StoryCard } from './narrative/StoryViews.tsx';
 import { projectNarrative, type Incident } from './narrative/projection.ts';
-import { editorProfile, modeProfiles, scenarios, presets, type StartSelection, type Selection } from './profiles.ts';
+import { editorProfile, modeProfiles, scenarios, presets, readSeed, type PresetId, type StartSelection, type Selection } from './profiles.ts';
 import { workerCodec } from './save-codec.ts';
 import { BrowserDatabase, deviceSaveStore, emptySave, SaveConflict, type LoadedSave } from './save-store.ts';
 import { createRoot } from 'react-dom/client';
@@ -26,9 +27,21 @@ function Home({ session, onStart, onResume, busy }: {
   session: GameSession | null; onStart: (selection: StartSelection) => void; onResume: () => void; busy: boolean;
 }) {
   const [selection, setSelection] = useState<Selection>({ mode: 'junior', track: 'campaign' });
-  const [replace, setReplace] = useState(false);
+  const [sandboxPreset, setSandboxPreset] = useState<PresetId>(scenarios.sandbox.defaultPreset);
+  const [sandboxSeed, setSandboxSeed] = useState(String(scenarios.sandbox.defaultSeed));
+  const [pending, setPending] = useState<StartSelection | null>(null);
   const scenario = scenarios[selection.track];
-  const starting = presets[scenario.defaultPreset];
+  const experiment = scenario.track === 'sandbox';
+  const preset = experiment ? sandboxPreset : scenario.defaultPreset;
+  const seed = experiment ? readSeed(sandboxSeed) : scenario.defaultSeed;
+  const starting = presets[preset];
+  const locked = busy || pending !== null;
+  function requestStart() {
+    if (seed === undefined) return;
+    const next = { ...selection, seed, preset };
+    if (session) setPending(next);
+    else onStart(next);
+  }
   return <>
     <section className="hero">
       <p className="eyebrow">The village charter</p>
@@ -45,25 +58,46 @@ function Home({ session, onStart, onResume, busy }: {
       <h2>Start a village</h2>
       <div className="two-col">
         <label>Complexity
-          <select disabled={busy} value={selection.mode} onChange={(event) => setSelection({ ...selection, mode: event.target.value as Selection['mode'] })}>
+          <select disabled={locked} value={selection.mode} onChange={(event) => setSelection({ ...selection, mode: event.target.value as Selection['mode'] })}>
             {Object.values(modeProfiles).map(({ id, label }) => <option key={id} value={id}>{label}</option>)}
           </select>
         </label>
         <label>Play option
-          <select disabled={busy} value={selection.track} onChange={(event) => setSelection({ ...selection, track: event.target.value as Selection['track'] })}>
+          <select disabled={locked} value={selection.track} onChange={(event) => setSelection({ ...selection, track: event.target.value as Selection['track'] })}>
             <option value="campaign">Campaign · The Hungry Village</option><option value="sandbox">12-day Sandbox experiment</option>
           </select>
         </label>
       </div>
       <p>{modeProfiles[selection.mode].explanation}</p>
-      <p>{starting.label} preset v{scenario.version} · Seed {scenario.defaultSeed} · {starting.fixture.days} days</p>
-      {replace ? <div className="notice" role="group" aria-label="Replace current village">
-        <p>Starting a new village replaces the current one.</p>
-        <div className="actions">
-          <button className="primary" disabled={busy} onClick={() => onStart(selection)}>Replace and start</button>
-          <button disabled={busy} onClick={() => setReplace(false)}>Cancel</button>
+      {experiment && <>
+        <div className="two-col">
+          <label>Starting preset
+            <select disabled={locked} value={sandboxPreset} onChange={({ target }) => setSandboxPreset(target.value as PresetId)}>
+              {scenario.presets.map((id) => <option key={id} value={id}>{presets[id].label}</option>)}
+            </select>
+          </label>
+          <label>Seed
+            <input type="text" inputMode="numeric" aria-describedby="start-seed-help" aria-invalid={seed === undefined}
+              value={sandboxSeed} disabled={locked} onChange={({ target }) => setSandboxSeed(target.value)} />
+          </label>
         </div>
-      </div> : <button className={session ? '' : 'primary'} disabled={busy} onClick={() => session ? setReplace(true) : onStart(selection)}>Start village</button>}
+        <p id="start-seed-help">Enter a whole number from 0 to 4,294,967,295. Use the same seed and preset to repeat the same start.</p>
+        <p>The experiment lasts 12 days and has no victory target.</p>
+      </>}
+      <p>{starting.label} preset · Scenario v{scenario.version} · {starting.fixture.days} days
+        {!experiment && ` · Seed ${scenario.defaultSeed}`}</p>
+      <details><summary>Starting conditions</summary>
+        <p>{starting.fixture.population.farmer} farmers · {starting.fixture.population.merchant} merchants · {starting.fixture.population.forester} foresters · {starting.fixture.population.guard} guards.</p>
+        <p>{starting.fixture.opening.marketFood} market food · {starting.fixture.opening.fieldFood} field food · {starting.fixture.opening.citizenCoin} coins per resident.</p>
+      </details>
+      {pending ? <div className="notice" role="group" aria-label="Replace current village">
+        <p>Starting a new village replaces the current one.</p>
+        <p>{modeProfiles[pending.mode].label} · {starting.label} · Seed {pending.seed}</p>
+        <div className="actions">
+          <button className="primary" disabled={busy} onClick={() => onStart(pending)}>Replace and start</button>
+          <button disabled={busy} onClick={() => setPending(null)}>Cancel</button>
+        </div>
+      </div> : <button className={session ? '' : 'primary'} disabled={busy || seed === undefined} onClick={requestStart}>Start village</button>}
     </section>
   </>;
 }
@@ -339,13 +373,18 @@ function App() {
         {session.game.state.turn > 0 && <button className="recent-results" onClick={() => openResults(session.game.state.turn)}>Latest day results</button>}
         {isMission(session)
           ? <MissionOverview session={session} openDay={openResults} openBook={() => go(bookScreen)} />
-          : <TrialSummary session={session} />}
+          : isExperiment(session) ? <>
+            <ExperimentReport session={session} day={session.game.state.turn} openGazette={openGazette} />
+            <RetryPanel key={session.id} session={session} start={start} busy={blocked} />
+          </> : <TrialSummary session={session} />}
       </Village>}
       {screen.name === 'results' && session && <DayResults session={session} day={reportDay}
         inspect={inspect} openGazette={() => openGazette(reportDay)} story={today[0] ? story(today[0], true) : null}
-        review={isMission(session) && (reportDay === checkpointDay || reportDay === session.game.fixture.days) &&
+        review={isMission(session) && (reportDay === checkpointDay || reportDay === session.game.fixture.days) ?
           <MissionReview session={session} day={reportDay} inspect={inspect} openBook={() => go(bookScreen)}
-            openChronicle={openChronicle} hasStory={narrative.incidents.some(({ turn }) => turn <= reportDay)} />}
+            openChronicle={openChronicle} hasStory={narrative.incidents.some(({ turn }) => turn <= reportDay)} />
+          : isExperiment(session) && reportDay === session.game.fixture.days &&
+            <ExperimentReport session={session} day={reportDay} openGazette={openGazette} />}
         next={session.setup && reportDay === session.game.fixture.days &&
           <RetryPanel key={session.id} session={session} start={start} busy={blocked} />} />}
       {screen.name === 'gazette' && session && <Gazette game={session.game} day={Number(screen.id)}
