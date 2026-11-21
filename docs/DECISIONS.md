@@ -27,3 +27,16 @@
 | PROD-001 | Accessibility of Junior Mode for ages 7-12 | Open | Supervised playtesting |
 
 For each new sign-off, record the date, reviewer, selected option, rejected alternatives, reasoning and affected tests.
+
+## Task 00 proposals · 21 November 2026
+
+Owner review is pending. See the [architecture report](04_Task_00_Architecture.md) for conflicts, alternatives, and the verification plan.
+
+| Decision | Proposal and approval gate | Affected checks |
+|---|---|---|
+| ARCH-001 | Approve a TypeScript core with a React/Vite web shell and Vitest for the next milestone. Keep Capacitor provisional until Android/iOS device and WebView evidence. Godot remains a 2D alternative if rendering needs warrant it. | RNG-01, MOB-01, MOB-02, MOB-04 |
+| SIM-001 | Approve versioned keyed draws, bounded integer/fixed-point arithmetic, stable IDs and canonical snapshot/event bytes. Choose and lock the algorithm, encoding, numeric scale and overflow rules before implementing Task 01 behaviour. | RNG-01, RNG-02, BUILD-12, BUILD-24 |
+| WORLD-001 | Approve rule-free fixture accounts, action eligibility, slot and settlement order, blocked-attempt semantics and debits/credits before Task 01. The opening stocks and prices remain candidates. | AGT-03, ECO-01, BUILD-07, BUILD-08, BUILD-10, BUILD-17 |
+| LAW-001 | Before Task 02, approve actual versus perceived decree versions, durable between-turn enactment, clause exposure, a full precedence/licence table and the rule-free Task 01 scope. Resolve the passive detection policy before enforcement. | LAW-02 through LAW-06, BUILD-05, BUILD-06, BUILD-09 |
+| SAVE-001 | Approve whole-turn snapshot commits with a prior checkpoint and separate editable drafts. Define schema compatibility and failure handling before Task 01 persistence. Browser and native store implementations follow platform testing. | SAVE-01, MOB-03, BUILD-18, BUILD-22 |
+| UX-001, PERF-001, PROD-001 | Keep portrait-first as a candidate. Agree the device matrix, orientation and release thresholds after physical-device checks. Validate Junior's disclosure and reading demands through supervised playtesting. | BUILD-20, BUILD-21, MOB-01 |
