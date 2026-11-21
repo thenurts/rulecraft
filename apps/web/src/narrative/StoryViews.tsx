@@ -57,7 +57,7 @@ export function Chronicle({ incidents, ...links }: StoryLinks & { incidents: rea
       <h1 id="page-heading" tabIndex={-1}>Royal Chronicle</h1>
       <p>Selected stories from completed days.</p>
     </header>
-    {incidents.length > 0 && <div className="panel">
+    {incidents.length > 0 && <div className="panel chronicle-filters">
       <fieldset className="plain-fieldset">
         <legend>Filter stories</legend>
         <div className="two-col">
@@ -131,7 +131,7 @@ export function ShareView({ game, mode, id }: { game: SocietyGame; mode: Reading
         {card.sections.map(({ label, text }) => <section key={label}><h2>{label}</h2><p>{text}</p></section>)}
         <p className="muted">{card.footer}</p>
       </figure>
-      <section className="panel">
+      <section className="panel share-export">
         <button className="primary" disabled={busy} onClick={() => void download()}>{busy ? 'Preparing PNG…' : 'Download PNG'}</button>
         {status && <p className="notice" role="status">{status}</p>}
         <details><summary>Selectable card text</summary>

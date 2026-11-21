@@ -69,3 +69,12 @@ test('save replay, reading mode and future-day selection retain earlier chronolo
 test('no completed day produces no story or forced flavour', () => {
   expect(projectNarrative(startSociety(fixture, 42), 'junior')).toEqual({ incidents: [], diagnostics: [] });
 });
+
+test('a completed day with no eligible evidence remains quiet', () => {
+  const quiet = advanceSociety(startSociety({
+    ...poorModel, opening: { ...poorModel.opening, marketFood: 0 },
+  }, 42));
+  expect(quiet.state.turn).toBe(1);
+  expect(quiet.events.length).toBeGreaterThan(0);
+  expect(projectNarrative(quiet, 'full')).toEqual({ incidents: [], diagnostics: [] });
+});

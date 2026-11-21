@@ -45,7 +45,7 @@ export const catalogueV1: Readonly<Record<Family, FamilyCopy>> = {
       line('liam', 'The patrol helped someone learn the rule.', 'Writing a rule and getting it to the right resident are two different jobs. This patrol did the second one.'),
       line('liam', 'The rule was in force before the resident learned it.', 'The action came before the notice. Keep that order straight when you look up who knew what.'),
     ],
-    caption: 'One encounter and a version of the rules to read.',
+    caption: 'A notice, delivered on patrol.',
   },
   FORMAL_WARNING: {
     headlines: ['Formal warning recorded', 'A patrol issued a warning', 'Known rule, recorded warning', 'A warning in the patrol log'],
@@ -106,9 +106,9 @@ export function describeFacts(facts: Facts): string {
     case 'MEAL_STOCKOUT':
       return `${plural(facts.residents, 'resident')} went without ${plural(facts.units, 'food unit')} they could pay for because there was too little market stock.`;
     case 'EDUCATION':
-      return `${plural(facts.encounters, 'patrol encounter')} delivered a notice to a resident who did not know the current prohibition at the time of the act.`;
+      return `${plural(facts.encounters, 'patrol encounter')} ${facts.encounters === 1 ? 'delivered' : 'each delivered'} a notice to a resident who did not know the current prohibition at the time of the act.`;
     case 'FORMAL_WARNING':
-      return `${plural(facts.encounters, 'formal warning')} followed a recorded prohibited act. The current version was known at the time.`;
+      return `${plural(facts.encounters, 'formal warning')} ${facts.encounters === 1 ? 'followed' : 'each followed'} a recorded prohibited act where the resident knew the current rule.`;
     case 'PATROL_CAPACITY_GAP':
       return `${plural(facts.missed, 'public act')} went uninvestigated in slots where eligible patrols had used their investigation capacity. Those slots recorded ${plural(facts.attempts, 'attempt')} across ${plural(facts.patrols, 'patrol')}.`;
     case 'FATIGUE_BLOCKED_WORK':

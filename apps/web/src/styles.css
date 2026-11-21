@@ -89,6 +89,11 @@ article.panel > details { margin-top: .65rem; }
 .record span, .record code { font-weight: 400; color: var(--muted); }
 .reference code { font-size: .8em; }
 .ruling { margin-block: .55rem 1rem; border-inline-start: 2px solid var(--rule); padding-inline-start: .65rem; }
+@media (max-width: 380px) {
+  .chronicle-filters, .share-preview, .share-export { padding-inline: min(1rem, 2vw); }
+  .chronicle-filters select { padding-inline: .2em; }
+  .share-preview :is(figcaption, section) { padding-inline: .35em; }
+}
 .story-card { border-color: #b1986e; }
 .story-card h2, .share-preview h2, .narrative-heading h1 {
   text-wrap: pretty;

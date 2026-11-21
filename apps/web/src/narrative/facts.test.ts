@@ -60,11 +60,18 @@ test('education uses a verified notice and ignorance, while formal warning uses 
 test('removed or duplicate patrol witnesses and invalid legal versions suppress enforcement stories', () => {
   const game = days(example(), 12);
   const removed = { ...game, events: game.events.filter(({ action }) => action !== 'patrol') };
-  expect(causes(removed)).not.toEqual(expect.arrayContaining(['EDUCATION']));
+  expect(causes(removed)).not.toContain('EDUCATION');
   expect(causes(removed)).not.toContain('FORMAL_WARNING');
   expect(causes(removed)).not.toContain('PATROL_CAPACITY_GAP');
   const broken = { ...game, book: { ...game.book, versions: [] } };
   expect(causes(broken)).not.toContain('FORMAL_WARNING');
+  const inapplicable: SocietyGame = { ...game, events: game.events.map((event) => !event.legalChoice ? event : {
+    ...event, legalChoice: event.legalChoice.map((choice) => ({
+      ...choice, actual: { ...choice.actual, considered: choice.actual.considered.map((rule) => ({ ...rule, applicable: false })) },
+    })),
+  }) };
+  expect(causes(inapplicable)).not.toContain('FORMAL_WARNING');
+  expect(causes(inapplicable)).not.toContain('EDUCATION');
   const duplicate = { ...game, events: [...game.events, ...game.events.filter(({ action }) => action === 'patrol')] };
   expect(causes(duplicate)).not.toContain('EDUCATION');
 });

@@ -1,7 +1,7 @@
 import { confirmLaw, startSociety, villageScope } from '@rulecraft/simulation';
 
-export function societyExample(fixture, start = startSociety) {
-  const field = confirmLaw(start(fixture, 42), {
+export function societyExample(fixture, start = startSociety, seed = 42) {
+  const field = confirmLaw(start(fixture, seed), {
     operation: 'CREATE', lawId: 'morning-harvest-ban', commandId: 'create-harvest-ban',
     ast: { ...villageScope, targetSelector: 'farmer', actionId: 'harvest-food', modality: 'MUST_NOT',
       when: { operand: 'slot', operator: 'EQ', value: 'morning' } },
