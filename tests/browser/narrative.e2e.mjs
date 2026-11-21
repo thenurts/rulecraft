@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { advanceSociety, confirmLaw, encodeSociety } from '@rulecraft/simulation';
+import { advanceSociety, confirmLaw, encodeSociety, societyDefaults } from '@rulecraft/simulation';
+import { projectNarrative } from '../../apps/web/src/narrative/projection.ts';
 import { completedCompetingDutiesDay } from '../fixtures/task-05-competing-duties.ts';
 import { startVillage } from './helpers.mjs';
 
@@ -187,7 +188,16 @@ test('local share PNG matches the selectable evidence text and handles unavailab
 });
 
 test('a competing-duties card downloads with both evidenced decrees and exposes all text when PNG overflows', async ({ page }) => {
-  const dayOne = completedCompetingDutiesDay();
+  // Keep the browser save a genuine Task 04-compatible legacy preview: the
+  // research helper's 100% news setting is intentionally NOT a valid legacy
+  // configuration. Find a natural competing-duty witness under real defaults.
+  let dayOne;
+  for (let seed = 0; seed < 256 && !dayOne; seed++) {
+    const candidate = completedCompetingDutiesDay(societyDefaults.bulletinBp, seed);
+    if (projectNarrative(candidate, 'full').incidents.some(({ turn, facts }) =>
+      turn === 1 && facts.family === 'COMPETING_KNOWN_DUTIES')) dayOne = candidate;
+  }
+  expect(dayOne, 'Expected a natural competing-duty witness with historical settings').toBeDefined();
   const game = advanceSociety(confirmLaw(dayOne, {
     operation: 'ABOLISH', lawId: 'harvest-food', commandId: 'abolish-harvest',
   }).game);
