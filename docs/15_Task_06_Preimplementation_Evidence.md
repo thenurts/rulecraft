@@ -2,6 +2,8 @@
 
 This report measures the merged Task 05 baseline at `4411497`. Issue #20 requires design PR #21 to be reviewed and merged first, and the product owner elected to wait for that merge. The evidence published here runs against the shipped v4 engine and desktop web shell. [Issue #20](https://github.com/thenurts/rulecraft/issues/20) · [Design PR #21](https://github.com/thenurts/rulecraft/pull/21)
 
+The [follow-up report](16_Task_06_Fixture_and_Persistence_Study.md) records candidate fixture tests and persistence alternatives separately from this baseline.
+
 ## Campaign viability
 
 **Design blocker for the tested Hungry Village configuration.** The constructive delivery duty changed the day-by-day stock trajectory, but none of the tested constructive strategies improved either end objective. Restricting harvest made materially worse outcomes possible. The trial therefore shows legislative effects on village behaviour without demonstrating a meaningful route to victory.

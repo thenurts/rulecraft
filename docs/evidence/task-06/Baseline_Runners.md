@@ -256,3 +256,40 @@ try {
   await browser.close();
 }
 ```
+
+## Baseline daily witness trace
+
+Save as `tools/task-06-baseline-trace.mjs`. It reads the exploratory JSON from the path supplied as its first argument and prints the day-by-day seed-42 witness JSON.
+
+```js
+import { readFileSync } from 'node:fs';
+import { advanceSociety, auditSnapshot, confirmLaw, startSociety } from '@rulecraft/simulation';
+import fixture from '../fixtures/task-01-village.json' with { type: 'json' };
+const study = JSON.parse(readFileSync(process.argv[2] ?? '/tmp/rulecraft-task06-exploration.json', 'utf8'));
+const seed = 42;
+const arms = {};
+for (const [name, asts] of Object.entries(study.strategies)) {
+  let game = startSociety(fixture, seed);
+  const commands = asts.map((ast) => {
+    const lawId = `${ast.actionId}-${ast.modality.toLowerCase()}${ast.when ? `-${ast.when.value}` : ''}`;
+    return { operation: 'CREATE', lawId, commandId: `confirm-${lawId}`, ast };
+  });
+  for (const command of commands) game = confirmLaw(game, command).game;
+  while (game.state.turn < 12) game = advanceSociety(game);
+  const sample = {
+    harvest: game.events.find(({ action, transactionId }) => action === 'harvest-food' && transactionId),
+    delivery: game.events.find(({ action, transactionId }) => action === 'market-delivery' && transactionId),
+    meal: game.events.find(({ action, transactionId }) => action === 'resident-meal' && transactionId),
+    unaffordable: game.events.find(({ foodAccess }) => foodAccess?.fundingShortfall > 0),
+    stockout: game.events.find(({ foodAccess }) => foodAccess?.supplyShortfall > 0),
+    knownDeliveryDuty: game.events.find(({ legalChoice }) => legalChoice?.some(({ actionId, perceived, selectionBarrier }) =>
+      actionId === 'market-delivery' && perceived.status === 'required' && !selectionBarrier)),
+  };
+  const txIds = Object.values(sample).map((event) => event?.transactionId).filter(Boolean);
+  arms[name] = { commands, noticeSample: game.book.notices.slice(0, 4), daily: game.days.map((day, index) => ({
+    ...day, foodAccess: game.societyDays[index].metrics.food, compliance: game.societyDays[index].metrics.compliance,
+    notices: game.societyDays[index].news.filter(({ noticeId }) => noticeId).length,
+  })), sample, transactions: game.transactions.filter(({ id }) => txIds.includes(id)), audit: auditSnapshot(game) };
+}
+console.log(JSON.stringify({ seed, arms }, null, 2));
+```

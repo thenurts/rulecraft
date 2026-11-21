@@ -1,0 +1,192 @@
+{
+  "days": {
+    "12": {
+      "fullBytes": 9408450,
+      "nodeEncodeMs": 411.846396,
+      "nodeFullVerifyMs": 939.7057649999999,
+      "capsuleBytes": 10277,
+      "nodeCapsuleReplayAndHashMs": 478.3327669999999,
+      "topLevelBytes": {
+        "attitudes": 84358,
+        "book": 184343,
+        "config": 336,
+        "contacts": 3361,
+        "days": 1395,
+        "events": 6728410,
+        "fixture": 696,
+        "journal": 8886,
+        "policy": 58,
+        "seed": 2,
+        "societyDays": 1923223,
+        "state": 16615,
+        "transactions": 456412,
+        "versions": 158
+      },
+      "choiceNestedBytes": 410738,
+      "legalChoiceNestedBytes": 5744764,
+      "incidents": 31,
+      "references": 486
+    },
+    "20": {
+      "fullBytes": 14475033,
+      "nodeEncodeMs": 804.3973560000004,
+      "nodeFullVerifyMs": 1950.664621,
+      "capsuleBytes": 10277,
+      "nodeCapsuleReplayAndHashMs": 728.3746800000008,
+      "topLevelBytes": {
+        "attitudes": 84441,
+        "book": 184511,
+        "config": 336,
+        "contacts": 3361,
+        "days": 2309,
+        "events": 11686058,
+        "fixture": 696,
+        "journal": 8886,
+        "policy": 58,
+        "seed": 2,
+        "societyDays": 1996469,
+        "state": 16621,
+        "transactions": 490930,
+        "versions": 158
+      },
+      "choiceNestedBytes": 684111,
+      "legalChoiceNestedBytes": 9962975,
+      "incidents": 50,
+      "references": 779
+    },
+    "29": {
+      "fullBytes": 20147387,
+      "nodeEncodeMs": 778.9880659999999,
+      "nodeFullVerifyMs": 1894.9372009999988,
+      "capsuleBytes": 10277,
+      "nodeCapsuleReplayAndHashMs": 1228.083036,
+      "topLevelBytes": {
+        "attitudes": 84447,
+        "book": 184511,
+        "config": 336,
+        "contacts": 3361,
+        "days": 3335,
+        "events": 17265877,
+        "fixture": 696,
+        "journal": 8886,
+        "policy": 58,
+        "seed": 2,
+        "societyDays": 2066691,
+        "state": 16653,
+        "transactions": 512179,
+        "versions": 158
+      },
+      "choiceNestedBytes": 991631,
+      "legalChoiceNestedBytes": 14708795,
+      "incidents": 69,
+      "references": 1132
+    },
+    "30": {
+      "fullBytes": 20777358,
+      "nodeEncodeMs": 812.2607639999987,
+      "nodeFullVerifyMs": 1763.6706360000026,
+      "capsuleBytes": 10277,
+      "nodeCapsuleReplayAndHashMs": 1149.4057840000023,
+      "topLevelBytes": {
+        "attitudes": 84447,
+        "book": 184511,
+        "config": 336,
+        "contacts": 3361,
+        "days": 3449,
+        "events": 17885635,
+        "fixture": 696,
+        "journal": 8886,
+        "policy": 58,
+        "seed": 2,
+        "societyDays": 2074438,
+        "state": 16653,
+        "transactions": 514531,
+        "versions": 158
+      },
+      "choiceNestedBytes": 1025796,
+      "legalChoiceNestedBytes": 15235851,
+      "incidents": 71,
+      "references": 1171
+    }
+  },
+  "history": [
+    {
+      "version": 3,
+      "bytes": 2012,
+      "hashes": {
+        "state": "375123c46edf3305",
+        "events": "75b6f979dc9dd357"
+      },
+      "incidents": 29,
+      "references": 444
+    },
+    {
+      "version": 4,
+      "bytes": 2012,
+      "hashes": {
+        "state": "f4c46dbfd1b05523",
+        "events": "076d885f324114cf"
+      },
+      "incidents": 30,
+      "references": 383
+    }
+  ],
+  "sharedAppendOnlyBytes": {
+    "events": 17265877,
+    "transactions": 512179,
+    "days": 3335,
+    "societyDays": 2066691,
+    "journal": 8886
+  },
+  "browser": "156.0.8078.79",
+  "isolatedStorage": {
+    "timings": {
+      "plainWrite": [
+        123.30000000074506,
+        192.5,
+        200.2000000011176,
+        400.2999999988824,
+        187.5
+      ],
+      "plainRead": [
+        100.59999999962747,
+        114.30000000074506,
+        126.59999999962747,
+        225.09999999962747,
+        99.19999999925494
+      ],
+      "compressLatest": [
+        239.7999999988824,
+        245.90000000037253,
+        301.59999999962747,
+        278,
+        274
+      ],
+      "gzipWrite": [
+        6.800000000745058,
+        9.400000000372529,
+        16.09999999962747,
+        13.299999998882413,
+        8.099999999627471
+      ],
+      "gzipRead": [
+        3.900000000372529,
+        4.299999998882413,
+        3.100000001490116,
+        4,
+        9.099999999627471
+      ],
+      "decompressLatest": [
+        80.09999999962747,
+        69.80000000074506,
+        103.19999999925494,
+        65.80000000074506,
+        65.40000000037253
+      ]
+    },
+    "rollbackRetained": true,
+    "corruptionDetected": true,
+    "plainPairPayloadBytes": 40924745,
+    "gzipPairPayloadBytes": 1148001
+  }
+}
